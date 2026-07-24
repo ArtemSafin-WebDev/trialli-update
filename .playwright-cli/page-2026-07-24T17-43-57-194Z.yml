@@ -1,0 +1,54 @@
+- generic [ref=e2]:
+  - link "Перейти к подборщику" [ref=e3] [cursor=pointer]:
+    - /url: "#tri-finder-main"
+  - link "Карвильшоп — фирменный магазин брендов LUZAR, TRIALLI, STARTVOLT, AIRLINE и CARVILLE RACING" [ref=e4] [cursor=pointer]:
+    - /url: https://carvilleshop.ru/
+    - img "Карвильшоп — фирменный магазин брендов LUZAR, TRIALLI, STARTVOLT, AIRLINE и CARVILLE RACING" [ref=e5]
+  - banner [ref=e6]:
+    - generic [ref=e7]:
+      - navigation "Дополнительная навигация" [ref=e8]:
+        - link "Гарантия" [ref=e9] [cursor=pointer]:
+          - /url: /#guarantee
+        - link "Новости" [ref=e10] [cursor=pointer]:
+          - /url: /#news
+        - link "О бренде" [ref=e11] [cursor=pointer]:
+          - /url: /#about
+        - link "Точки продаж" [ref=e12] [cursor=pointer]:
+          - /url: /#stores
+        - link "Документы" [ref=e13] [cursor=pointer]:
+          - /url: /#documents
+        - link "Контакты" [ref=e14] [cursor=pointer]:
+          - /url: /#contacts
+      - generic "Социальные сети" [ref=e15]:
+        - link "ВКонтакте" [ref=e16] [cursor=pointer]:
+          - /url: "#"
+        - link "Telegram" [ref=e17] [cursor=pointer]:
+          - /url: "#"
+        - link "RUTUBE" [ref=e18] [cursor=pointer]:
+          - /url: "#"
+    - generic [ref=e19]:
+      - link "TRIALLI" [ref=e20] [cursor=pointer]:
+        - /url: /
+      - link "Каталог" [ref=e21] [cursor=pointer]:
+        - /url: /pages/catalog-results.html
+        - text: Каталог
+      - search [ref=e23]:
+        - generic [ref=e24]: Поиск по сайту
+        - searchbox "Поиск по сайту" [ref=e25]
+        - button "Найти" [ref=e26] [cursor=pointer]
+      - button "Закрыть подборщик" [ref=e28] [cursor=pointer]: × Подобрать детали
+      - link "Корзина, 3 товара" [ref=e29] [cursor=pointer]:
+        - /url: /pages/catalog-results.html
+        - generic [ref=e31]: "3"
+  - main [ref=e32]:
+    - region "Подберите детали по авто, VIN или госномеру" [ref=e33]:
+      - generic [ref=e35]:
+        - heading "Подберите детали по авто, VIN или госномеру" [level=1] [ref=e36]:
+          - text: Подберите детали
+          - text: по авто, VIN или госномеру
+        - tablist "Способ подбора" [ref=e38]:
+          - tab "Подобрать по авто" [ref=e39] [cursor=pointer]
+          - tab "Подобрать по VIN или госномеру" [ref=e40] [cursor=pointer]
+          - button "▱ Мои авто 3" [ref=e41] [cursor=pointer]:
+            - text: ▱ Мои авто
+            - generic [ref=e42]: "3"

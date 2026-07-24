@@ -1,0 +1,14 @@
+{
+  "size": [
+    390,
+    366
+  ],
+  "tolerance": 12,
+  "mean_absolute_error": 2.929,
+  "root_mean_square_error": 11.7103,
+  "changed_pixels_percent": 4.1173,
+  "artifacts": {
+    "overlay": "/Users/artemsafin/Desktop/projects/trialli-update/output/playwright/footer-mobile-diff-final/overlay.png",
+    "diff": "/Users/artemsafin/Desktop/projects/trialli-update/output/playwright/footer-mobile-diff-final/diff.png"
+  }
+}

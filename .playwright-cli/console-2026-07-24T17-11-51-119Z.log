@@ -1,0 +1,5 @@
+Total messages: 7 (Errors: 1, Warnings: 0)
+Returning 1 messages for level "error"
+
+TypeError: Cannot read properties of null (reading 'addEventListener')
+    at HTMLDocument.<anonymous> (http://127.0.0.1:5174/vendor/trialli/local/templates/trialli/js/custom.js:962:15)

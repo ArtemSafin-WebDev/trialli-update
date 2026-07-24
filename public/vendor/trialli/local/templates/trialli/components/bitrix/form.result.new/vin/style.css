@@ -1,0 +1,97 @@
+.form-vin__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 35px;
+}
+
+.form-vin__list .form_input_row .form-default__label {
+    color: #1A1919;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 14px;
+    letter-spacing: 0.02em;
+    text-align: left;
+    margin-bottom: 10px;
+    display: flex;
+}
+
+.form-vin__list .form_input_row .input-default input {
+    background: #F1F1F2;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 16px;
+}
+
+.form-vin__list .form_input_row .input-default textarea {
+    background: #F1F1F2;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 16px;
+}
+
+.form-vin__list .form_input_row .input-default .select-underline__option {
+    background: #F1F1F2;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 16px;
+    width: 100%;
+    color: #1A1919;
+    text-align: left;
+}
+
+.form-vin__list .form_input_row .input-default .select-underline__input {
+    display: none;
+}
+
+.form-vin__list .form_input_row .input-default .select-underline__dropdown .select-underline__option-wrap {
+    background: none;
+    margin: 5px 0;
+}
+
+.form-vin__list .form_input_row {
+    width: 360px;
+}
+
+.form-vin__list .form_input_row.textarea {
+    /*width: 764px;*/
+}
+
+
+.form-vin__btn {
+    margin-top: 2.7rem;
+}
+
+
+.form-vin__btn {
+    text-align: center;
+}
+
+.form-vin__btn .btn.btn-white {
+    min-width: 167px;
+    background: #BED600;
+    color: #0D2026;
+    border: none;
+    border-radius: 5px;
+}
+
+.vin-form-title{
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 30px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: black;
+}
+
+.popup-ask.vin_popup {
+    width: min-content;
+    max-width: none;
+    padding: 40px 35px 20px;
+}
+.form-vin__desc{
+    color: black;
+    font-size: 18px;
+    min-width: 280px;
+}

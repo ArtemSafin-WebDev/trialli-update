@@ -1,0 +1,101 @@
+.slider-main-about__slider .swiper-slide {
+    width: 68%;
+    height: initial;
+}
+
+.slider-main-about__slider .swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background-color: #D9D9D9;
+}
+.slider-main-about__slider .swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background-color: #BED600;
+}
+.slider-main-about__slider.swiper-horizontal>.swiper-pagination-bullets,
+.slider-main-about__slider .swiper-pagination-bullets.swiper-pagination-horizontal,
+.slider-main-about__slider .swiper-pagination-custom,
+.slider-main-about__slider .swiper-pagination-fraction {
+    width: 68%;
+}
+
+.slider-main-about__slider .swiper-slide {
+    margin-bottom: 5rem;
+}
+
+.main-about-block-content {
+    padding-top: 5rem;
+}
+
+.card-about-title {
+    margin-bottom: 1rem;
+}
+.card-about-title,
+.card-about-title h2 {
+    color: #FFF;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.2; /* 201.667% */
+    text-transform: uppercase;
+}
+.card-about-title h3 {
+    text-transform: none;
+}
+
+.card-about-title b {
+    color: #BED600;
+}
+
+.card-about-text {
+    color: #FFF;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 135.5%;
+    padding-bottom: 2rem;
+}
+.card-about-text a:hover {
+    color: #BED600;
+    text-decoration-line: underline;
+}
+.card-about-img img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    object-position: center;
+}
+
+.card-about-img {
+    position: relative;
+    display: block;
+    border-radius: 30px;
+    overflow: hidden;
+    margin-top: auto;
+    width: 89%;
+}
+
+.card-about-img:before {
+    content: " ";
+    display: block;
+    width: 534px;
+    height: 311px;
+}
+.card-about {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.swiper-slide.swiper-slide-active {
+    height: initial;
+}
+.card-about-text ul {
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+}

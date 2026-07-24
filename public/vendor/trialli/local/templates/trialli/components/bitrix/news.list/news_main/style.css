@@ -1,0 +1,135 @@
+.tab-main-content-item {
+    /*padding-top: 4rem;*/
+    height: 100%;
+}
+.tab-main-content-item > div {
+    /*padding-top: 4rem;*/
+    height: 100%;
+}
+
+.main-news-block-title .page__h2 {
+    color: #FFF;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.main-news-block-title {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+a.main-page__link {
+    color: #BED600;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    border-bottom: 1px solid #BED600;
+}
+
+.main-news-block-sub {
+    padding-top: 3rem;
+}
+
+.main-news-block-sub-title span {
+    position: relative;
+}
+.main-news-block-sub-title span:after {
+    content: '';
+    display: block;
+    background: url("/vendor/trialli/local/templates/trialli/img/svg/news-main-span.svg") no-repeat;
+    width: 200px;
+    height: 90px;
+    position: absolute;
+    left: -12px;
+    top: -7px;
+}
+.main-news-block-sub-title {
+    color: #FFF;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+
+.main-news-block-content {
+    display: grid;
+    grid-template-areas: "new1 new2" "new1 new3" "new1 new4";
+    gap: 2rem;
+    padding-top: 39px;
+    padding-bottom: 35px;
+}
+.main-news-block-child-0 {
+    grid-area: new1;
+}
+.main-news-block-child-1 {
+    grid-area: new2;
+}
+.main-news-block-child-2 {
+    grid-area: new3;
+}
+.main-news-block-child-3 {
+    grid-area: new4;
+}
+a.card-main-news {
+    position: relative;
+    width: 100%;
+    min-height: 120px;
+    height: 100%;
+    overflow: hidden;
+    display: block;
+    border-radius: 18px;
+}
+
+.card-main-news__image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+opacity: 0.5;
+}
+
+.card-main-news__title {
+    color: #FFF;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    position: absolute;
+    z-index: 2;
+    top: 20px;
+    left: 20px;
+}
+a.card-main-news:hover .card-main-news__title,
+a.card-main-news:hover .card-main-news__link {
+    color: #BED600;
+}
+
+.card-main-news__image img {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+
+.card-main-news__link {
+    border-radius: 20px;
+    border: 1px solid #FFF;
+    color: #FFF;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    width: fit-content;
+    padding: 0.5rem 1rem;
+    margin-top: 1rem;
+}

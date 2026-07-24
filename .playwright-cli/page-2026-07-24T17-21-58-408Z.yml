@@ -1,0 +1,481 @@
+- generic [ref=e2]:
+  - link "Перейти к содержимому" [ref=e3] [cursor=pointer]:
+    - /url: "#tri-home-main"
+  - link "Карвильшоп — фирменный магазин брендов LUZAR, TRIALLI, STARTVOLT, AIRLINE и CARVILLE RACING" [ref=e4] [cursor=pointer]:
+    - /url: https://carvilleshop.ru/
+    - img "Карвильшоп — фирменный магазин брендов LUZAR, TRIALLI, STARTVOLT, AIRLINE и CARVILLE RACING" [ref=e5]
+  - banner [ref=e6]:
+    - generic [ref=e7]:
+      - navigation "Дополнительная навигация" [ref=e8]:
+        - link "Гарантия" [ref=e9] [cursor=pointer]:
+          - /url: "#guarantee"
+        - link "Новости" [ref=e10] [cursor=pointer]:
+          - /url: "#news"
+        - link "О бренде" [ref=e11] [cursor=pointer]:
+          - /url: "#about"
+        - link "Точки продаж" [ref=e12] [cursor=pointer]:
+          - /url: "#stores"
+        - link "Документы" [ref=e13] [cursor=pointer]:
+          - /url: "#documents"
+        - link "Контакты" [ref=e14] [cursor=pointer]:
+          - /url: "#contacts"
+      - generic "Социальные сети" [ref=e15]:
+        - link "ВКонтакте" [ref=e16] [cursor=pointer]:
+          - /url: "#"
+        - link "YouTube" [ref=e17] [cursor=pointer]:
+          - /url: "#"
+        - link "RUTUBE" [ref=e18] [cursor=pointer]:
+          - /url: "#"
+    - generic [ref=e19]:
+      - link "TRIALLI" [ref=e20] [cursor=pointer]:
+        - /url: /
+      - link "Каталог" [ref=e21] [cursor=pointer]:
+        - /url: "#categories"
+        - text: Каталог
+      - search [ref=e23]:
+        - generic [ref=e24]: Поиск по сайту
+        - searchbox "Поиск по сайту" [ref=e25]
+        - button "Найти" [ref=e26] [cursor=pointer]
+      - link "Корзина, 3 товара" [ref=e28] [cursor=pointer]:
+        - /url: "#popular"
+        - generic [ref=e30]: "3"
+  - main [ref=e31]:
+    - region "Подберите детали по авто, VIN или госномеру" [ref=e32]:
+      - generic [ref=e34]:
+        - heading "Подберите детали по авто, VIN или госномеру" [level=1] [ref=e35]:
+          - text: Подберите детали
+          - text: по авто, VIN или госномеру
+        - generic [ref=e36]:
+          - generic [ref=e37]:
+            - tablist "Способ подбора" [ref=e38]:
+              - tab "Подобрать по авто" [selected] [ref=e39] [cursor=pointer]
+              - tab "Подобрать по VIN или госномеру" [ref=e40] [cursor=pointer]
+            - button "Мои авто" [ref=e41] [cursor=pointer]: Мои авто
+          - generic [ref=e43]:
+            - generic [ref=e44]:
+              - button "Марка" [ref=e46] [cursor=pointer]:
+                - generic [ref=e47]: Марка
+              - button "Модель" [disabled] [ref=e49]:
+                - generic [ref=e50]: Модель
+              - button "Год" [disabled] [ref=e52]:
+                - generic [ref=e53]: Год
+              - button "Группа товаров" [disabled] [ref=e55]:
+                - generic [ref=e56]: Группа товаров
+            - button "Подобрать" [disabled] [ref=e57]: Подобрать
+    - region ">18 000 SKU товаров" [ref=e59]:
+      - generic [ref=e60]:
+        - generic [ref=e61]:
+          - heading ">18 000 SKU товаров" [level=2] [ref=e62]
+          - generic [ref=e63]:
+            - button "Назад" [ref=e64] [cursor=pointer]: ‹
+            - button "Вперед" [ref=e65] [cursor=pointer]: ›
+        - generic [ref=e67]:
+          - link "Тормозная система >2040 SKU" [ref=e68] [cursor=pointer]:
+            - /url: "#popular"
+            - generic [ref=e69]: Тормозная система
+            - generic [ref=e70]: ">2040 SKU"
+          - link "Подшипники >2040 SKU" [ref=e71] [cursor=pointer]:
+            - /url: "#popular"
+            - generic [ref=e72]: Подшипники
+            - generic [ref=e73]: ">2040 SKU"
+          - link "Амортизаторы и опоры >2040 SKU" [ref=e74] [cursor=pointer]:
+            - /url: "#popular"
+            - generic [ref=e75]: Амортизаторы и опоры
+            - generic [ref=e76]: ">2040 SKU"
+          - link "Прокладки >2040 SKU" [ref=e77] [cursor=pointer]:
+            - /url: "#popular"
+            - generic [ref=e78]: Прокладки
+            - generic [ref=e79]: ">2040 SKU"
+          - link "Ремни и ролики >2040 SKU" [ref=e80] [cursor=pointer]:
+            - /url: "#popular"
+            - generic [ref=e81]: Ремни и ролики
+            - generic [ref=e82]: ">2040 SKU"
+          - link "Резинотехнические изделия >2040 SKU" [ref=e83] [cursor=pointer]:
+            - /url: "#popular"
+            - generic [ref=e84]: Резинотехнические изделия
+            - generic [ref=e85]: ">2040 SKU"
+          - link "Система выпуска отработавших газов >2040 SKU" [ref=e86] [cursor=pointer]:
+            - /url: "#popular"
+            - generic [ref=e87]: Система выпуска отработавших газов
+            - generic [ref=e88]: ">2040 SKU"
+          - link "Рулевое управление и подвеска >2040 SKU" [ref=e89] [cursor=pointer]:
+            - /url: "#popular"
+            - generic [ref=e90]: Рулевое управление и подвеска
+            - generic [ref=e91]: ">2040 SKU"
+          - link "Ступицы и ремкомплекты >2040 SKU" [ref=e92] [cursor=pointer]:
+            - /url: "#popular"
+            - generic [ref=e93]: Ступицы и ремкомплекты
+            - generic [ref=e94]: ">2040 SKU"
+          - link "Амортизаторы кабин >2040 SKU" [ref=e95] [cursor=pointer]:
+            - /url: "#popular"
+            - generic [ref=e96]: Амортизаторы кабин
+            - generic [ref=e97]: ">2040 SKU"
+          - link "Сцепление >2040 SKU" [ref=e98] [cursor=pointer]:
+            - /url: "#popular"
+            - generic [ref=e99]: Сцепление
+            - generic [ref=e100]: ">2040 SKU"
+          - link "Оси ступицы заднего колеса >2040 SKU" [ref=e101] [cursor=pointer]:
+            - /url: "#popular"
+            - generic [ref=e102]: Оси ступицы заднего колеса
+            - generic [ref=e103]: ">2040 SKU"
+          - link "ШРУСы и приводы >2040 SKU" [ref=e104] [cursor=pointer]:
+            - /url: "#popular"
+            - generic [ref=e105]: ШРУСы и приводы
+            - generic [ref=e106]: ">2040 SKU"
+          - link "Пружины >2040 SKU" [ref=e107] [cursor=pointer]:
+            - /url: "#popular"
+            - generic [ref=e108]: Пружины
+            - generic [ref=e109]: ">2040 SKU"
+          - link "Газовые упоры и электроприводы >2040 SKU" [ref=e110] [cursor=pointer]:
+            - /url: "#popular"
+            - generic [ref=e111]: Газовые упоры и электроприводы
+            - generic [ref=e112]: ">2040 SKU"
+          - link "Реклама TRIALLI >2040 SKU" [ref=e113] [cursor=pointer]:
+            - /url: "#popular"
+            - generic [ref=e114]: Реклама TRIALLI
+            - generic [ref=e115]: ">2040 SKU"
+    - region "Запчасти для китайских автомобилей" [ref=e121]:
+      - link "Широкий выбор запчастей для китайских автомобилей" [ref=e122] [cursor=pointer]:
+        - /url: "#categories"
+        - img "Широкий выбор запчастей для китайских автомобилей" [ref=e124]
+    - region "Новинки недели" [ref=e125]:
+      - generic [ref=e126]:
+        - generic [ref=e127]:
+          - heading "Новинки недели" [level=2] [ref=e128]
+          - link "2 545 товаров" [ref=e129] [cursor=pointer]:
+            - /url: "#popular"
+            - text: 2 545 товаров ›
+          - generic [ref=e130]:
+            - button "Назад" [ref=e131] [cursor=pointer]: ‹
+            - button "Вперед" [ref=e132] [cursor=pointer]: ›
+        - generic [ref=e134]:
+          - link "Тормозная система 67 SKU ›" [ref=e135] [cursor=pointer]:
+            - /url: "#popular"
+            - strong [ref=e136]: Тормозная система
+            - generic [ref=e137]: 67 SKU ›
+          - link "Амортизаторы и опоры 25 SKU ›" [ref=e138] [cursor=pointer]:
+            - /url: "#popular"
+            - strong [ref=e139]: Амортизаторы и опоры
+            - generic [ref=e140]: 25 SKU ›
+          - link "Ремни и ролики 200 SKU ›" [ref=e141] [cursor=pointer]:
+            - /url: "#popular"
+            - strong [ref=e142]: Ремни и ролики
+            - generic [ref=e143]: 200 SKU ›
+          - link "Система выпуска отработавших газов 200 SKU ›" [ref=e144] [cursor=pointer]:
+            - /url: "#popular"
+            - strong [ref=e145]: Система выпуска отработавших газов
+            - generic [ref=e146]: 200 SKU ›
+          - link "Подшипники 200 SKU ›" [ref=e147] [cursor=pointer]:
+            - /url: "#popular"
+            - strong [ref=e148]: Подшипники
+            - generic [ref=e149]: 200 SKU ›
+          - link "Прокладки 200 SKU ›" [ref=e150] [cursor=pointer]:
+            - /url: "#popular"
+            - strong [ref=e151]: Прокладки
+            - generic [ref=e152]: 200 SKU ›
+    - region "Покупайте оригинальные товары TRIALLI" [ref=e158]:
+      - link "Покупайте оригинальные товары TRIALLI на carvilleshop.ru" [ref=e159] [cursor=pointer]:
+        - /url: https://carvilleshop.ru/
+        - img "Покупайте оригинальные товары TRIALLI на carvilleshop.ru" [ref=e161]
+    - region "Популярное" [ref=e162]:
+      - generic [ref=e163]:
+        - heading "Популярное" [level=2] [ref=e164]
+        - generic [ref=e165]:
+          - article [ref=e166]:
+            - generic [ref=e167]:
+              - generic "TRIALLI" [ref=e169]: T
+              - img "Суппорт тормозной для автомобилей Лада" [ref=e170]
+              - generic "Изображения товара" [ref=e171]:
+                - button "Фото 1" [ref=e172] [cursor=pointer]
+                - button "Фото 2" [ref=e173] [cursor=pointer]
+                - button "Фото 3" [ref=e174] [cursor=pointer]
+            - generic [ref=e175]:
+              - link "Суппорт тормозной для автомобилей Лада" [ref=e176] [cursor=pointer]:
+                - /url: "#"
+                - text: Суппорт тормозной
+                - text: для автомобилей Лада
+              - generic [ref=e177]:
+                - text: LRAC 1980
+                - button "Скопировать артикул" [ref=e178] [cursor=pointer]
+              - generic [ref=e179]:
+                - generic [ref=e180]: 2 710 ₽
+                - generic [ref=e181]: 3 710 ₽
+                - button "Добавить в корзину" [ref=e182] [cursor=pointer]: +
+          - article [ref=e183]:
+            - generic [ref=e184]:
+              - generic [ref=e185]:
+                - generic "TRIALLI" [ref=e186]: T
+                - generic [ref=e187]: Новинка
+              - img "Суппорт тормозной для автомобилей Лада" [ref=e188]
+              - generic "Изображения товара" [ref=e189]:
+                - button "Фото 1" [ref=e190] [cursor=pointer]
+                - button "Фото 2" [ref=e191] [cursor=pointer]
+                - button "Фото 3" [ref=e192] [cursor=pointer]
+            - generic [ref=e193]:
+              - link "Суппорт тормозной для автомобилей Лада" [ref=e194] [cursor=pointer]:
+                - /url: "#"
+                - text: Суппорт тормозной
+                - text: для автомобилей Лада
+              - generic [ref=e195]:
+                - text: LRAC 1980
+                - button "Скопировать артикул" [ref=e196] [cursor=pointer]
+              - generic [ref=e197]:
+                - generic [ref=e198]: 2 710 ₽
+                - generic [ref=e199]: 3 710 ₽
+                - button "Добавить в корзину" [ref=e200] [cursor=pointer]: +
+          - article [ref=e201]:
+            - generic [ref=e202]:
+              - generic [ref=e203]:
+                - generic "TRIALLI" [ref=e204]: T
+                - generic [ref=e205]: Новинка
+              - img "Суппорт тормозной для автомобилей Лада" [ref=e206]
+              - generic "Изображения товара" [ref=e207]:
+                - button "Фото 1" [ref=e208] [cursor=pointer]
+                - button "Фото 2" [ref=e209] [cursor=pointer]
+                - button "Фото 3" [ref=e210] [cursor=pointer]
+            - generic [ref=e211]:
+              - link "Суппорт тормозной для автомобилей Лада" [ref=e212] [cursor=pointer]:
+                - /url: "#"
+                - text: Суппорт тормозной
+                - text: для автомобилей Лада
+              - generic [ref=e213]:
+                - text: LRAC 1980
+                - button "Скопировать артикул" [ref=e214] [cursor=pointer]
+              - generic [ref=e215]:
+                - generic [ref=e216]: 2 710 ₽
+                - generic [ref=e217]: 3 710 ₽
+                - button "Добавить в корзину" [ref=e218] [cursor=pointer]: +
+          - article [ref=e219]:
+            - generic [ref=e220]:
+              - generic "TRIALLI" [ref=e222]: T
+              - img "Суппорт тормозной для автомобилей Лада" [ref=e223]
+              - generic "Изображения товара" [ref=e224]:
+                - button "Фото 1" [ref=e225] [cursor=pointer]
+                - button "Фото 2" [ref=e226] [cursor=pointer]
+                - button "Фото 3" [ref=e227] [cursor=pointer]
+            - generic [ref=e228]:
+              - link "Суппорт тормозной для автомобилей Лада" [ref=e229] [cursor=pointer]:
+                - /url: "#"
+                - text: Суппорт тормозной
+                - text: для автомобилей Лада
+              - generic [ref=e230]:
+                - text: LRAC 1980
+                - button "Скопировать артикул" [ref=e231] [cursor=pointer]
+              - generic [ref=e232]:
+                - generic [ref=e233]: 2 710 ₽
+                - generic [ref=e234]: 3 710 ₽
+                - button "Добавить в корзину" [ref=e235] [cursor=pointer]: +
+          - article [ref=e236]:
+            - generic [ref=e237]:
+              - generic [ref=e238]:
+                - generic "TRIALLI" [ref=e239]: T
+                - generic [ref=e240]: Скоро закончится
+              - img "Суппорт тормозной для автомобилей Лада" [ref=e241]
+              - generic "Изображения товара" [ref=e242]:
+                - button "Фото 1" [ref=e243] [cursor=pointer]
+                - button "Фото 2" [ref=e244] [cursor=pointer]
+                - button "Фото 3" [ref=e245] [cursor=pointer]
+            - generic [ref=e246]:
+              - link "Суппорт тормозной для автомобилей Лада" [ref=e247] [cursor=pointer]:
+                - /url: "#"
+                - text: Суппорт тормозной
+                - text: для автомобилей Лада
+              - generic [ref=e248]:
+                - text: LRAC 1980
+                - button "Скопировать артикул" [ref=e249] [cursor=pointer]
+              - generic [ref=e250]:
+                - generic [ref=e251]: 2 710 ₽
+                - generic [ref=e252]: 3 710 ₽
+                - button "Добавить в корзину" [ref=e253] [cursor=pointer]: +
+          - article [ref=e254]:
+            - generic [ref=e255]:
+              - generic [ref=e256]:
+                - generic "TRIALLI" [ref=e257]: T
+                - generic [ref=e258]: Новинка
+              - img "Суппорт тормозной для автомобилей Лада" [ref=e259]
+              - generic "Изображения товара" [ref=e260]:
+                - button "Фото 1" [ref=e261] [cursor=pointer]
+                - button "Фото 2" [ref=e262] [cursor=pointer]
+                - button "Фото 3" [ref=e263] [cursor=pointer]
+            - generic [ref=e264]:
+              - link "Суппорт тормозной для автомобилей Лада" [ref=e265] [cursor=pointer]:
+                - /url: "#"
+                - text: Суппорт тормозной
+                - text: для автомобилей Лада
+              - generic [ref=e266]:
+                - text: LRAC 1980
+                - button "Скопировать артикул" [ref=e267] [cursor=pointer]
+              - generic [ref=e268]:
+                - generic [ref=e269]: 2 710 ₽
+                - generic [ref=e270]: 3 710 ₽
+                - button "Добавить в корзину" [ref=e271] [cursor=pointer]: +
+          - article [ref=e272]:
+            - generic [ref=e273]:
+              - generic [ref=e274]:
+                - generic "TRIALLI" [ref=e275]: T
+                - generic [ref=e276]: Новинка
+              - img "Суппорт тормозной для автомобилей Лада" [ref=e277]
+              - generic "Изображения товара" [ref=e278]:
+                - button "Фото 1" [ref=e279] [cursor=pointer]
+                - button "Фото 2" [ref=e280] [cursor=pointer]
+                - button "Фото 3" [ref=e281] [cursor=pointer]
+            - generic [ref=e282]:
+              - link "Суппорт тормозной для автомобилей Лада" [ref=e283] [cursor=pointer]:
+                - /url: "#"
+                - text: Суппорт тормозной
+                - text: для автомобилей Лада
+              - generic [ref=e284]:
+                - text: LRAC 1980
+                - button "Скопировать артикул" [ref=e285] [cursor=pointer]
+              - generic [ref=e286]:
+                - generic [ref=e287]: 2 710 ₽
+                - generic [ref=e288]: 3 710 ₽
+                - button "Добавить в корзину" [ref=e289] [cursor=pointer]: +
+          - article [ref=e290]:
+            - generic [ref=e291]:
+              - generic "TRIALLI" [ref=e293]: T
+              - img "Суппорт тормозной для автомобилей Лада" [ref=e294]
+              - generic "Изображения товара" [ref=e295]:
+                - button "Фото 1" [ref=e296] [cursor=pointer]
+                - button "Фото 2" [ref=e297] [cursor=pointer]
+                - button "Фото 3" [ref=e298] [cursor=pointer]
+            - generic [ref=e299]:
+              - link "Суппорт тормозной для автомобилей Лада" [ref=e300] [cursor=pointer]:
+                - /url: "#"
+                - text: Суппорт тормозной
+                - text: для автомобилей Лада
+              - generic [ref=e301]:
+                - text: LRAC 1980
+                - button "Скопировать артикул" [ref=e302] [cursor=pointer]
+              - generic [ref=e303]:
+                - generic [ref=e304]: 2 710 ₽
+                - generic [ref=e305]: 3 710 ₽
+                - button "Добавить в корзину" [ref=e306] [cursor=pointer]: +
+          - article [ref=e307]:
+            - generic [ref=e308]:
+              - generic [ref=e309]:
+                - generic "TRIALLI" [ref=e310]: T
+                - generic [ref=e311]: Новинка
+              - img "Суппорт тормозной для автомобилей Лада" [ref=e312]
+              - generic "Изображения товара" [ref=e313]:
+                - button "Фото 1" [ref=e314] [cursor=pointer]
+                - button "Фото 2" [ref=e315] [cursor=pointer]
+                - button "Фото 3" [ref=e316] [cursor=pointer]
+            - generic [ref=e317]:
+              - link "Суппорт тормозной для автомобилей Лада" [ref=e318] [cursor=pointer]:
+                - /url: "#"
+                - text: Суппорт тормозной
+                - text: для автомобилей Лада
+              - generic [ref=e319]:
+                - text: LRAC 1980
+                - button "Скопировать артикул" [ref=e320] [cursor=pointer]
+              - generic [ref=e321]:
+                - generic [ref=e322]: 2 710 ₽
+                - generic [ref=e323]: 3 710 ₽
+                - button "Добавить в корзину" [ref=e324] [cursor=pointer]: +
+          - article [ref=e325]:
+            - generic [ref=e326]:
+              - generic [ref=e327]:
+                - generic "TRIALLI" [ref=e328]: T
+                - generic [ref=e329]: Новинка
+              - img "Суппорт тормозной для автомобилей Лада" [ref=e330]
+              - generic "Изображения товара" [ref=e331]:
+                - button "Фото 1" [ref=e332] [cursor=pointer]
+                - button "Фото 2" [ref=e333] [cursor=pointer]
+                - button "Фото 3" [ref=e334] [cursor=pointer]
+            - generic [ref=e335]:
+              - link "Суппорт тормозной для автомобилей Лада" [ref=e336] [cursor=pointer]:
+                - /url: "#"
+                - text: Суппорт тормозной
+                - text: для автомобилей Лада
+              - generic [ref=e337]:
+                - text: LRAC 1980
+                - button "Скопировать артикул" [ref=e338] [cursor=pointer]
+              - generic [ref=e339]:
+                - generic [ref=e340]: 2 710 ₽
+                - generic [ref=e341]: 3 710 ₽
+                - button "Добавить в корзину" [ref=e342] [cursor=pointer]: +
+          - article [ref=e343]:
+            - generic [ref=e344]:
+              - generic [ref=e345]:
+                - generic "TRIALLI" [ref=e346]: T
+                - generic [ref=e347]: Новинка
+              - img "Суппорт тормозной для автомобилей Лада" [ref=e348]
+              - generic "Изображения товара" [ref=e349]:
+                - button "Фото 1" [ref=e350] [cursor=pointer]
+                - button "Фото 2" [ref=e351] [cursor=pointer]
+                - button "Фото 3" [ref=e352] [cursor=pointer]
+            - generic [ref=e353]:
+              - link "Суппорт тормозной для автомобилей Лада" [ref=e354] [cursor=pointer]:
+                - /url: "#"
+                - text: Суппорт тормозной
+                - text: для автомобилей Лада
+              - generic [ref=e355]:
+                - text: LRAC 1980
+                - button "Скопировать артикул" [ref=e356] [cursor=pointer]
+              - generic [ref=e357]:
+                - generic [ref=e358]: 2 710 ₽
+                - generic [ref=e359]: 3 710 ₽
+                - button "Добавить в корзину" [ref=e360] [cursor=pointer]: +
+          - article [ref=e361]:
+            - generic [ref=e362]:
+              - generic "TRIALLI" [ref=e364]: T
+              - img "Суппорт тормозной для автомобилей Лада" [ref=e365]
+              - generic "Изображения товара" [ref=e366]:
+                - button "Фото 1" [ref=e367] [cursor=pointer]
+                - button "Фото 2" [ref=e368] [cursor=pointer]
+                - button "Фото 3" [ref=e369] [cursor=pointer]
+            - generic [ref=e370]:
+              - link "Суппорт тормозной для автомобилей Лада" [ref=e371] [cursor=pointer]:
+                - /url: "#"
+                - text: Суппорт тормозной
+                - text: для автомобилей Лада
+              - generic [ref=e372]:
+                - text: LRAC 1980
+                - button "Скопировать артикул" [ref=e373] [cursor=pointer]
+              - generic [ref=e374]:
+                - generic [ref=e375]: 2 710 ₽
+                - generic [ref=e376]: 3 710 ₽
+                - button "Добавить в корзину" [ref=e377] [cursor=pointer]: +
+        - button "Показать еще" [ref=e378] [cursor=pointer]: Показать еще
+        - complementary [ref=e380]:
+          - generic [ref=e382]:
+            - strong [ref=e383]: Не уверены в выборе? Оставьте заявку на индивидуальный подбор
+            - generic [ref=e384]: Наши специалисты помогут подобрать подходящую деталь для вашего авто
+          - button "Запросить подбор" [ref=e385] [cursor=pointer]
+  - contentinfo [ref=e386]:
+    - generic [ref=e387]:
+      - link "TRIALLI" [ref=e388] [cursor=pointer]:
+        - /url: /
+      - navigation "Навигация в подвале" [ref=e389]:
+        - link "О бренде" [ref=e390] [cursor=pointer]:
+          - /url: "#about"
+        - link "Гарантия" [ref=e391] [cursor=pointer]:
+          - /url: "#guarantee"
+        - link "Точки продаж" [ref=e392] [cursor=pointer]:
+          - /url: "#stores"
+        - link "Документы" [ref=e393] [cursor=pointer]:
+          - /url: "#documents"
+      - link "8 800 555-89-65" [ref=e394] [cursor=pointer]:
+        - /url: tel:88005558965
+        - generic [ref=e395]: ⌕
+        - text: 8 800 555-89-65
+      - generic "Социальные сети" [ref=e396]:
+        - link "ВКонтакте" [ref=e397] [cursor=pointer]:
+          - /url: "#"
+        - link "YouTube" [ref=e398] [cursor=pointer]:
+          - /url: "#"
+        - link "RUTUBE" [ref=e399] [cursor=pointer]:
+          - /url: "#"
+        - link "Дзен" [ref=e400] [cursor=pointer]:
+          - /url: "#"
+        - link "Telegram" [ref=e401] [cursor=pointer]:
+          - /url: "#"
+      - paragraph [ref=e402]:
+        - text: 2026 © ООО «ЭРЛАЙН».
+        - text: Производитель автозапчастей и автоаксессуаров.
+        - text: Все права защищены. Реализация в РФ и СНГ.
+      - link "Пользовательское соглашение" [ref=e403] [cursor=pointer]:
+        - /url: "#policy"
+  - link "Наверх":
+    - /url: "#top"

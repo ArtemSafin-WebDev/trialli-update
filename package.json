@@ -1,0 +1,16 @@
+{
+  "name": "trialli-pages",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "sync:trialli": "node scripts/sync-trialli-assets.mjs"
+  },
+  "devDependencies": {
+    "vite": "^8.1.5"
+  }
+}
+

@@ -1,0 +1,5 @@
+[     232ms] InvalidCharacterError: Failed to execute 'remove' on 'DOMTokenList': The token provided ('swiper-grid swiper-grid-column') contains HTML space characters, which are not valid in tokens.
+    at Q.setBreakpoint (http://127.0.0.1:5173/vendor/trialli/local/templates/trialli/npm/swiper-bundle.min.js:13:45855)
+    at Q.init (http://127.0.0.1:5173/vendor/trialli/local/templates/trialli/npm/swiper-bundle.min.js:13:54659)
+    at new Q (http://127.0.0.1:5173/vendor/trialli/local/templates/trialli/npm/swiper-bundle.min.js:13:50525)
+    at http://127.0.0.1:5173/src/scripts/home.js:171:7

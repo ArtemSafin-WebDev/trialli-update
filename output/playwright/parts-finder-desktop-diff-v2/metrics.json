@@ -1,0 +1,14 @@
+{
+  "size": [
+    1440,
+    800
+  ],
+  "tolerance": 12,
+  "mean_absolute_error": 25.0647,
+  "root_mean_square_error": 56.8734,
+  "changed_pixels_percent": 32.5192,
+  "artifacts": {
+    "overlay": "/Users/artemsafin/Desktop/projects/trialli-update/output/playwright/parts-finder-desktop-diff-v2/overlay.png",
+    "diff": "/Users/artemsafin/Desktop/projects/trialli-update/output/playwright/parts-finder-desktop-diff-v2/diff.png"
+  }
+}

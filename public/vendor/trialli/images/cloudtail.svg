@@ -1,0 +1,15 @@
+<svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="
+    M 0.792255 0
+    L 10 0
+    L 10 13
+    L 0.792255 13
+" fill="#0D2026"/><path d="
+    M 8.5 0
+    L 8.5 0.85
+    L 1.44789 4.88754
+    C 0.792255 5.26224 0.772589 6.20058 1.41195 6.60242
+    L 8.5 11.0371
+    L 8.5 13
+" stroke="#BED600" stroke-opacity="0.5" fill="#0D2026"/>
+</svg>

@@ -1,0 +1,14 @@
+[     218ms] TypeError: Cannot read properties of null (reading 'addEventListener')
+    at HTMLDocument.<anonymous> (http://127.0.0.1:5174/vendor/trialli/local/templates/trialli/js/custom.js:962:15)
+[     224ms] [WARNING] jQuery.Deferred exception: $(...).magnificPopup is not a function TypeError: $(...).magnificPopup is not a function
+    at modalForms (http://127.0.0.1:5174/vendor/trialli/local/templates/trialli/js/custom.js:82:25)
+    at initGlobal (http://127.0.0.1:5174/vendor/trialli/local/templates/trialli/js/custom.js:88:5)
+    at HTMLDocument.<anonymous> (http://127.0.0.1:5174/vendor/trialli/local/templates/trialli/js/custom.js:620:5)
+    at e (http://127.0.0.1:5174/vendor/trialli/local/templates/trialli/npm/jquery.min.js:2:26990)
+    at t (http://127.0.0.1:5174/vendor/trialli/local/templates/trialli/npm/jquery.min.js:2:27292) undefined @ http://127.0.0.1:5174/@vite/client:524
+[     232ms] TypeError: $(...).magnificPopup is not a function
+    at modalForms (http://127.0.0.1:5174/vendor/trialli/local/templates/trialli/js/custom.js:82:25)
+    at initGlobal (http://127.0.0.1:5174/vendor/trialli/local/templates/trialli/js/custom.js:88:5)
+    at HTMLDocument.<anonymous> (http://127.0.0.1:5174/vendor/trialli/local/templates/trialli/js/custom.js:620:5)
+    at e (http://127.0.0.1:5174/vendor/trialli/local/templates/trialli/npm/jquery.min.js:2:26990)
+    at t (http://127.0.0.1:5174/vendor/trialli/local/templates/trialli/npm/jquery.min.js:2:27292)

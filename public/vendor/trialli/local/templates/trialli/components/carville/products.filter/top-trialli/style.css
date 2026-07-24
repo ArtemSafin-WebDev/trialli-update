@@ -1,0 +1,111 @@
+
+.select-default {
+    position: relative;
+}
+.select-default--active .select-default__option--value {
+    border-radius: 2.6rem 2.6rem 0 0;
+    border-bottom-color: transparent;
+}
+.select-default--active .select-default__option--value:after {
+    transform: translateY(-50%) scaleY(-1);
+}
+.select-default__option {
+    border: 0;
+    background: none;
+    font-family: inherit;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    padding: 0.75em 1em;
+    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: 1.25;
+    color: #FFF;
+    text-align: left;
+}
+.select-default__option--value {
+    background: #FFFFFF1A;
+    border: none;
+    color: #E3E3E3;
+    padding-right: 3em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    border-radius: 4rem;
+}
+.select-default__option-wrap .select-default__option:hover{
+    color: #BED600;
+}
+.select-default__option--value:after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 1em;
+    width: 1em;
+    height: 1em;
+    background: url("/vendor/trialli/local/templates/trialli/img/svg/arrow-down.svg") no-repeat 50% 50%/contain;
+}
+.select-default__dropdown {
+    border-top: 0;
+    border-radius: 0 0 2.6rem 2.6rem;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    z-index: 10;
+    background-color: #28363B;
+}
+input.select-default__input, input.select-underline__input {
+    width: 100%;
+    padding: 0.25em 1em;
+    font-weight: bold;
+    font-size: 1.6rem;
+    line-height: 1.25;
+    color: #bed600;
+    border-radius: 2rem;
+}
+
+.select-default__dropdown {
+    z-index: 99;
+}
+
+.select-default__dropdown {
+    max-height: 500px;
+    overflow-y: auto;
+}
+@media (max-width: 1299.98px) {
+    .select-default__option {
+        font-size: 1.4rem;
+    }
+}
+
+.main-find-panel-content#Search .input-search{
+    height: 100%;
+}
+
+.main-find-panel-content#Search .input-search form{
+    height: 100%;
+}
+
+.main-find-panel-content#Search .input-search form input{
+    height: 100%;
+}
+
+#SearchCar .fullheight{
+    height: 100%;
+}
+
+#SearchCar .form-search-catalog__select{
+    height: 100%;
+}
+
+#SearchCar .select-default{
+    height: 100%;
+}
+
+#SearchCar .select-default__option--value{
+    height: 100%;
+}

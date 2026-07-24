@@ -1,0 +1,21 @@
+- generic [ref=e2]:
+  - link "Перейти к подборщику" [ref=e3] [cursor=pointer]:
+    - /url: "#tri-finder-main"
+  - main [ref=e4]:
+    - region "Подбор деталей" [ref=e5]:
+      - generic [ref=e6]:
+        - link "Назад" [ref=e7] [cursor=pointer]:
+          - /url: /
+          - text: ←
+        - heading "Подбор деталей" [level=1] [ref=e8]
+      - generic [ref=e9]:
+        - button "По авто" [ref=e10] [cursor=pointer]
+        - button "По VIN и госномеру" [active] [ref=e11] [cursor=pointer]
+        - button "Мои авто" [ref=e12] [cursor=pointer]:
+          - text: ▱
+          - generic [ref=e13]: "3"
+      - generic [ref=e48]:
+        - generic [ref=e49]:
+          - generic [ref=e50]: VIN или госномер
+          - textbox "VIN или госномер" [ref=e51]
+        - button "◌ Подобрать товары" [ref=e52] [cursor=pointer]

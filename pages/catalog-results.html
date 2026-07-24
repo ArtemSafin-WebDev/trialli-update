@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>TRIALLI — результаты подбора по VIN</title>
+    <link rel="icon" href="/assets/trialli-home/logo.svg" />
+
+    <link rel="stylesheet" href="/vendor/trialli/bitrix/js/main/core/css/core.css" />
+    <link rel="stylesheet" href="/vendor/trialli/local/templates/trialli/components/bitrix/search.title/.default/style.css" />
+    <link rel="stylesheet" href="/vendor/trialli/local/templates/trialli/css/main.css" />
+    <link rel="stylesheet" href="/vendor/trialli/local/templates/trialli/css/fancybox.css" />
+    <link rel="stylesheet" href="/vendor/trialli/local/templates/trialli/css/custom.css" />
+    <link rel="stylesheet" href="/vendor/trialli/local/templates/trialli/npm/magnific-popup.css" />
+    <link rel="stylesheet" href="/vendor/trialli/local/templates/trialli/npm/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="/vendor/trialli/local/templates/trialli/css/template_styles.css" />
+    <link rel="stylesheet" href="/vendor/trialli/local/templates/trialli/css/adaptive_new.css" />
+
+    <link rel="stylesheet" href="/src/styles/home.css" />
+    <link rel="stylesheet" href="/src/styles/catalog-menu.css" />
+    <link rel="stylesheet" href="/src/styles/catalog-results.css" />
+  </head>
+  <body id="top" class="tri-home-body">
+    <div class="tri-home tri-results" data-tri-home data-tri-results>
+      <a class="tri-home__skip" href="#tri-results-main">Перейти к содержимому</a>
+
+      <a class="tri-home-top-banner" href="https://carvilleshop.ru/" target="_blank" rel="noreferrer">
+        <img src="/assets/trialli-home/top-banner.png" width="1440" height="60" alt="Карвильшоп — фирменный магазин брендов LUZAR, TRIALLI, STARTVOLT, AIRLINE и CARVILLE RACING" />
+      </a>
+
+      <header class="tri-home-header" data-tri-home-header>
+        <div class="tri-home-header__utility">
+          <nav class="tri-home-header__utility-nav" aria-label="Дополнительная навигация">
+            <a href="#guarantee">Гарантия</a>
+            <a href="#news">Новости</a>
+            <a href="#about">О бренде</a>
+            <a href="#stores">Точки продаж</a>
+            <a href="#documents">Документы</a>
+            <a href="#contacts">Контакты</a>
+          </nav>
+          <div class="tri-home-header__social" aria-label="Социальные сети">
+            <a href="#" aria-label="ВКонтакте"><img src="/assets/trialli-home/social-vk.svg" alt="" /></a>
+            <a href="#" aria-label="YouTube"><img src="/assets/trialli-home/social-youtube.svg" alt="" /></a>
+            <a href="#" aria-label="RUTUBE"><img src="/assets/trialli-home/social-r.svg" alt="" /></a>
+          </div>
+        </div>
+
+        <div class="tri-home-header__main">
+          <a class="tri-home-header__logo" href="/" aria-label="TRIALLI">
+            <img src="/assets/trialli-home/logo.svg" width="70" height="40" alt="" />
+          </a>
+          <a class="tri-home-header__catalog" href="/pages/catalog-results.html" data-catalog-toggle aria-expanded="false">
+            <span class="tri-home-icon tri-home-icon--menu" aria-hidden="true"></span>
+            Каталог
+          </a>
+          <form class="tri-home-header__search" action="/pages/catalog-results.html" role="search">
+            <label class="tri-home-visually-hidden" for="tri-results-site-search">Поиск по сайту</label>
+            <input id="tri-results-site-search" type="search" name="q" placeholder="Искать на сайте..." autocomplete="off" />
+            <button type="submit" aria-label="Найти"><span class="tri-home-icon tri-home-icon--search" aria-hidden="true"></span></button>
+          </form>
+          <a class="tri-home-header__cart" href="#catalog-products" aria-label="Корзина, 3 товара">
+            <span class="tri-home-icon tri-home-icon--cart" aria-hidden="true"></span>
+            <span class="tri-home-header__cart-count">3</span>
+          </a>
+          <button class="tri-home-header__burger" type="button" aria-label="Открыть меню" aria-expanded="false" data-header-menu-toggle>
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+        <nav class="tri-home-header__mobile-menu" aria-label="Мобильное меню" aria-hidden="true" data-header-menu>
+          <a href="/">Главная</a>
+          <a href="/pages/catalog-results.html">Каталог</a>
+          <a href="/pages/parts-finder.html">Подбор деталей</a>
+          <a href="#contacts">Контакты</a>
+        </nav>
+      </header>
+
+      <main id="tri-results-main">
+        <section class="tri-results-mobile-intro" aria-label="Найденный автомобиль">
+          <div class="tri-results-mobile-intro__header">
+            <a href="/pages/parts-finder.html" aria-label="Назад">←</a>
+            <span>Найдено 48 товаров</span>
+            <button type="button" aria-label="Закрыть" onclick="location.assign('/pages/parts-finder.html')">×</button>
+          </div>
+          <article class="tri-results-mobile-intro__car">
+            <img src="/assets/trialli-catalog/found-car.png" alt="" />
+            <strong>Audi A4 B8 (08-), 2015, 2.0 бензиновый, A4 2.0 TFSI quattro 190 л.с.</strong>
+          </article>
+          <button class="tri-results-mobile-intro__wrong" type="button" data-open-request>▱&nbsp; Не моё авто</button>
+        </section>
+        <section class="tri-results-finder" aria-labelledby="tri-results-finder-title">
+          <div class="tri-home-container">
+            <div class="tri-results-finder__surface">
+              <h1 id="tri-results-finder-title"><span>Подберите детали</span><br />по авто, VIN или госномеру</h1>
+              <div class="tri-results-finder__tabs" role="tablist" aria-label="Способ подбора">
+                <a href="/pages/parts-finder.html" role="tab" aria-selected="false">Подобрать по авто</a>
+                <button type="button" role="tab" aria-selected="true">Подобрать по VIN или госномеру</button>
+                <button class="tri-results-finder__history" type="button" data-results-history>▱&nbsp; Мои авто</button>
+              </div>
+              <form class="tri-results-finder__panel" action="/pages/catalog-results.html" method="get">
+                <div class="tri-results-finder__search">
+                  <label class="tri-home-visually-hidden" for="tri-results-vin">VIN или госномер</label>
+                  <input id="tri-results-vin" name="vin" value="Y6DTF69Y080144158" autocomplete="off" />
+                  <button type="submit">▱&nbsp; Подобрать</button>
+                </div>
+                <p class="tri-results-finder__found-title">По вашим данным нашли авто:</p>
+                <div class="tri-results-finder__vehicle">
+                  <span class="tri-results-finder__vehicle-icon" aria-hidden="true">▱</span>
+                  <dl>
+                    <div><dt>Марка</dt><dd>Audi</dd></div>
+                    <div><dt>Модель</dt><dd>A4 B8 (08-)</dd></div>
+                    <div><dt>Год</dt><dd>2015</dd></div>
+                    <div><dt>Объём двигателя</dt><dd>2.0 бензиновый</dd></div>
+                    <div><dt>Модификация</dt><dd>A4 2.0 TFSI quattro 190 л.с.</dd></div>
+                  </dl>
+                  <button type="button" data-open-request>▱&nbsp; Не моё авто</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section class="tri-results-catalog" aria-labelledby="tri-results-title">
+          <div class="tri-home-container">
+            <div class="tri-results-catalog__heading">
+              <div>
+                <p>Результаты подбора по VIN</p>
+                <h2 id="tri-results-title">Y6DTF69Y080144158</h2>
+              </div>
+              <form class="tri-results-search" data-results-search>
+                <label class="tri-home-visually-hidden" for="tri-results-product-search">Найти товары для вашего авто</label>
+                <input id="tri-results-product-search" type="search" placeholder="Найти товары для вашего авто" autocomplete="off" />
+                <button type="submit" aria-label="Найти">⌕</button>
+              </form>
+              <div class="tri-results-sort">
+                <button type="button" aria-expanded="false" data-results-sort-toggle>⇅ <span>По величине скидки</span></button>
+                <div class="tri-results-sort__menu" hidden data-results-sort-menu>
+                  <button type="button" data-sort-value="discount">По величине скидки</button>
+                  <button type="button" data-sort-value="price-asc">Сначала дешевле</button>
+                  <button type="button" data-sort-value="price-desc">Сначала дороже</button>
+                </div>
+              </div>
+              <button class="tri-results-filter-mobile" type="button" aria-label="Открыть фильтры" data-mobile-filters>☷</button>
+              <div class="tri-results-view-mobile" aria-label="Вид каталога">
+                <button class="is-active" type="button" aria-label="Плитка" data-view="grid">▦</button>
+                <button type="button" aria-label="Список" data-view="list">▤</button>
+              </div>
+            </div>
+
+            <div class="tri-results-catalog__layout">
+              <aside class="tri-results-sidebar" aria-label="Фильтры каталога">
+                <div class="tri-results-sidebar__summary">Всего товаров: <strong data-results-count>1065</strong></div>
+                <fieldset>
+                  <legend>Доступные группы товаров</legend>
+                  <label><input type="checkbox" value="Тормозная система" data-results-filter /> <span>Тормозная система</span></label>
+                  <label><input type="checkbox" value="Амортизаторы и опоры" data-results-filter /> <span>Амортизаторы и опоры</span></label>
+                  <label><input type="checkbox" value="Ремни и ролики" data-results-filter /> <span>Ремни и ролики</span></label>
+                  <label><input type="checkbox" value="Система выпуска" data-results-filter /> <span>Система выпуска отработавших газов</span></label>
+                  <label><input type="checkbox" value="Ступицы" data-results-filter /> <span>Ступицы и ремкомплекты</span></label>
+                  <label><input type="checkbox" value="Сцепление" data-results-filter /> <span>Сцепление</span></label>
+                  <label><input type="checkbox" value="ШРУСы" data-results-filter /> <span>ШРУСы и приводы</span></label>
+                  <button type="button" data-results-more-filters>Еще 6⌄</button>
+                </fieldset>
+                <label class="tri-results-sidebar__switch">
+                  <span>Товары со скидкой</span>
+                  <input type="checkbox" data-results-sale />
+                  <i aria-hidden="true"></i>
+                </label>
+                <fieldset class="tri-results-sidebar__price">
+                  <legend>Цена, ₽</legend>
+                  <div><input type="number" value="459" min="0" data-results-price-min /><input type="number" value="9999999" min="0" data-results-price-max /></div>
+                  <input type="range" min="459" max="9999999" value="9999999" data-results-range />
+                </fieldset>
+                <button class="tri-results-sidebar__reset" type="button" disabled data-results-reset>↻ Сбросить фильтры</button>
+              </aside>
+
+              <div class="tri-results-products-wrap">
+                <div class="tri-results-products" id="catalog-products" data-results-products></div>
+                <button class="tri-results-more" type="button" data-results-more>▱&nbsp; Показать еще</button>
+                <aside class="tri-home-request-banner tri-results-request">
+                  <div class="tri-home-request-banner__visual"><img src="/assets/trialli-home/request-envelope.png" alt="" /></div>
+                  <div class="tri-home-request-banner__content">
+                    <div class="tri-home-request-banner__copy">
+                      <strong>Не уверены в выборе? Оставьте заявку на индивидуальный подбор</strong>
+                      <span>Наши специалисты помогут подобрать подходящую деталь для вашего авто</span>
+                    </div>
+                    <button type="button" data-open-request>Запросить подбор</button>
+                  </div>
+                </aside>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="tri-home-footer" id="contacts">
+        <div class="tri-home-container tri-home-footer__inner">
+          <a class="tri-home-footer__logo" href="/" aria-label="TRIALLI"><img src="/assets/trialli-home/footer-logo.svg" width="124" height="70" alt="" /></a>
+          <nav class="tri-home-footer__nav" aria-label="Навигация в подвале">
+            <a id="about" href="#about">О бренде</a><a id="guarantee" href="#guarantee">Гарантия</a><a id="stores" href="#stores">Точки продаж</a><a id="documents" href="#documents">Документы</a>
+          </nav>
+          <a class="tri-home-footer__phone" href="tel:88005558965"><img src="/assets/trialli-home/icon-phone.svg" width="16" height="16" alt="" />8 800 555-89-65</a>
+          <div class="tri-home-footer__social" aria-label="Социальные сети">
+            <a href="#" aria-label="ВКонтакте"><img src="/assets/trialli-home/social-vk.svg" alt="" /></a>
+            <a href="#" aria-label="YouTube"><img src="/assets/trialli-home/social-youtube.svg" alt="" /></a>
+            <a href="#" aria-label="RUTUBE"><img src="/assets/trialli-home/social-r.svg" alt="" /></a>
+            <a href="#" aria-label="Дзен"><img src="/assets/trialli-home/social-d2.svg" alt="" /></a>
+            <a href="#" aria-label="Telegram"><img src="/assets/trialli-home/social-telegram.svg" alt="" /></a>
+          </div>
+          <p class="tri-home-footer__copyright"><span class="tri-home-footer__year tri-home-footer__year--desktop">2026</span><span class="tri-home-footer__year tri-home-footer__year--mobile">2023</span> © ООО "ЭРЛАЙН".<br />Производитель автозапчастей и автоаксессуаров.<br />Все права защищены. Реализация в РФ и СНГ.</p>
+          <a class="tri-home-footer__policy" href="#policy">Пользовательское соглашение</a>
+        </div>
+      </footer>
+
+      <a id="back-to-top" href="#top" aria-label="Наверх"></a>
+
+      <aside class="tri-results-save-notice" data-save-notice>
+        <span>▱</span><strong>Данные о вашем автомобиле<br />сохранены в Мои авто</strong><button type="button" aria-label="Закрыть">×</button>
+      </aside>
+
+      <nav class="tri-results-bottom" aria-label="Основная навигация">
+        <a href="/"><span>⌂</span>Главная</a>
+        <a href="/pages/catalog-results.html"><span>▦</span>Каталог</a>
+        <a class="is-active" href="/pages/parts-finder.html" aria-current="page"><span>☷</span>Подбор</a>
+        <a href="#catalog-products"><span>⌑</span>Корзина</a>
+      </nav>
+
+      <div class="tri-home-modal" hidden data-request-modal>
+        <div class="tri-home-modal__backdrop" data-close-request></div>
+        <section class="tri-home-modal__dialog tri-home-modal__dialog--request" role="dialog" aria-modal="true" aria-labelledby="tri-results-request-title">
+          <button class="tri-home-modal__close" type="button" aria-label="Закрыть" data-close-request>×</button>
+          <h2 id="tri-results-request-title">Индивидуальный подбор</h2>
+          <p>Оставьте контакты — менеджер свяжется с вами и поможет подобрать деталь.</p>
+          <form action="/api/parts-finder/vin-request" method="post" data-request-form>
+            <label>Имя<input name="name" type="text" required autocomplete="name" /></label>
+            <label>Телефон<input name="phone" type="tel" required autocomplete="tel" placeholder="+7 999 000-00-00" /></label>
+            <label>VIN или госномер<input name="vin" type="text" value="Y6DTF69Y080144158" autocomplete="off" /></label>
+            <label class="tri-home-modal__agreement"><input name="agreement" type="checkbox" required /> Я согласен на обработку персональных данных</label>
+            <button class="tri-home-button" type="submit">Отправить запрос</button>
+          </form>
+        </section>
+      </div>
+    </div>
+
+    <script type="module" src="/src/scripts/home.js"></script>
+    <script type="module" src="/src/scripts/catalog-menu.js"></script>
+    <script type="module" src="/src/scripts/catalog-results.js"></script>
+  </body>
+</html>

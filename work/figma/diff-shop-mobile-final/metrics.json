@@ -1,0 +1,14 @@
+{
+  "size": [
+    390,
+    221
+  ],
+  "tolerance": 12,
+  "mean_absolute_error": 6.6834,
+  "root_mean_square_error": 23.3847,
+  "changed_pixels_percent": 11.3598,
+  "artifacts": {
+    "overlay": "/Users/artemsafin/Desktop/projects/trialli-update/work/figma/diff-shop-mobile-final/overlay.png",
+    "diff": "/Users/artemsafin/Desktop/projects/trialli-update/work/figma/diff-shop-mobile-final/diff.png"
+  }
+}

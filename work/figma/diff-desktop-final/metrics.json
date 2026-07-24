@@ -1,0 +1,14 @@
+{
+  "size": [
+    1440,
+    3889
+  ],
+  "tolerance": 12,
+  "mean_absolute_error": 13.3542,
+  "root_mean_square_error": 43.6447,
+  "changed_pixels_percent": 15.1082,
+  "artifacts": {
+    "overlay": "/Users/artemsafin/Desktop/projects/trialli-update/work/figma/diff-desktop-final/overlay.png",
+    "diff": "/Users/artemsafin/Desktop/projects/trialli-update/work/figma/diff-desktop-final/diff.png"
+  }
+}

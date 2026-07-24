@@ -1,0 +1,272 @@
+.l-catalog-filter__categories nav ul {
+    list-style: none;
+    flex-wrap: wrap;
+    display: flex;
+}
+
+.l-catalog-filter__categories nav ul li {
+    flex: 1 0 25%;
+    max-width: 31%;
+}
+
+.l-catalog-filter__categories .subsect_container nav ul li {
+    flex: unset;
+    max-width: unset;
+}
+
+.l-catalog-filter__categories .subsect_container nav ul {
+    flex-direction: column;
+}
+
+.l-catalog-filter__categories .subsect_container.multicol nav ul {
+    flex-direction: row;
+    gap: 1.3rem 0;
+}
+
+.l-catalog-filter__categories .subsect_container.multicol nav ul li {
+    width: 50%;
+}
+
+.article-default.article-default--news img {
+    border-radius: 2.5rem;
+    height: auto;
+}
+
+/*.article-default.article-default--news p:first-child:first-letter {
+    font-size: 6rem;
+    line-height: 1;
+    float: left;
+    margin-top: 5px;
+    margin-right: 10px;
+}*/
+
+.article-default p {
+    font-size: 23px;
+    line-height: 1.3;
+}
+
+.article-default.article-default--news p:first-child {
+    font-weight: 600;
+}
+
+.l-news-item__width .page__h1.text-uppercase {
+    font-weight: 600;
+    line-height: 1.2;
+    text-transform: none;
+    font-size: 40px;
+}
+.article-default b {
+    color: #BED600;
+}
+.article-default.article-default--news a:not(.list-docs__item) {
+    color: #000000;
+    background: #BED600;
+    padding: 0px 15px;
+    border-radius: 20px;
+    display: inline-block;
+}
+.article-default.article-default--news a:not(.list-docs__item) b{
+    color: #000000;
+}
+.old_site_block{
+    color: #000000;
+    background: #BED600;
+    padding: 10px;
+    text-align: center;
+    font-size: 16px;
+    position: relative;
+    z-index: 10;
+}
+
+.new_prods_wrapper{
+}
+.new_prods_cont{
+    display: flex;
+    gap: 20px;
+    /*width: fit-content;*/
+    overflow: hidden;
+}
+.new_prods_cont_sect{
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.10);
+    padding: 27px 25px;
+    min-width: 226px;
+    position: relative;
+}
+.new_prods_cont_sect .new_cnt{
+    position: absolute;
+    top: 27px;
+    right: 25px;
+}
+.new_prods_cont_sect .new_cnt span{
+    color: #0D2026;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px; /* 122.222% */
+    letter-spacing: 0.36px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-70%);
+}
+.new_prods_cont_sect .sect_img{
+    max-height: 56px;
+    position: absolute;
+}
+.new_prods_cont_sect .sect_title{
+    padding-top: 72px;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0.36px;
+    text-transform: uppercase;
+}
+.new_prods_sect{
+    position: relative;
+    padding: 37.5px 0 46px;
+}
+.new_prods_sect .new_prods_ctrl {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: calc(100% + 32px);
+    top: 50%;
+    margin: 0 -16px;
+    transform: translateY(-50%);
+    z-index: 5;
+}
+.new_prods_sect .new_prods_ctrl > div {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
+.new_prods_sect .new_prods_ctrl > div.deactive {
+    opacity: 0;
+    cursor: initial;
+}
+.new_prods_sect .new_prods_ctrl .btn_left {
+    rotate: -90deg;
+}
+
+.new_prods_sect .new_prods_ctrl .btn_right {
+    rotate: 90deg;
+}
+
+.mobile_new_title{
+    display: none;
+}
+
+
+.top-banner__wrap {
+    height: 60px;
+    width: 100%;
+    background: url("/vendor/trialli/local/templates/trialli/img/new/top-banner.svg") 50% no-repeat;
+    background-size: cover;
+    padding: 7px 0;
+}
+
+.top-banner {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    gap: 8px;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
+
+.top-banner__title {
+    text-transform: uppercase;
+    color: #0D2026;
+    font-size: 17px;
+    line-height: 110%;
+    margin-bottom: 4px;
+    font-family: 'TTHover', sans-serif;
+    font-weight: 500;
+}
+
+.top-banner__text {
+    color: rgba(22, 45, 53, 0.80);
+    font-size: 10px;
+    font-family: 'TTHover', sans-serif;
+    font-weight: 500;
+}
+
+.top-banner__button {
+    margin-left: 24px;
+}
+
+.top-banner__button a, .top-banner__button span{
+    display: inline-block;
+    width: 157px;
+    height: 36px;
+    text-transform: uppercase;
+    background-color: none;
+
+    background-image: url("/vendor/trialli/local/templates/trialli/img/new/top-banner-link.svg");
+    background-repeat: no-repeat;
+    background-position: 122px 50%;
+    padding: 11px 16px;
+    border-radius: 35px;
+    border: 1px solid #0D2026;
+    color: #0D2026;
+    font-family: 'TTHover', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.top-banner__button a:hover, .top-banner__button span:hover {
+    color: #204a8f;
+    background-image: url("/vendor/trialli/local/templates/trialli/img/new/top-banner-link-active.svg");
+}
+
+.page__center {
+    max-width: 1200px;
+}
+
+.only-mobile {
+    display: none;
+}
+
+@media all and (max-width: 1023px) {
+    .top-banner__wrap {
+        height: auto;
+    }
+}
+@media all and (max-width: 640px) {
+    .top-banner__wrap {
+        background-image: url("/vendor/trialli/local/templates/trialli/img/new/top-banner-mobile.svg");
+        height: 4rem;
+    }
+
+    .top-banner__img {
+        width: 2.6rem;
+    }
+
+    .only-mobile {
+        display: inline;
+    }
+
+    .top-banner__button{
+        display: none;
+    }
+    .top-banner {
+        max-width: 100%;
+    }
+    .top-banner__button {
+        display: none;
+    }
+    .top-banner__title,
+    .top-banner__text {
+        font-size: 10px;
+        line-height: 13px;
+        margin-bottom: 0;
+        text-transform: none;
+        display: inline;
+    }
+
+}

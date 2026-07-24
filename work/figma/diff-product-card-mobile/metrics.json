@@ -1,0 +1,14 @@
+{
+  "size": [
+    177,
+    333
+  ],
+  "tolerance": 12,
+  "mean_absolute_error": 3.11,
+  "root_mean_square_error": 14.3081,
+  "changed_pixels_percent": 5.7498,
+  "artifacts": {
+    "overlay": "/Users/artemsafin/Desktop/projects/trialli-update/work/figma/diff-product-card-mobile/overlay.png",
+    "diff": "/Users/artemsafin/Desktop/projects/trialli-update/work/figma/diff-product-card-mobile/diff.png"
+  }
+}
