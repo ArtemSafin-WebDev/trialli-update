@@ -534,12 +534,24 @@ if (root) {
 
   const pickerModal = root.querySelector("[data-picker-modal]");
   const requestModal = root.querySelector("[data-request-modal]");
+  const homeHeader = root.querySelector("[data-tri-home-header]");
   const headerMenu = root.querySelector("[data-header-menu]");
   const headerMenuToggle = root.querySelector("[data-header-menu-toggle]");
   const historyPopover = root.querySelector("[data-picker-history-popover]");
 
   const sliderState = { categories: 0 };
   const sliderStep = { categories: 390 };
+
+  function setHeaderMenu(open) {
+    homeHeader?.classList.toggle("is-menu-open", open);
+    headerMenu?.classList.toggle("is-open", open);
+    headerMenu?.setAttribute("aria-hidden", String(!open));
+    headerMenuToggle?.setAttribute("aria-expanded", String(open));
+    headerMenuToggle?.setAttribute(
+      "aria-label",
+      open ? "Закрыть меню" : "Открыть меню",
+    );
+  }
 
   function clampProductQuantity(value) {
     return Math.max(1, Math.min(99, Number(value) || 1));
@@ -574,10 +586,12 @@ if (root) {
 
     if (target.matches("[data-header-menu-toggle]")) {
       const open = !headerMenu?.classList.contains("is-open");
-      headerMenu?.classList.toggle("is-open", open);
-      headerMenu?.setAttribute("aria-hidden", String(!open));
-      headerMenuToggle?.setAttribute("aria-expanded", String(open));
+      setHeaderMenu(open);
       return;
+    }
+
+    if (headerMenu?.contains(target) && target.matches("a")) {
+      setHeaderMenu(false);
     }
 
     if (target.matches("[data-open-picker]")) {
@@ -774,9 +788,7 @@ if (root) {
     if (event.key !== "Escape") return;
     setModal(pickerModal, false);
     setModal(requestModal, false);
-    headerMenu?.classList.remove("is-open");
-    headerMenu?.setAttribute("aria-hidden", "true");
-    headerMenuToggle?.setAttribute("aria-expanded", "false");
+    setHeaderMenu(false);
   });
 
   function showToast(message) {
