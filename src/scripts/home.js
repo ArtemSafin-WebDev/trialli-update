@@ -1,3 +1,7 @@
+import "./trialli-home-picker-mock-api.js";
+import "./trialli-home-picker-request-modal.js";
+import "./trialli-home-picker.js";
+
 const root = document.querySelector("[data-tri-home]");
 
 if (root) {
@@ -35,60 +39,6 @@ if (root) {
     ["Рулевое управление и подвеска", 200],
     ["Рулевое управление и подвеска", 200],
   ];
-
-  const pickerFields = [
-    {
-      id: "brand",
-      label: "Марка",
-      options: () => ["LADA", "Volkswagen", "KIA", "Hyundai", "ГАЗ"],
-    },
-    {
-      id: "model",
-      label: "Модель",
-      options: (state) => {
-        const models = {
-          LADA: ["Vesta", "Granta", "Niva Travel"],
-          Volkswagen: ["Tiguan", "Polo", "Passat"],
-          KIA: ["Rio", "Sportage", "Ceed"],
-          Hyundai: ["Solaris", "Creta", "Tucson"],
-          "ГАЗ": ["Газель Next", "Соболь", "Валдай"],
-        };
-        return models[state.brand] || [];
-      },
-    },
-    {
-      id: "year",
-      label: "Год",
-      options: () => ["2024", "2023", "2022", "2021", "2020", "2019", "2018"],
-    },
-    {
-      id: "engine",
-      label: "Объем двигателя",
-      options: () => ["1.4 л", "1.6 л", "2.0 л", "2.4 л", "2.8 л"],
-    },
-    {
-      id: "modification",
-      label: "Модификация",
-      options: () => ["Бензин, АКПП", "Бензин, МКПП", "Дизель, АКПП"],
-    },
-    {
-      id: "group",
-      label: "Группа товаров",
-      options: () => categories.slice(0, 10).map(([name]) => name),
-    },
-  ];
-
-  const pickerState = {
-    mode: "vehicle",
-    brand: "",
-    model: "",
-    year: "",
-    engine: "",
-    modification: "",
-    group: "",
-    openedField: "",
-    vin: "",
-  };
 
   const categoryTrack = root.querySelector("[data-categories-track]");
   const weeklyTrack = root.querySelector("[data-weekly-track]");
@@ -423,100 +373,6 @@ if (root) {
     }
   }
 
-  function isFieldEnabled(index) {
-    if (index === 0) return true;
-    return Boolean(pickerState[pickerFields[index - 1].id]);
-  }
-
-  function fieldTemplate(field, index) {
-    const enabled = isFieldEnabled(index);
-    const value = pickerState[field.id];
-    const open = pickerState.openedField === field.id && enabled;
-    const options = enabled ? field.options(pickerState) : [];
-
-    return `
-      <div class="tri-home-picker__field" data-picker-field="${field.id}">
-        <button
-          class="tri-home-picker__field-button${value ? " has-value" : ""}"
-          type="button"
-          ${enabled ? "" : "disabled"}
-          aria-expanded="${open}"
-          data-picker-field-toggle="${field.id}"
-        >
-          <span>${value || field.label}</span>
-        </button>
-        ${
-          open
-            ? `<div class="tri-home-picker__dropdown">
-                ${options
-                  .map(
-                    (option) => `
-                      <button type="button" data-picker-option="${field.id}" data-picker-value="${option}">${option}</button>
-                    `,
-                  )
-                  .join("")}
-              </div>`
-            : ""
-        }
-      </div>
-    `;
-  }
-
-  function renderPickerFields() {
-    root.querySelectorAll("[data-picker-fields]").forEach((host) => {
-      host.innerHTML = pickerFields.map(fieldTemplate).join("");
-    });
-
-    const complete = pickerFields.every((field) => Boolean(pickerState[field.id]));
-    root.querySelectorAll("[data-picker-submit]").forEach((button) => {
-      button.disabled = !complete;
-    });
-  }
-
-  function syncPickerMode() {
-    root.querySelectorAll("[data-picker-mode]").forEach((button) => {
-      button.setAttribute(
-        "aria-selected",
-        String(button.dataset.pickerMode === pickerState.mode),
-      );
-    });
-    root.querySelectorAll("[data-picker-panel]").forEach((panel) => {
-      panel.hidden = panel.dataset.pickerPanel !== pickerState.mode;
-    });
-  }
-
-  function syncVinState() {
-    root.querySelectorAll("[data-picker-vin]").forEach((input) => {
-      if (input.value !== pickerState.vin) input.value = pickerState.vin;
-    });
-    root.querySelectorAll("[data-picker-vin-submit]").forEach((button) => {
-      button.disabled = pickerState.vin.trim().length < 5;
-    });
-  }
-
-  function choosePickerValue(fieldId, value) {
-    const fieldIndex = pickerFields.findIndex((field) => field.id === fieldId);
-    if (fieldIndex < 0) return;
-
-    pickerState[fieldId] = value;
-    pickerFields.slice(fieldIndex + 1).forEach((field) => {
-      pickerState[field.id] = "";
-    });
-    pickerState.openedField = "";
-    renderPickerFields();
-  }
-
-  function createMobilePicker() {
-    const host = root.querySelector("[data-mobile-picker-host]");
-    const source = root.querySelector("[data-picker-form]");
-    if (!host || !source) return;
-
-    host.replaceChildren(source.cloneNode(true));
-    renderPickerFields();
-    syncPickerMode();
-    syncVinState();
-  }
-
   function setModal(modal, open) {
     if (!modal) return;
     modal.hidden = !open;
@@ -532,12 +388,10 @@ if (root) {
     }
   }
 
-  const pickerModal = root.querySelector("[data-picker-modal]");
   const requestModal = root.querySelector("[data-request-modal]");
   const homeHeader = root.querySelector("[data-tri-home-header]");
   const headerMenu = root.querySelector("[data-header-menu]");
   const headerMenuToggle = root.querySelector("[data-header-menu-toggle]");
-  const historyPopover = root.querySelector("[data-picker-history-popover]");
 
   const sliderState = { categories: 0 };
   const sliderStep = { categories: 390 };
@@ -579,9 +433,7 @@ if (root) {
   }
 
   root.addEventListener("click", async (event) => {
-    const target = event.target.closest(
-      "button, a, [data-picker-option], [data-history-vehicle]",
-    );
+    const target = event.target.closest("button, a");
     if (!target) return;
 
     if (target.matches("[data-header-menu-toggle]")) {
@@ -594,18 +446,6 @@ if (root) {
       setHeaderMenu(false);
     }
 
-    if (target.matches("[data-open-picker]")) {
-      event.preventDefault();
-      createMobilePicker();
-      setModal(pickerModal, true);
-      return;
-    }
-
-    if (target.matches("[data-close-picker]")) {
-      setModal(pickerModal, false);
-      return;
-    }
-
     if (target.matches("[data-open-request]")) {
       setModal(requestModal, true);
       return;
@@ -613,50 +453,6 @@ if (root) {
 
     if (target.matches("[data-close-request]")) {
       setModal(requestModal, false);
-      return;
-    }
-
-    if (target.matches("[data-picker-mode]")) {
-      pickerState.mode = target.dataset.pickerMode;
-      pickerState.openedField = "";
-      syncPickerMode();
-      return;
-    }
-
-    if (target.matches("[data-picker-field-toggle]")) {
-      const id = target.dataset.pickerFieldToggle;
-      pickerState.openedField = pickerState.openedField === id ? "" : id;
-      renderPickerFields();
-      return;
-    }
-
-    if (target.matches("[data-picker-option]")) {
-      choosePickerValue(
-        target.dataset.pickerOption,
-        target.dataset.pickerValue,
-      );
-      return;
-    }
-
-    if (target.matches("[data-picker-history]")) {
-      const inModal = Boolean(target.closest("[data-picker-modal]"));
-      if (inModal) {
-        choosePickerValue("brand", "Volkswagen");
-        choosePickerValue("model", "Tiguan");
-        choosePickerValue("year", "2019");
-      } else if (historyPopover) {
-        const open = historyPopover.hidden;
-        historyPopover.hidden = !open;
-        target.setAttribute("aria-expanded", String(open));
-      }
-      return;
-    }
-
-    if (target.matches("[data-history-vehicle]")) {
-      choosePickerValue("brand", target.dataset.brand);
-      choosePickerValue("model", target.dataset.model);
-      choosePickerValue("year", target.dataset.year);
-      if (historyPopover) historyPopover.hidden = true;
       return;
     }
 
@@ -706,12 +502,7 @@ if (root) {
     if (event.target.matches(".tri-home-product-card__quantity")) {
       const cart = event.target.closest("[data-product-cart]");
       if (cart) setProductQuantity(cart, clampProductQuantity(event.target.value));
-      return;
     }
-
-    if (!event.target.matches("[data-picker-vin]")) return;
-    pickerState.vin = event.target.value;
-    syncVinState();
   });
 
   root.addEventListener("submit", (event) => {
@@ -735,24 +526,6 @@ if (root) {
       return;
     }
 
-    if (event.target.matches("[data-picker-form]")) {
-      event.preventDefault();
-      showToast(
-        pickerState.mode === "vin"
-          ? `Ищем детали по запросу ${pickerState.vin}`
-          : "Автомобиль выбран — переходим к каталогу",
-      );
-      setModal(pickerModal, false);
-      const query =
-        pickerState.mode === "vin"
-          ? `?vin=${encodeURIComponent(pickerState.vin.trim())}`
-          : "";
-      window.setTimeout(() => {
-        window.location.assign(`/pages/catalog-results.html${query}`);
-      }, 250);
-      return;
-    }
-
     if (event.target.matches("[data-request-form]")) {
       event.preventDefault();
       if (!event.target.checkValidity()) {
@@ -765,28 +538,8 @@ if (root) {
     }
   });
 
-  document.addEventListener("click", (event) => {
-    if (
-      historyPopover &&
-      !historyPopover.hidden &&
-      !historyPopover.contains(event.target) &&
-      !event.target.closest("[data-picker-history]")
-    ) {
-      historyPopover.hidden = true;
-    }
-
-    if (
-      pickerState.openedField &&
-      !event.target.closest("[data-picker-field]")
-    ) {
-      pickerState.openedField = "";
-      renderPickerFields();
-    }
-  });
-
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
-    setModal(pickerModal, false);
     setModal(requestModal, false);
     setHeaderMenu(false);
   });
@@ -819,8 +572,5 @@ if (root) {
     }, 2200);
   }
 
-  renderPickerFields();
-  syncPickerMode();
-  syncVinState();
   document.documentElement.dataset.triHomeReady = "true";
 }

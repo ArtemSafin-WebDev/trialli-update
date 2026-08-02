@@ -21,6 +21,7 @@
 
     <!-- Новая главная изолирована в отдельном файле. -->
     <link rel="stylesheet" href="/src/styles/home.css" />
+    <link rel="stylesheet" href="/src/styles/trialli-home-picker.css" />
     <link rel="stylesheet" href="/src/styles/catalog-menu.css" />
     <script src="/vendor/trialli/local/templates/trialli/js/vendor/modernizr.js"></script>
   </head>
@@ -95,51 +96,9 @@
       </header>
 
       <main id="tri-home-main">
-        <section class="tri-home-picker-section" aria-labelledby="tri-home-picker-title">
+        <section class="tri-home-picker-section" aria-label="Подбор деталей">
           <div class="tri-home-container">
-            <div class="tri-home-picker" data-picker>
-              <div class="tri-home-picker__mobile-visual">
-                <img src="/assets/trialli-home/picker-banner-mobile.png" width="358" height="158" alt="" />
-                <button type="button" data-open-picker aria-label="Открыть подбор деталей"></button>
-              </div>
-
-              <h1 id="tri-home-picker-title">Подберите детали<br />по авто, VIN или госномеру</h1>
-
-              <form class="tri-home-picker__form" action="/pages/catalog-results.html" method="get" data-picker-form>
-                <div class="tri-home-picker__head">
-                  <div class="tri-home-picker__tabs" role="tablist" aria-label="Способ подбора">
-                    <button type="button" role="tab" aria-selected="true" data-picker-mode="vehicle">Подобрать по авто</button>
-                    <button type="button" role="tab" aria-selected="false" data-picker-mode="vin">Подобрать по VIN или госномеру</button>
-                  </div>
-                  <button class="tri-home-picker__history" type="button" data-picker-history>
-                    <span class="tri-home-icon tri-home-icon--car" aria-hidden="true"></span>
-                    Мои авто
-                  </button>
-                </div>
-
-                <div class="tri-home-picker__panel" data-picker-panel="vehicle">
-                  <div class="tri-home-picker__fields" data-picker-fields></div>
-                  <button class="tri-home-button tri-home-picker__submit" type="submit" disabled data-picker-submit>
-                    <span class="tri-home-icon tri-home-icon--car" aria-hidden="true"></span>
-                    Подобрать
-                  </button>
-                </div>
-
-                <div class="tri-home-picker__panel tri-home-picker__panel--vin" data-picker-panel="vin" hidden>
-                  <label>
-                    <span class="tri-home-visually-hidden">VIN или госномер</span>
-                    <input name="vin" type="text" placeholder="Введите VIN или госномер" autocomplete="off" data-picker-vin />
-                  </label>
-                  <button class="tri-home-button tri-home-picker__submit" type="submit" disabled data-picker-vin-submit>Подобрать</button>
-                </div>
-              </form>
-
-              <div class="tri-home-picker__history-popover" hidden data-picker-history-popover>
-                <strong>Мои авто</strong>
-                <button type="button" data-history-vehicle data-brand="Volkswagen" data-model="Tiguan" data-year="2019">Volkswagen Tiguan, 2019</button>
-                <button type="button" data-history-vehicle data-brand="LADA" data-model="Vesta" data-year="2021">LADA Vesta, 2021</button>
-              </div>
-            </div>
+            <div id="parts-finder" class="parts-finder-shell"></div>
           </div>
         </section>
 
@@ -325,15 +284,6 @@
       </nav>
 
       <a id="back-to-top" href="#top" aria-label="Наверх"></a>
-
-      <div class="tri-home-modal" hidden data-picker-modal>
-        <div class="tri-home-modal__backdrop" data-close-picker></div>
-        <section class="tri-home-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="tri-home-mobile-picker-title">
-          <button class="tri-home-modal__close" type="button" aria-label="Закрыть" data-close-picker>×</button>
-          <h2 id="tri-home-mobile-picker-title">Подбор деталей</h2>
-          <div class="tri-home-modal__picker" data-mobile-picker-host></div>
-        </section>
-      </div>
 
       <div class="tri-home-modal" hidden data-request-modal>
         <div class="tri-home-modal__backdrop" data-close-request></div>
