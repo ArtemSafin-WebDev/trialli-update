@@ -3174,3 +3174,110 @@ button.pf-vin-request__car-icon.is-open {
     min-height: 206px;
   }
 }
+
+/* The body grows behind the tabs and owns both the dark fill and the lime
+   stroke. This keeps every curved edge on one rasterized shape. */
+@supports (border-shape: shape(from 0 0, line to 100% 0, close)) {
+  @media (min-width: 768px) {
+    .pf-tabs {
+      position: relative;
+      z-index: auto;
+    }
+
+    .pf-tabs__group {
+      overflow: visible;
+      background: transparent;
+    }
+
+    .pf-picker-surface--vehicle > .pf-input-group {
+      z-index: 4;
+      min-height: 126px;
+      margin-top: -46px;
+      padding: 61px 15px 15px;
+      border: 1px solid #bed600 !important;
+      border-radius: 0;
+      border-shape: shape(
+        from 0 30px,
+        curve to 30px 0 with 0 13.431px / 13.431px 0,
+        hline to 179px,
+        curve to 209px 30px with 195.569px 0 / 209px 13.431px,
+        curve to 225px 46px with 209px 38.837px / 216.163px 46px,
+        hline to calc(100% - 30px),
+        curve to 100% 76px with calc(100% - 13.431px) 46px / 100% 59.431px,
+        vline to calc(100% - 30px),
+        curve to calc(100% - 30px) 100% with 100% calc(100% - 13.431px) / calc(100% - 13.431px) 100%,
+        hline to 30px,
+        curve to 0 calc(100% - 30px) with 13.431px 100% / 0 calc(100% - 13.431px),
+        vline to 30px,
+        close
+      );
+    }
+
+    .pf-picker-surface--vin > .pf-vin-panel {
+      z-index: 4;
+      margin-top: -46px;
+      padding-top: 46px;
+      border: 1px solid #bed600 !important;
+      border-radius: 0;
+      border-shape: shape(
+        from 0 46px,
+        hline to 193px,
+        curve to 209px 30px with 201.837px 46px / 209px 38.837px,
+        curve to 239px 0 with 209px 13.431px / 222.431px 0,
+        hline to 492px,
+        curve to 522px 30px with 508.569px 0 / 522px 13.431px,
+        curve to 538px 46px with 522px 38.837px / 529.163px 46px,
+        hline to calc(100% - 30px),
+        curve to 100% 76px with calc(100% - 13.431px) 46px / 100% 59.431px,
+        vline to calc(100% - 30px),
+        curve to calc(100% - 30px) 100% with 100% calc(100% - 13.431px) / calc(100% - 13.431px) 100%,
+        hline to 30px,
+        curve to 0 calc(100% - 30px) with 13.431px 100% / 0 calc(100% - 13.431px),
+        vline to 46px,
+        close
+      );
+    }
+
+    .tri-home .pf-tab[aria-selected="true"] {
+      z-index: 5;
+      background: transparent;
+    }
+
+    .tri-home .pf-history-toggle {
+      position: relative;
+      z-index: 5;
+    }
+
+    .pf-picker-surface--vehicle .pf-tab:last-child[aria-selected="false"] {
+      z-index: 3;
+      border-radius: 0;
+      border-shape: shape(
+        from 16px 46px,
+        curve to 0 30px with 7.163px 46px / 0 38.837px,
+        curve to 30px 0 with 0 13.431px / 13.431px 0,
+        hline to 283px,
+        curve to 313px 30px with 299.569px 0 / 313px 13.431px,
+        vline to 46px,
+        close
+      );
+    }
+
+    .pf-picker-surface--vin .pf-tab:first-child[aria-selected="false"] {
+      z-index: 3;
+      border-radius: 0;
+      border-shape: shape(
+        from 0 30px,
+        curve to 30px 0 with 0 13.431px / 13.431px 0,
+        hline to 179px,
+        curve to 209px 30px with 195.569px 0 / 209px 13.431px,
+        curve to 193px 46px with 209px 38.837px / 201.837px 46px,
+        hline to 0,
+        close
+      );
+    }
+
+    .pf-vin-found {
+      border-color: transparent !important;
+    }
+  }
+}
