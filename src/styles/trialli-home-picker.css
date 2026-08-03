@@ -2774,8 +2774,8 @@ button.pf-vin-request__car-icon.is-open {
     height: 16px;
   }
 
-  .pf-checkbox::before {
-    border-color: #a1b0b2 !important;
+  .tri-home .pf-dropdown--groups .pf-checkbox::before {
+    border: 1px solid #a1b0b2 !important;
     border-radius: 4px;
     background: transparent;
   }
