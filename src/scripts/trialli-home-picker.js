@@ -24,8 +24,8 @@
     model: "20rem",
   };
   const MOBILE_VISIBLE_OPTIONS = {
-    brand: 10,
-    productGroups: 4,
+    brand: 12,
+    productGroups: 5,
     default: 8,
   };
   const EMPTY_VIN_REQUEST = {
@@ -339,21 +339,24 @@
     }
 
     updateVinSearchClearButton() {
-      const field = this.root.querySelector(".pf-vin-search__field");
-      if (!field) return;
-      const clear = field.querySelector(".pf-vin-search__clear");
-      if (this.vinSearch.value && !clear) {
-        field.insertAdjacentHTML(
-          "beforeend",
-          `<button class="pf-vin-search__clear" type="button" aria-label="Очистить VIN или госномер" data-action="clear-vin-search">${iconCross()}</button>`,
-        );
-      }
-      if (!this.vinSearch.value && clear) clear.remove();
+      this.root.querySelectorAll(".pf-vin-search__field").forEach((field) => {
+        const clear = field.querySelector(".pf-vin-search__clear");
+        if (this.vinSearch.value && !clear) {
+          field.insertAdjacentHTML(
+            "beforeend",
+            `<button class="pf-vin-search__clear" type="button" aria-label="Очистить VIN или госномер" data-action="clear-vin-search">${iconCross()}</button>`,
+          );
+        }
+        if (!this.vinSearch.value && clear) clear.remove();
+      });
     }
 
     updateVinSearchSubmitState() {
-      const submit = this.root.querySelector(".pf-vin-search .pf-submit");
-      if (submit) submit.disabled = !this.vinSearch.value.trim();
+      this.root
+        .querySelectorAll(".pf-vin-search .pf-submit")
+        .forEach((submit) => {
+          submit.disabled = !this.vinSearch.value.trim();
+        });
     }
 
     updateSearchClearButton(controlId) {
@@ -554,16 +557,16 @@
       return `
         <div class="pf-mobile-content">
           <div class="pf-mobile-titlebar">
-            <div class="pf-mobile-page-title" id="pf-mobile-title">Подбор деталей</div>
-            <button class="pf-mobile-close" type="button" aria-label="Закрыть подбор" data-action="close-mobile-finder">
-              ${iconCross()}
+            <button class="pf-mobile-page-title" type="button" id="pf-mobile-title" data-action="close-mobile-finder">
+              ${iconBack()}
+              <span>Подбор деталей</span>
             </button>
           </div>
           ${this.mobileTabsTemplate()}
           ${this.historyOpen === "tabs" && this.hasHistoryFeature() ? this.historyTemplate("tabs") : ""}
           ${
             this.mode === "vin"
-              ? `<div class="pf-mobile-vin">${this.vinTemplate()}</div>`
+              ? `<div class="pf-mobile-vin">${this.vinTemplate(true)}</div>`
               : this.mobileVehicleFormTemplate()
           }
         </div>
@@ -580,7 +583,7 @@
         <div class="pf-mobile-tabs" role="tablist" aria-label="Режим подбора">
           <div class="pf-mobile-tabs__group">
             <button class="pf-mobile-tab" type="button" role="tab" aria-selected="${vehicleSelected}" data-action="switch-mode" data-mode="vehicle">По авто</button>
-            <button class="pf-mobile-tab" type="button" role="tab" aria-selected="${vinSelected}" data-action="switch-mode" data-mode="vin">По VIN или госномеру</button>
+            <button class="pf-mobile-tab" type="button" role="tab" aria-selected="${vinSelected}" data-action="switch-mode" data-mode="vin">По VIN и госномеру</button>
           </div>
           ${
             this.hasHistoryFeature()
@@ -679,9 +682,12 @@
             ${this.response.controls.map((control) => this.mobileControlTemplate(control)).join("")}
           </div>
           <div class="pf-hidden-inputs" data-hidden-inputs>${this.hiddenInputsTemplate()}</div>
-          <button class="pf-mobile-submit" type="submit" ${this.isVehicleSubmitDisabled() ? "disabled" : ""}>
-            ${escapeHtml(this.response.submit?.mobileLabel || "Подобрать товары")}
-          </button>
+          <div class="pf-mobile-submitbar">
+            <button class="pf-mobile-submit" type="submit" ${this.isVehicleSubmitDisabled() ? "disabled" : ""}>
+              ${iconCtaSearch()}
+              <span>${escapeHtml(this.response.submit?.mobileLabel || "Подобрать товары")}</span>
+            </button>
+          </div>
         </form>
       `;
     }
@@ -693,7 +699,10 @@
       const visibleLimit = MOBILE_VISIBLE_OPTIONS[control.id] || MOBILE_VISIBLE_OPTIONS.default;
       const visibleOptions = options.slice(0, visibleLimit);
       const moreCount = Math.max(options.length - visibleOptions.length, 0);
-      const title = `${control.label}${control.id === "brand" ? "*" : ""}`;
+      const title =
+        control.id === "productGroups"
+          ? "Группы товаров"
+          : `${control.label}${control.id === "brand" ? "*" : ""}`;
 
       return `
         <section class="pf-mobile-control ${activeClass}" data-mobile-control="${escapeAttr(control.id)}">
@@ -750,24 +759,36 @@
 
       return `
         <div class="pf-mobile-content pf-mobile-content--expanded">
-          <button class="pf-mobile-expanded__title" type="button" data-action="close-mobile-options">
-            ${iconBack()}
-            <span>${escapeHtml(control.label)}</span>
-          </button>
-          <div class="pf-mobile-search ${searchValue ? "is-filled" : ""}" data-mobile-search-field="${escapeAttr(control.id)}">
-            <label class="visually-hidden" for="${escapeAttr(searchId)}">Поиск: ${escapeHtml(control.label)}</label>
-            <input id="${escapeAttr(searchId)}" type="search" value="${escapeAttr(searchValue)}" placeholder="${escapeAttr(control.label)}" data-mobile-search="${escapeAttr(control.id)}" data-autofocus autocomplete="off">
-            <button class="pf-mobile-search__clear" type="button" aria-label="Очистить ${escapeAttr(control.label)}" data-action="clear-mobile-search" data-id="${escapeAttr(control.id)}" ${searchValue ? "" : "hidden"}>
-              ${iconCross()}
+          <div class="pf-mobile-expanded__header">
+            <button class="pf-mobile-expanded__title" type="button" data-action="close-mobile-options">
+              ${iconBack()}
+              <span>${escapeHtml(control.label)}</span>
             </button>
-            <span class="pf-mobile-search__submit" aria-hidden="true">${iconSearch()}</span>
+            ${
+              hasSelection
+                ? `<button class="pf-mobile-expanded__reset" type="button" data-action="clear-control" data-id="${escapeAttr(control.id)}">
+                    ${iconReset()}<span>Сбросить</span>
+                  </button>`
+                : ""
+            }
           </div>
-          <div class="pf-mobile-expanded__list">
-            <div class="pf-mobile-expanded__hint">Популярные</div>
-            <div class="pf-mobile-expanded__options" data-mobile-expanded-options="${escapeAttr(control.id)}">
-              ${options.length ? options.map((option) => this.mobileExpandedOptionTemplate(option, control)).join("") : emptyTemplate()}
+          <div class="pf-mobile-expanded__panel">
+            <div class="pf-mobile-search ${searchValue ? "is-filled" : ""}" data-mobile-search-field="${escapeAttr(control.id)}">
+              <label class="visually-hidden" for="${escapeAttr(searchId)}">Поиск: ${escapeHtml(control.label)}</label>
+              <input id="${escapeAttr(searchId)}" type="search" value="${escapeAttr(searchValue)}" placeholder="Начните ввод..." data-mobile-search="${escapeAttr(control.id)}" data-autofocus autocomplete="off">
+              <button class="pf-mobile-search__clear" type="button" aria-label="Очистить ${escapeAttr(control.label)}" data-action="clear-mobile-search" data-id="${escapeAttr(control.id)}" ${searchValue ? "" : "hidden"}>
+                ${iconCross()}
+              </button>
+              <span class="pf-mobile-search__submit" aria-hidden="true">${iconSearch()}</span>
+            </div>
+            <div class="pf-mobile-expanded__list">
+              <div class="pf-mobile-expanded__hint">Популярные</div>
+              <div class="pf-mobile-expanded__options" data-mobile-expanded-options="${escapeAttr(control.id)}">
+                ${options.length ? options.map((option) => this.mobileExpandedOptionTemplate(option, control)).join("") : emptyTemplate()}
+              </div>
             </div>
           </div>
+          ${control.type === "multi" && hasSelection ? this.mobileExpandedSubmitFormTemplate() : ""}
           ${hasSelection ? this.mobileExpandedActionsTemplate(control) : ""}
         </div>
       `;
@@ -783,21 +804,52 @@
 
       return `
         <button
-          class="pf-mobile-expanded__option ${selected ? "is-selected" : ""}"
+          class="pf-mobile-expanded__option ${control.type === "multi" ? "is-multi" : ""} ${selected ? "is-selected" : ""}"
           type="button"
           data-action="${action}"
           ${idAttr}
           data-value="${escapeAttr(option.id)}"
           aria-pressed="${selected}"
         >
+          ${
+            control.type === "multi"
+              ? `<span class="pf-mobile-expanded__box" aria-hidden="true">${selected ? iconCheck() : ""}</span>`
+              : ""
+          }
           <span>${escapeHtml(option.label)}</span>
-          ${selected ? `<span class="pf-mobile-expanded__check">${iconCheck()}</span>` : ""}
+          ${control.type !== "multi" && selected ? `<span class="pf-mobile-expanded__check">${iconCheck()}</span>` : ""}
         </button>
+      `;
+    }
+
+    mobileExpandedSubmitFormTemplate() {
+      const action =
+        this.response.submit?.endpoint ||
+        this.response.submit?.action ||
+        this.submitEndpoint ||
+        this.response.endpoint ||
+        DEFAULT_ENDPOINTS.submit;
+
+      return `
+        <form class="pf-mobile-expanded__submit-form" id="pf-mobile-expanded-submit" action="${escapeAttr(action)}" method="post">
+          ${this.hiddenInputsTemplate()}
+        </form>
       `;
     }
 
     mobileExpandedActionsTemplate(control) {
       const next = this.getNextEnabledControl(control.id);
+      if (control.type === "multi") {
+        return `
+          <div class="pf-mobile-expanded__actions pf-mobile-expanded__actions--submit">
+            <button class="pf-mobile-submit" type="submit" form="pf-mobile-expanded-submit" ${this.isVehicleSubmitDisabled() ? "disabled" : ""}>
+              ${iconCtaSearch()}
+              <span>${escapeHtml(this.response.submit?.mobileLabel || "Подобрать товары")}</span>
+            </button>
+          </div>
+        `;
+      }
+
       return `
         <div class="pf-mobile-expanded__actions">
           ${
@@ -845,11 +897,11 @@
       `;
     }
 
-    vinTemplate() {
+    vinTemplate(isMobile = false) {
       const state = this.response.vinSearch?.state || this.vinSearch.result || "";
       return `
         <div class="pf-vin-panel">
-          ${this.vinSearchTemplate()}
+          ${this.vinSearchTemplate(isMobile)}
           ${state === "not-found" ? this.vinRequestTemplate() : ""}
           ${state === "not-found" && this.historyOpen === "vinRequest" && this.hasHistoryFeature() ? this.historyTemplate("vinRequest") : ""}
         </div>
@@ -857,7 +909,7 @@
       `;
     }
 
-    vinSearchTemplate() {
+    vinSearchTemplate(isMobile = false) {
       const search = this.response.vinSearch || {};
       const action =
         search.endpoint ||
@@ -865,7 +917,9 @@
         this.endpoints.vinSubmit ||
         this.submitEndpoint;
       const queryKey = search.queryKey || "vin";
-      const label = search.submit?.label || "Подобрать товары";
+      const label = isMobile
+        ? search.submit?.mobileLabel || "Подобрать товары"
+        : search.submit?.label || "Подобрать товары";
       const value = search.value ?? this.vinSearch.value ?? "";
       const disabled =
         !String(value).trim() ||
@@ -877,7 +931,7 @@
           <input type="hidden" name="mode" value="vin">
           <label class="pf-vin-search__field">
             <span class="visually-hidden">VIN или госномер</span>
-            <input class="pf-vin-search__input" type="text" name="${escapeAttr(queryKey)}" value="${escapeAttr(value)}" placeholder="${escapeAttr(search.placeholder || "Введите VIN или госномер")}" data-vin-search autocomplete="off" required>
+            <input class="pf-vin-search__input" type="text" name="${escapeAttr(queryKey)}" value="${escapeAttr(value)}" placeholder="${escapeAttr(search.placeholder || "Введите VIN или госномер")}" data-vin-search autocomplete="off" autocapitalize="characters" spellcheck="false" required>
             ${
               value
                 ? `<button class="pf-vin-search__clear" type="button" aria-label="Очистить VIN или госномер" data-action="clear-vin-search">${iconCross()}</button>`
@@ -885,7 +939,7 @@
             }
           </label>
           <button class="pf-submit" type="submit" ${disabled ? "disabled" : ""}>
-            ${iconCar()}<span>${escapeHtml(label)}</span>
+            ${isMobile ? iconCtaSearch() : iconCar()}<span>${escapeHtml(label)}</span>
           </button>
         </form>
       `;
@@ -1456,7 +1510,6 @@
       if (this.mobileFinderOpen) {
         this.render({
           mobileScrollTop,
-          skipAutofocus: true,
         });
       } else {
         this.updateControlsView();
@@ -1526,12 +1579,16 @@
 
     clearVinSearch() {
       this.updateVinSearchValue("");
-      const input = this.root.querySelector("[data-vin-search]");
-      if (input) {
+      const inputs = [...this.root.querySelectorAll("[data-vin-search]")];
+      inputs.forEach((input) => {
         input.value = "";
-        input.focus();
-      }
+      });
+      const input = this.mobileFinderOpen
+        ? this.root.querySelector(".pf-mobile-screen [data-vin-search]")
+        : inputs[0];
+      input?.focus();
       this.updateVinSearchClearButton();
+      this.updateVinSearchSubmitState();
     }
 
     async toggleOption(optionId) {
@@ -2270,7 +2327,7 @@
   }
 
   function iconCross() {
-    return `<svg class="pf-cross-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.334 3.64551L8.97949 8L13.334 12.3545L12.3555 13.333L8.00098 8.97852L3.64648 13.333L2.66797 12.3545L7.02246 8L2.66797 3.64551L3.64648 2.66699L8.00098 7.02148L12.3555 2.66699L13.334 3.64551Z"/></svg>`;
+    return `<svg class="pf-cross-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8613 4.19526C11.1216 3.93491 11.5443 3.93491 11.8047 4.19526C12.0648 4.45557 12.0648 4.87735 11.8047 5.13765L8.94234 7.99996L11.8047 10.8613L11.8496 10.9121C12.0631 11.1739 12.0487 11.5606 11.8047 11.8047C11.5606 12.0487 11.1739 12.0631 10.9121 11.8496L10.8613 11.8047L7.99996 8.94234L5.13765 11.8047C4.87735 12.0648 4.45557 12.0648 4.19526 11.8047C3.93491 11.5443 3.93491 11.1216 4.19526 10.8613L7.0566 7.99996L4.19526 5.13765C3.93491 4.8773 3.93491 4.45561 4.19526 4.19526C4.45561 3.93491 4.8773 3.93491 5.13765 4.19526L7.99996 7.0566L10.8613 4.19526Z"/></svg>`;
   }
 
   function iconArrow() {
@@ -2278,15 +2335,19 @@
   }
 
   function iconRight() {
-    return `<svg class="pf-right-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.80469 2.19531L11.1377 7.52832V8.47168L5.80469 13.8047L4.8623 12.8623L9.72363 8L4.8623 3.1377L5.80469 2.19531Z"/></svg>`;
+    return `<svg class="pf-right-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M6.1952 3.52818C6.45551 3.26793 6.87724 3.26797 7.13758 3.52818L11.1376 7.52818C11.3979 7.78851 11.3979 8.21021 11.1376 8.47057L7.13758 12.4706C6.87723 12.7309 6.45555 12.7309 6.1952 12.4706C5.93497 12.2102 5.93489 11.7885 6.1952 11.5282L9.72352 7.99986L6.1952 4.47057C5.93497 4.21021 5.93489 3.78849 6.1952 3.52818Z"/></svg>`;
   }
 
   function iconBack() {
-    return `<svg class="pf-back-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.92 19.08L3.84 12L10.92 4.92L12.34 6.34L7.68 11H20V13H7.68L12.34 17.66L10.92 19.08Z"/></svg>`;
+    return `<svg class="pf-back-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.59473 18.4785C9.32957 18.4785 9.07522 18.373 8.8877 18.1855L3.23047 12.5283C3.04309 12.3408 2.9375 12.0864 2.9375 11.8213C2.93755 11.5562 3.04302 11.3017 3.23047 11.1143L8.8877 5.45703C9.0752 5.26968 9.32965 5.16504 9.59473 5.16504C9.85981 5.16505 10.1143 5.26966 10.3018 5.45703C10.4893 5.64457 10.5947 5.89982 10.5947 6.16504C10.5946 6.4301 10.4892 6.68464 10.3018 6.87207L6.35156 10.8213L20.4229 10.8213C20.6849 10.8258 20.9354 10.9332 21.1191 11.1201C21.3029 11.3071 21.4062 11.5591 21.4063 11.8213C21.4063 12.0835 21.3029 12.3354 21.1191 12.5225C20.9354 12.7094 20.685 12.8167 20.4229 12.8213L6.35156 12.8213L10.3018 16.7715C10.4892 16.959 10.5947 17.2134 10.5947 17.4785C10.5947 17.7437 10.4892 17.9981 10.3018 18.1855C10.1142 18.373 9.85989 18.4785 9.59473 18.4785Z"/></svg>`;
   }
 
   function iconSearch() {
-    return `<img class="pf-search-icon" src="/assets/trialli-home/picker-search.svg" alt="" aria-hidden="true">`;
+    return `<svg class="pf-search-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M6.99979 1.33301C8.06377 1.33294 9.10686 1.63252 10.0086 2.19727C10.9101 2.76193 11.6341 3.56935 12.0984 4.52637C12.5628 5.48363 12.7482 6.5526 12.6336 7.61035C12.519 8.66801 12.1095 9.67228 11.451 10.5078L13.8855 12.9424C14.0069 13.068 14.0735 13.2365 14.0721 13.4111C14.0705 13.5859 14.0003 13.7533 13.8767 13.877C13.7532 14.0004 13.5865 14.0707 13.4119 14.0723C13.2371 14.0738 13.0679 14.0072 12.9422 13.8857L10.5076 11.4502C9.7979 12.0095 8.96503 12.3917 8.07791 12.5635C7.19082 12.7353 6.27518 12.6924 5.40799 12.4385C4.54088 12.1846 3.7469 11.7266 3.09256 11.1035C2.43829 10.4804 1.94226 9.71008 1.64627 8.85645C1.35028 8.00277 1.26323 7.09069 1.39139 6.19629C1.51958 5.30189 1.85973 4.45103 2.38358 3.71484C2.90748 2.97862 3.60004 2.37809 4.40311 1.96387C5.20608 1.54975 6.09632 1.33311 6.99979 1.33301ZM6.99979 2.66699C5.85057 2.66703 4.74796 3.12292 3.93534 3.93555C3.12272 4.7482 2.66678 5.85076 2.66678 7C2.66678 8.14924 3.12272 9.2518 3.93534 10.0645C4.74796 10.8771 5.85057 11.333 6.99979 11.333C8.14903 11.333 9.25159 10.8771 10.0642 10.0645C10.8769 9.2518 11.3328 8.14927 11.3328 7C11.3328 5.85073 10.8769 4.7482 10.0642 3.93555C9.25159 3.12293 8.14903 2.66699 6.99979 2.66699Z"/></svg>`;
+  }
+
+  function iconCtaSearch() {
+    return `<img class="pf-cta-search-icon" src="/assets/trialli-home/picker-search.svg" alt="" aria-hidden="true">`;
   }
 
   function iconCar() {
@@ -2326,7 +2387,7 @@
   }
 
   function iconCheck() {
-    return `<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M14.4717 4.27637L6.47168 12.2764H5.52832L1.52832 8.27637L2.47168 7.33301L6 10.8623L13.5283 3.33301L14.4717 4.27637Z"/></svg>`;
+    return `<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M14.4707 4.27637L6.4707 12.2764H5.52734L1.52734 8.27637L2.4707 7.33301L5.99902 10.8623L13.5273 3.33301L14.4707 4.27637Z"/></svg>`;
   }
 
   function iconSent() {

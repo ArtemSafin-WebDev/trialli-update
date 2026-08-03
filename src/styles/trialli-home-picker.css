@@ -519,6 +519,7 @@
   height: 1.6rem;
   color: #ffffff;
   cursor: pointer;
+  line-height: 0;
 }
 
 .pf-checkbox::before {
@@ -548,8 +549,10 @@
 
 .pf-checkbox svg {
   position: relative;
+  display: block;
   width: 1.2rem;
   height: 1.2rem;
+  flex: 0 0 auto;
   fill: currentColor;
   opacity: 0;
   transition: opacity 0.2s ease;
@@ -3360,5 +3363,572 @@ button.pf-vin-request__car-icon.is-open {
   .parts-finder-shell {
     min-height: 0;
     height: 0;
+  }
+}
+/* TRIALLI mobile picker. The desktop picker keeps its established layout. */
+@media (max-width: 767.98px) {
+  body.pf-mobile-lock .tri-home-header,
+  body.pf-mobile-lock .tri-home-header__menu-backdrop,
+  body.pf-mobile-lock .tri-home-bottom-nav {
+    display: none !important;
+  }
+
+  .pf-mobile-screen {
+    top: 0;
+    z-index: 1000;
+    min-height: 100dvh;
+    background: #0d2026;
+    color: #dae4e5;
+    font-family: "TTHover", "TT Hoves", Arial, sans-serif;
+  }
+
+  .pf-mobile-content {
+    min-height: 100%;
+    gap: 16px;
+    padding: 16px 16px 0;
+  }
+
+  .pf-mobile-titlebar {
+    min-height: 24px;
+  }
+
+  .tri-home .pf-mobile-page-title,
+  .tri-home .pf-mobile-expanded__title,
+  .tri-home .pf-mobile-history-title {
+    display: inline-flex;
+    width: auto;
+    max-width: 100%;
+    align-items: center;
+    gap: 12px;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    font-family: "TTHover", "TT Hoves", Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: left;
+    text-transform: none;
+  }
+
+  .pf-mobile-page-title .pf-back-icon,
+  .pf-mobile-expanded__title .pf-back-icon,
+  .pf-mobile-history-title .pf-back-icon {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+  }
+
+  .pf-mobile-close {
+    display: none;
+  }
+
+  .pf-mobile-tabs {
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .pf-mobile-tabs__group {
+    gap: 0;
+    min-height: 48px;
+    overflow: hidden;
+    border-radius: 30px;
+    background: #162d35;
+  }
+
+  .tri-home .pf-mobile-tab {
+    min-height: 48px;
+    border: 0;
+    border-radius: 30px;
+    padding: 16px 12px;
+    background: transparent;
+    color: #a1b0b2;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 14px;
+  }
+
+  .tri-home .pf-mobile-tab[aria-selected="true"] {
+    border-top: 1px solid #bed600 !important;
+    background: linear-gradient(180deg, rgb(190 214 0 / 10%), rgb(190 214 0 / 0%));
+    color: #bed600;
+  }
+
+  .tri-home .pf-mobile-history-tab {
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+    border-radius: 31px;
+    padding: 16px;
+    background: #162d35;
+    color: #bed600;
+  }
+
+  .pf-mobile-history-tab > span {
+    top: -4px;
+    right: -4px;
+    display: grid;
+    min-width: 20px;
+    height: 20px;
+    place-items: center;
+    border-radius: 15px;
+    padding: 0 5px;
+    background: #bed600;
+    color: #222626;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  .pf-mobile-history-tab .pf-history-icon {
+    color: currentColor;
+  }
+
+  .pf-mobile-vin,
+  .pf-mobile-vin .pf-vin-panel {
+    width: 100%;
+    border-radius: 24px;
+  }
+
+  .pf-mobile-vin .pf-vin-panel {
+    overflow: visible;
+    background: rgb(18 42 48 / 90%);
+  }
+
+  .pf-mobile-vin .pf-vin-search {
+    display: flex;
+    min-height: 144px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+    border-radius: 24px;
+    padding: 16px;
+    background: rgb(18 42 48 / 90%);
+  }
+
+  .pf-mobile-vin .pf-vin-search__field {
+    width: 100%;
+    flex: 0 0 48px;
+  }
+
+  .tri-home .pf-mobile-vin .pf-vin-search__input {
+    height: 48px;
+    border: 1px solid transparent !important;
+    border-radius: 24px;
+    padding: 16px 44px 16px 20px;
+    background: #203840;
+    color: #fff;
+    font-family: "TTHover", "TT Hoves", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    caret-color: #fff;
+    outline: 0;
+  }
+
+  .tri-home .pf-mobile-vin .pf-vin-search__input::placeholder {
+    color: #8a9998;
+    opacity: 1;
+  }
+
+  .tri-home .pf-mobile-vin .pf-vin-search__input:hover:not(:disabled) {
+    border-color: rgb(190 214 0 / 55%) !important;
+  }
+
+  .tri-home .pf-mobile-vin .pf-vin-search__input:focus:not(:disabled) {
+    border-color: #bed600 !important;
+  }
+
+  .tri-home .pf-mobile-vin .pf-vin-search__clear {
+    right: 16px;
+    width: 16px;
+    height: 16px;
+    color: #8a9998;
+  }
+
+  .pf-mobile-vin .pf-vin-search__clear .pf-cross-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .tri-home .pf-mobile-vin .pf-submit {
+    width: 100%;
+    height: 40px;
+    min-height: 40px;
+    gap: 6px;
+    border: 0;
+    border-radius: 31px;
+    padding: 12px 20px;
+    background: #bed600;
+    color: #0d2026;
+    font-family: "TTHover", "TT Hoves", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    opacity: 1;
+  }
+
+  .tri-home .pf-mobile-vin .pf-submit:hover:not(:disabled) {
+    background: #d4ed0e;
+  }
+
+  .tri-home .pf-mobile-vin .pf-submit:disabled {
+    background: rgb(255 255 255 / 10%);
+    color: rgb(255 255 255 / 30%);
+  }
+
+  .pf-mobile-vin .pf-submit:disabled .pf-cta-search-icon {
+    opacity: 0.3;
+    filter: brightness(0) invert(1);
+  }
+
+  .pf-mobile-form {
+    flex: 1 1 auto;
+    min-height: 0;
+    gap: 0;
+  }
+
+  .pf-mobile-controls {
+    gap: 8px;
+    padding-bottom: 16px;
+  }
+
+  .pf-mobile-control {
+    min-height: 48px;
+    gap: 12px;
+    border-radius: 24px;
+    padding: 16px;
+    background: rgb(18 42 48 / 90%);
+  }
+
+  .pf-mobile-control__title {
+    color: #dae4e5;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+  }
+
+  .pf-mobile-control.is-disabled .pf-mobile-control__title {
+    color: #4c5759;
+  }
+
+  .pf-mobile-tags {
+    gap: 4px;
+  }
+
+  .tri-home .pf-mobile-tag {
+    gap: 6px;
+    min-height: 32px;
+    border: 1px solid #203840 !important;
+    border-radius: 20px;
+    padding: 8px 12px;
+    background: transparent;
+    color: #c2cacc;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+  }
+
+  .tri-home .pf-mobile-tag.is-selected {
+    border-color: #bed600 !important;
+    background: #bed600;
+    color: #0d2026;
+  }
+
+  .tri-home .pf-mobile-tag--more {
+    border-color: #bed600 !important;
+    background: #bed600;
+    color: #0d2026;
+    font-weight: 500;
+  }
+
+  .pf-mobile-tag--more .pf-right-icon {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+
+  .pf-mobile-submitbar,
+  .pf-mobile-expanded__actions {
+    position: sticky;
+    z-index: 4;
+    bottom: 0;
+    display: grid;
+    gap: 8px;
+    margin: auto -16px 0;
+    border-top: 1px solid #36474d !important;
+    border-radius: 20px 20px 0 0;
+    padding: 16px 16px 32px;
+    background: linear-gradient(0deg, #08151a, rgb(22 45 53 / 50%));
+    box-shadow: none;
+    backdrop-filter: blur(4px);
+  }
+
+  .tri-home .pf-mobile-submit {
+    gap: 6px;
+    min-height: 40px;
+    border-radius: 31px;
+    padding: 12px 20px;
+    background: #bed600;
+    color: #0d2026;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+  }
+
+  .tri-home .pf-mobile-submit[disabled] {
+    background: rgb(255 255 255 / 10%);
+    color: rgb(255 255 255 / 30%);
+    cursor: not-allowed;
+  }
+
+  .tri-home .pf-mobile-submit[disabled] .pf-cta-search-icon {
+    opacity: 0.3;
+    filter: brightness(0) invert(1);
+  }
+
+  .tri-home .pf-mobile-submit--secondary {
+    background: #162d35;
+    color: #fff;
+  }
+
+  .pf-cta-search-icon {
+    display: block;
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
+  }
+
+  .pf-mobile-content--expanded {
+    min-height: 100dvh;
+    overflow: hidden;
+  }
+
+  .pf-mobile-expanded__header {
+    display: flex;
+    min-height: 24px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .tri-home .pf-mobile-expanded__reset {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: #a1b0b2;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+  }
+
+  .pf-mobile-expanded__reset .pf-reset-icon {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+
+  .pf-mobile-expanded__panel {
+    display: flex;
+    flex: 0 1 auto;
+    min-height: 0;
+    max-height: calc(100dvh - 80px);
+    flex-direction: column;
+    gap: 24px;
+    overflow: hidden;
+    border-radius: 24px;
+    padding: 16px;
+    background: rgb(18 42 48 / 90%);
+  }
+
+  .tri-home .pf-mobile-search {
+    flex: 0 0 40px;
+    gap: 4px;
+    height: 40px;
+    border: 0.5px solid #bed600 !important;
+    border-radius: 40px;
+    padding-left: 16px;
+    background: radial-gradient(100% 785% at 0% 50%, #0f2329 0%, #12272c 50%, #1e3431 75%, #304939 100%);
+    color: #fff;
+  }
+
+  .tri-home .pf-mobile-search.is-filled {
+    border-color: #bed600 !important;
+  }
+
+  .pf-mobile-search input {
+    padding: 12px 0;
+    color: #fff;
+    font-family: "TTHover", "TT Hoves", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+  }
+
+  .pf-mobile-search input::placeholder {
+    color: #8a9998;
+    opacity: 1;
+  }
+
+  .tri-home .pf-mobile-search__clear {
+    color: #8a9998;
+  }
+
+  .pf-mobile-search__clear .pf-cross-icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  .pf-mobile-search__submit {
+    flex: 0 0 40px;
+    width: 40px;
+    margin: -0.5px -0.5px -0.5px 0;
+    border-radius: 40px;
+    background: transparent;
+    color: #bed600;
+  }
+
+  .pf-mobile-search .pf-search-icon {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+
+  .pf-mobile-expanded__list {
+    display: flex;
+    flex: 1 1 auto;
+    min-height: 0;
+    flex-direction: column;
+    overflow: hidden auto;
+    border-radius: 0;
+    padding: 0;
+    background: transparent;
+  }
+
+  .pf-mobile-expanded__list::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  .pf-mobile-expanded__list::-webkit-scrollbar-track {
+    background: rgb(255 255 255 / 10%);
+  }
+
+  .pf-mobile-expanded__list::-webkit-scrollbar-thumb {
+    min-height: 80px;
+    border-radius: 10px;
+    background: rgb(255 255 255 / 30%);
+  }
+
+  .pf-mobile-expanded__list::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  .pf-mobile-expanded__hint {
+    padding: 0 0 8px;
+    color: #8a9998;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 14px;
+  }
+
+  .pf-mobile-expanded__options {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tri-home .pf-mobile-expanded__option {
+    min-height: 34px;
+    gap: 8px;
+    padding: 8px 0;
+    background: transparent;
+    color: #c2cacc;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 18px;
+  }
+
+  .tri-home .pf-mobile-expanded__option.is-selected {
+    background: transparent;
+    color: #fff;
+  }
+
+  .pf-mobile-expanded__option.is-multi > span:nth-child(2),
+  .pf-mobile-expanded__option:not(.is-multi) > span:first-child {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .tri-home .pf-mobile-expanded__option.is-multi > .pf-mobile-expanded__box {
+    display: grid;
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
+    place-items: center;
+    box-sizing: border-box;
+    border: 1px solid #a1b0b2 !important;
+    border-radius: 4px;
+    background: transparent;
+    line-height: 0;
+  }
+
+  .tri-home .pf-mobile-expanded__option.is-multi.is-selected > .pf-mobile-expanded__box {
+    border-color: #bed600 !important;
+    background: #bed600;
+  }
+
+  .pf-mobile-expanded__box svg {
+    display: block;
+    width: 12px;
+    height: 12px;
+    flex: 0 0 12px;
+    fill: #0d2026;
+  }
+
+  .pf-mobile-expanded__check {
+    color: #bed600;
+  }
+
+  .pf-mobile-expanded__actions {
+    flex: 0 0 auto;
+    margin-top: auto;
+    margin-bottom: 0;
+  }
+
+  .pf-mobile-expanded__submit-form {
+    display: none;
+  }
+
+  .pf-mobile-expanded__actions--submit {
+    grid-template-columns: 1fr;
+  }
+
+  .pf-mobile-content--history {
+    min-height: 100dvh;
+    background: #0d2026;
+  }
+
+  .pf-mobile-history-card,
+  .pf-mobile-history-empty,
+  .pf-mobile-screen .pf-history {
+    border-radius: 24px;
+    background: rgb(18 42 48 / 90%);
+    color: #dae4e5;
+  }
+
+  .pf-mobile-history-card__rows,
+  .pf-mobile-history-card__row dd,
+  .pf-mobile-history-empty__text h2 {
+    color: #dae4e5;
+  }
+
+  .pf-mobile-history-card__row dt,
+  .pf-mobile-history-empty__text p {
+    color: #8a9998;
   }
 }
