@@ -36,6 +36,16 @@ if (root) {
   const siteHeader = root.querySelector("[data-tri-home-header]");
   const headerMenu = root.querySelector("[data-header-menu]");
   const headerMenuToggle = root.querySelector("[data-header-menu-toggle]");
+  const headerMenuBackdrop = root.querySelector(
+    "[data-header-menu-backdrop]",
+  );
+  const mobileHeaderMedia = window.matchMedia("(max-width: 767px)");
+
+  const updatePageScrollLock = () => {
+    const modalOpen = Boolean(root.querySelector(".tri-home-modal:not([hidden])"));
+    const menuOpen = Boolean(headerMenu?.classList.contains("is-open"));
+    document.body.style.overflow = modalOpen || menuOpen ? "hidden" : "";
+  };
 
   const setModal = (modal, open) => {
     if (!modal) return;
@@ -44,7 +54,7 @@ if (root) {
       "is-modal-open",
       open || Boolean(root.querySelector(".tri-home-modal:not([hidden])")),
     );
-    document.body.style.overflow = open ? "hidden" : "";
+    updatePageScrollLock();
     if (open) {
       requestAnimationFrame(() => modal.querySelector("button, input")?.focus());
     }
@@ -53,12 +63,16 @@ if (root) {
   const setHeaderMenu = (open) => {
     siteHeader?.classList.toggle("is-menu-open", open);
     headerMenu?.classList.toggle("is-open", open);
+    headerMenuBackdrop?.classList.toggle("is-open", open);
     headerMenu?.setAttribute("aria-hidden", String(!open));
+    headerMenuBackdrop?.setAttribute("aria-hidden", String(!open));
+    headerMenuBackdrop?.setAttribute("tabindex", open ? "0" : "-1");
     headerMenuToggle?.setAttribute("aria-expanded", String(open));
     headerMenuToggle?.setAttribute(
       "aria-label",
       open ? "Закрыть меню" : "Открыть меню",
     );
+    updatePageScrollLock();
   };
 
   root.addEventListener("click", (event) => {
@@ -67,6 +81,11 @@ if (root) {
 
     if (target.matches("[data-header-menu-toggle]")) {
       setHeaderMenu(!headerMenu?.classList.contains("is-open"));
+      return;
+    }
+
+    if (target.matches("[data-header-menu-backdrop]")) {
+      setHeaderMenu(false);
       return;
     }
 
@@ -99,6 +118,10 @@ if (root) {
     if (event.key !== "Escape") return;
     setModal(requestModal, false);
     setHeaderMenu(false);
+  });
+
+  mobileHeaderMedia.addEventListener("change", (event) => {
+    if (!event.matches) setHeaderMenu(false);
   });
 
   root.querySelector('[data-site-nav="home"]')?.classList.toggle(

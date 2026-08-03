@@ -508,6 +508,15 @@
     template() {
       return `
         <article class="parts-finder ${this.mobileFinderOpen ? "is-mobile-open" : ""}" aria-labelledby="parts-finder-title">
+          <img
+            class="parts-finder__background"
+            src="/assets/trialli-home/picker-background-desktop.webp"
+            width="2172"
+            height="724"
+            alt=""
+            aria-hidden="true"
+            decoding="async"
+          />
           <h1 id="parts-finder-title" class="parts-finder__title">${formatDesktopTitle(this.response.title)}</h1>
           <div class="parts-finder__workspace">
             <div class="pf-picker-surface pf-picker-surface--${escapeAttr(this.mode)}">
