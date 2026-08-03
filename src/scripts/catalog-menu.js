@@ -61,11 +61,11 @@ if (catalogRoots.length) {
             <img src="/assets/trialli-home/logo.svg" alt="" />
           </a>
           <button class="tri-catalog-menu__close" type="button" data-catalog-close><span>Каталог</span></button>
-          <form class="tri-catalog-menu__search" action="/pages/catalog-results.html" role="search">
+          <form class="tri-catalog-menu__search" action="/" role="search">
             <input type="search" name="q" placeholder="Искать на сайте..." autocomplete="off" />
             <button type="submit" aria-label="Найти">⌕</button>
           </form>
-          <a class="tri-catalog-menu__cart" href="/pages/catalog-results.html#catalog-products" aria-label="Корзина">
+          <a class="tri-catalog-menu__cart" href="/#popular" aria-label="Корзина">
             <span aria-hidden="true">⌑</span><b>3</b>
           </a>
         </header>
@@ -88,15 +88,15 @@ if (catalogRoots.length) {
               .join("")}
           </div>
           <div class="tri-catalog-menu__column" data-catalog-column="2">
-            <a class="tri-catalog-menu__all" href="/pages/catalog-results.html">Все товары · 1 123</a>
+            <a class="tri-catalog-menu__all" href="/#categories">Все товары · 1 123</a>
             <div class="tri-catalog-menu__items">${itemTemplate(levelTwo, 2)}</div>
           </div>
           <div class="tri-catalog-menu__column" data-catalog-column="3" hidden>
-            <a class="tri-catalog-menu__all" href="/pages/catalog-results.html">Все товары · 123</a>
+            <a class="tri-catalog-menu__all" href="/#categories">Все товары · 123</a>
             <div class="tri-catalog-menu__items">${itemTemplate(levelThree, 3)}</div>
           </div>
           <div class="tri-catalog-menu__column" data-catalog-column="4" hidden>
-            <a class="tri-catalog-menu__all" href="/pages/catalog-results.html">Все товары · 56</a>
+            <a class="tri-catalog-menu__all" href="/#categories">Все товары · 56</a>
             <div class="tri-catalog-menu__items">${itemTemplate(levelFour, 4)}</div>
           </div>
         </div>
@@ -115,7 +115,7 @@ if (catalogRoots.length) {
 
     const setOpen = (open) => {
       if (window.matchMedia("(max-width: 767px)").matches) {
-        if (open) window.location.href = "/pages/catalog-results.html";
+        if (open) window.location.href = "/#categories";
         return;
       }
       modal.hidden = !open;
@@ -174,7 +174,7 @@ if (catalogRoots.length) {
         target.classList.add("is-subtle-active");
         columns[4].hidden = false;
       } else if (level === 4) {
-        window.location.href = "/pages/catalog-results.html";
+        window.location.href = "/#categories";
       }
     });
 

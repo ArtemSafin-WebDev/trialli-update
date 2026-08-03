@@ -1,0 +1,4 @@
+/* Общий CSS-бандл новых компонентов. Порядок импортов является частью контракта. */
+@import "./home.css";
+@import "./trialli-home-picker.css";
+@import "./catalog-menu.css";

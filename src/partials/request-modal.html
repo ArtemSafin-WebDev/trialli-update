@@ -1,0 +1,15 @@
+<div class="tri-home-modal" hidden data-request-modal>
+  <div class="tri-home-modal__backdrop" data-close-request></div>
+  <section class="tri-home-modal__dialog tri-home-modal__dialog--request" role="dialog" aria-modal="true" aria-labelledby="tri-request-title">
+    <button class="tri-home-modal__close" type="button" aria-label="Закрыть" data-close-request>×</button>
+    <h2 id="tri-request-title">Индивидуальный подбор</h2>
+    <p>Оставьте контакты — менеджер свяжется с вами и поможет подобрать деталь.</p>
+    <form action="/api/parts-finder/vin-request" method="post" data-request-form>
+      <label>Имя<input name="name" type="text" required autocomplete="name" /></label>
+      <label>Телефон<input name="phone" type="tel" required autocomplete="tel" placeholder="+7 999 000-00-00" /></label>
+      <label>VIN или госномер<input name="vin" type="text" autocomplete="off" /></label>
+      <label class="tri-home-modal__agreement"><input name="agreement" type="checkbox" required /> Я согласен на обработку персональных данных</label>
+      <button class="tri-home-button" type="submit">Отправить запрос</button>
+    </form>
+  </section>
+</div>

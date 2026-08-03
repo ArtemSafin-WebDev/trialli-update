@@ -1,8 +1,10 @@
-import { readdirSync } from 'node:fs';
+import { cpSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
+import { htmlPartials } from './scripts/vite-html-partials.mjs';
 
 const projectRoot = import.meta.dirname;
+const partialsRoot = resolve(projectRoot, 'src/partials');
 
 function trialliCartStub() {
   const middleware = (request, response, next) => {
@@ -30,9 +32,21 @@ function trialliCartStub() {
 
 function collectHtmlEntries(directory = projectRoot) {
   const entries = {};
+  const ignoredRootDirectories = new Set([
+    'dist',
+    'node_modules',
+    'output',
+    'public',
+    'scripts',
+    'src',
+    'work',
+  ]);
 
   for (const item of readdirSync(directory, { withFileTypes: true })) {
-    if (item.name === 'dist' || item.name === 'node_modules' || item.name.startsWith('.')) {
+    if (
+      item.name.startsWith('.') ||
+      (directory === projectRoot && ignoredRootDirectories.has(item.name))
+    ) {
       continue;
     }
 
@@ -56,11 +70,45 @@ function collectHtmlEntries(directory = projectRoot) {
   return entries;
 }
 
+function copyProjectAssets() {
+  return {
+    name: 'trialli-copy-project-assets',
+    closeBundle() {
+      cpSync(
+        resolve(projectRoot, 'public/assets'),
+        resolve(projectRoot, 'dist/assets'),
+        { recursive: true },
+      );
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [trialliCartStub()],
+  appType: 'mpa',
+  plugins: [
+    htmlPartials({ root: projectRoot, partialsDir: partialsRoot }),
+    trialliCartStub(),
+    copyProjectAssets(),
+  ],
   build: {
+    // public/vendor — это внешние файлы существующего сайта. В dist их не копируем.
+    copyPublicDir: false,
+    manifest: true,
+    modulePreload: false,
     rollupOptions: {
       input: collectHtmlEntries(),
+      output: {
+        manualChunks(id) {
+          if (
+            id.includes('/src/scripts/site.js') ||
+            id.includes('/src/scripts/catalog-menu.js') ||
+            id.includes('/src/scripts/components/') ||
+            id.includes('/src/scripts/trialli-home-picker')
+          ) {
+            return 'site-components';
+          }
+        },
+      },
     },
   },
 });

@@ -5,102 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="format-detection" content="telephone=no" />
     <title>TRIALLI — автозапчасти для легковых и грузовых автомобилей</title>
-    <link rel="icon" href="/assets/trialli-home/logo.svg" />
-
-    <!-- Базовые стили действующего trialli.ru, в исходном порядке. -->
-    <link rel="stylesheet" href="/vendor/trialli/bitrix/js/main/core/css/core.css" />
-    <link rel="stylesheet" href="/vendor/trialli/local/templates/trialli/components/bitrix/search.title/.default/style.css" />
-    <link rel="stylesheet" href="/vendor/trialli/local/templates/trialli/css/main.css" />
-    <link rel="stylesheet" href="/vendor/trialli/local/templates/trialli/css/fancybox.css" />
-    <link rel="stylesheet" href="/vendor/trialli/local/templates/trialli/css/custom.css" />
-    <link rel="stylesheet" href="/vendor/trialli/local/templates/trialli/npm/magnific-popup.css" />
-    <link rel="stylesheet" href="/vendor/trialli/local/templates/trialli/npm/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="/vendor/trialli/local/templates/trialli/components/bitrix/form.result.new/vin/style.css" />
-    <link rel="stylesheet" href="/vendor/trialli/local/templates/trialli/css/template_styles.css" />
-    <link rel="stylesheet" href="/vendor/trialli/local/templates/trialli/css/adaptive_new.css" />
-
-    <!-- Новая главная изолирована в отдельном файле. -->
-    <link rel="stylesheet" href="/src/styles/home.css" />
-    <link rel="stylesheet" href="/src/styles/trialli-home-picker.css" />
-    <link rel="stylesheet" href="/src/styles/catalog-menu.css" />
-    <script src="/vendor/trialli/local/templates/trialli/js/vendor/modernizr.js"></script>
+    <!-- @include /src/partials/site-head.html -->
   </head>
   <body id="top" class="tri-home-body">
-    <div class="tri-home" data-tri-home>
+    <div class="tri-home" data-tri-home data-site-shell>
       <a class="tri-home__skip" href="#tri-home-main">Перейти к содержимому</a>
 
-      <a class="tri-home-top-banner" href="https://carvilleshop.ru/" target="_blank" rel="noreferrer" aria-label="Перейти в фирменный магазин Карвильшоп">
-        <img class="tri-home-top-banner__background" src="/assets/trialli-home/top-banner-background.svg" width="1440" height="60" alt="" aria-hidden="true" />
-        <span class="tri-home-top-banner__content">
-          <span class="tri-home-top-banner__message">
-            <img class="tri-home-top-banner__mark" src="/assets/trialli-home/top-banner-mark.svg" width="38" height="38" alt="" aria-hidden="true" />
-            <span class="tri-home-top-banner__copy">
-              <strong>Карвильшоп – фирменный магазин</strong>
-              <span>брендов LUZAR, TRIALLI, STARTVOLT, AIRLINE и CARVILLE RACING</span>
-            </span>
-          </span>
-          <span class="tri-home-top-banner__button">
-            <span>Карвильшоп</span>
-            <img src="/assets/trialli-home/top-banner-arrow.svg" width="16" height="16" alt="" aria-hidden="true" />
-          </span>
-        </span>
-      </a>
-
-      <header class="tri-home-header" data-tri-home-header>
-        <div class="tri-home-header__utility">
-          <nav class="tri-home-header__utility-nav" aria-label="Дополнительная навигация">
-            <a href="#guarantee">Гарантия</a>
-            <a href="#news">Новости</a>
-            <a href="#about">О бренде</a>
-            <a href="#stores">Точки продаж</a>
-            <a href="#documents">Документы</a>
-            <a href="#contacts">Контакты</a>
-          </nav>
-          <div class="tri-home-header__social" aria-label="Социальные сети">
-            <a href="#" aria-label="ВКонтакте"><img src="/assets/trialli-home/social-vk.svg" alt="" /></a>
-            <a href="#" aria-label="Telegram"><img src="/assets/trialli-home/social-telegram.svg" alt="" /></a>
-            <a href="#" aria-label="RUTUBE"><img src="/assets/trialli-home/social-r.svg" alt="" /></a>
-          </div>
-        </div>
-
-        <div class="tri-home-header__main">
-          <a class="tri-home-header__logo" href="/" aria-label="TRIALLI">
-            <img src="/assets/trialli-home/logo.svg" width="70" height="40" alt="" />
-          </a>
-          <a class="tri-home-header__catalog" href="/pages/catalog-results.html" data-catalog-toggle aria-expanded="false">
-            <span class="tri-home-icon tri-home-icon--menu" aria-hidden="true"></span>
-            Каталог
-          </a>
-          <form class="tri-home-header__search" action="/catalog/" method="get" role="search">
-            <label class="tri-home-visually-hidden" for="tri-home-search">Поиск по сайту</label>
-            <input id="tri-home-search" type="search" name="q" placeholder="Искать на сайте..." autocomplete="off" />
-            <button type="submit" aria-label="Найти"><span class="tri-home-icon tri-home-icon--search" aria-hidden="true"></span></button>
-          </form>
-          <a class="tri-home-header__cart" href="#popular" aria-label="Корзина, 3 товара">
-            <span class="tri-home-icon tri-home-icon--cart" aria-hidden="true"></span>
-            <span class="tri-home-header__cart-count">3</span>
-          </a>
-          <button class="tri-home-header__burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="tri-home-mobile-menu" data-header-menu-toggle>
-            <span class="tri-home-icon tri-home-icon--menu" aria-hidden="true"></span>
-          </button>
-        </div>
-
-        <nav class="tri-home-header__mobile-menu" id="tri-home-mobile-menu" aria-label="Мобильное меню" aria-hidden="true" data-header-menu>
-          <a href="#guarantee">Гарантия</a>
-          <a href="#news">Новости</a>
-          <a href="#about">О бренде</a>
-          <a href="#stores">Точки продаж</a>
-          <a href="#contacts">Контакты</a>
-          <a href="#documents">Документы</a>
-        </nav>
-      </header>
+      <!-- @include /src/partials/site-header.html -->
 
       <main id="tri-home-main">
-        <section class="tri-home-picker-section" aria-label="Подбор деталей">
-          <div class="tri-home-container">
-            <div id="parts-finder" class="parts-finder-shell"></div>
-          </div>
-        </section>
+        <!-- @include /src/partials/parts-finder.html -->
 
         <section class="tri-home-categories" id="categories" aria-labelledby="tri-home-categories-title">
           <div class="tri-home-container tri-home-container--overflow">
@@ -245,77 +159,14 @@
         </section>
       </main>
 
-      <footer class="tri-home-footer" id="contacts">
-        <div class="tri-home-container tri-home-footer__inner">
-          <a class="tri-home-footer__logo" href="/" aria-label="TRIALLI">
-            <img src="/assets/trialli-home/footer-logo.svg" width="124" height="70" alt="" />
-          </a>
-          <nav class="tri-home-footer__nav" aria-label="Навигация в подвале">
-            <a id="about" href="#about">О бренде</a>
-            <a id="guarantee" href="#guarantee">Гарантия</a>
-            <a id="stores" href="#stores">Точки продаж</a>
-            <a id="documents" href="#documents">Документы</a>
-          </nav>
-          <a class="tri-home-footer__phone" href="tel:88005558965">
-            <img src="/assets/trialli-home/icon-phone.svg" width="16" height="16" alt="" />
-            8 800 555-89-65
-          </a>
-          <div class="tri-home-footer__social" aria-label="Социальные сети">
-            <a href="#" aria-label="ВКонтакте"><img src="/assets/trialli-home/social-vk.svg" alt="" /></a>
-            <a href="#" aria-label="YouTube"><img src="/assets/trialli-home/social-youtube.svg" alt="" /></a>
-            <a href="#" aria-label="RUTUBE"><img src="/assets/trialli-home/social-r.svg" alt="" /></a>
-            <a href="#" aria-label="Дзен"><img src="/assets/trialli-home/social-d2.svg" alt="" /></a>
-            <a href="#" aria-label="Telegram"><img src="/assets/trialli-home/social-telegram.svg" alt="" /></a>
-          </div>
-          <p class="tri-home-footer__copyright">
-            <span class="tri-home-footer__year tri-home-footer__year--desktop">2026</span><span class="tri-home-footer__year tri-home-footer__year--mobile">2023</span> © ООО "ЭРЛАЙН".<br />
-            Производитель автозапчастей и автоаксессуаров.<br />
-            Все права защищены. Реализация в РФ и СНГ.
-          </p>
-          <a class="tri-home-footer__policy" href="#policy">Пользовательское соглашение</a>
-        </div>
-      </footer>
-
-      <nav class="tri-home-bottom-nav" aria-label="Основная мобильная навигация">
-        <a class="is-active" href="#top"><span aria-hidden="true">⌂</span>Главная</a>
-        <a href="/pages/catalog-results.html"><span aria-hidden="true">▦</span>Каталог</a>
-        <button type="button" data-open-picker><span aria-hidden="true">⌘</span>Подбор</button>
-        <a href="#popular"><span aria-hidden="true">⌑</span>Корзина</a>
-      </nav>
+      <!-- @include /src/partials/site-footer.html -->
+      <!-- @include /src/partials/site-bottom-nav.html -->
 
       <a id="back-to-top" href="#top" aria-label="Наверх"></a>
-
-      <div class="tri-home-modal" hidden data-request-modal>
-        <div class="tri-home-modal__backdrop" data-close-request></div>
-        <section class="tri-home-modal__dialog tri-home-modal__dialog--request" role="dialog" aria-modal="true" aria-labelledby="tri-home-request-title">
-          <button class="tri-home-modal__close" type="button" aria-label="Закрыть" data-close-request>×</button>
-          <h2 id="tri-home-request-title">Индивидуальный подбор</h2>
-          <p>Оставьте контакты — менеджер свяжется с вами и поможет подобрать деталь.</p>
-          <form action="/api/parts-finder/vin-request" method="post" data-request-form>
-            <label>Имя<input name="name" type="text" required autocomplete="name" /></label>
-            <label>Телефон<input name="phone" type="tel" required autocomplete="tel" placeholder="+7 999 000-00-00" /></label>
-            <label>VIN или госномер<input name="vin" type="text" autocomplete="off" /></label>
-            <label class="tri-home-modal__agreement"><input name="agreement" type="checkbox" required /> Я согласен на обработку персональных данных</label>
-            <button class="tri-home-button" type="submit">Отправить запрос</button>
-          </form>
-        </section>
-      </div>
+      <!-- @include /src/partials/request-modal.html -->
     </div>
 
-    <!-- Общие скрипты сайта загружаются до логики новой страницы. -->
-    <script src="/vendor/trialli/bitrix/js/main/core/core.js"></script>
-    <script src="/vendor/trialli/local/templates/trialli/npm/jquery.min.js"></script>
-    <script src="/vendor/trialli/local/templates/trialli/npm/jquery.custom-select.js"></script>
-    <script src="/vendor/trialli/local/templates/trialli/npm/jquery.magnific-popup.min.js"></script>
-    <script src="/vendor/trialli/local/templates/trialli/js/owl.min.js"></script>
-    <script src="/vendor/trialli/local/templates/trialli/js/bootstrap.min.js"></script>
-    <script src="/vendor/trialli/local/templates/trialli/npm/swiper-bundle.min.js"></script>
-    <script src="/vendor/trialli/local/templates/trialli/js/custom.js"></script>
-    <script src="/vendor/trialli/local/templates/trialli/js/cart.js"></script>
-    <script src="/vendor/trialli/local/templates/trialli/js/fancybox.umd.js"></script>
-    <script src="/vendor/trialli/local/templates/trialli/components/bitrix/menu/headerMobile/script.js"></script>
-    <script src="/vendor/trialli/bitrix/components/bitrix/search.title/script.js"></script>
+    <!-- @include /src/partials/site-scripts.html -->
     <script type="module" src="/src/scripts/home.js"></script>
-    <script type="module" src="/src/scripts/catalog-menu.js"></script>
   </body>
 </html>

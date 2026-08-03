@@ -1,6 +1,0 @@
-[     195ms] TypeError: Cannot read properties of null (reading 'addEventListener')
-    at HTMLDocument.<anonymous> (http://127.0.0.1:5174/vendor/trialli/local/templates/trialli/js/custom.js:962:15)
-[  183829ms] ReferenceError: index is not defined
-    at http://127.0.0.1:5174/src/scripts/home.js?t=1784913246511:100:45
-    at Array.map (<anonymous>)
-    at http://127.0.0.1:5174/src/scripts/home.js?t=1784913246511:97:8
