@@ -3220,7 +3220,7 @@ button.pf-vin-request__car-icon.is-open {
       border: 1px solid #bed600 !important;
       border-radius: 0;
       border-shape: shape(
-        from 0 46px,
+        from 30px 46px,
         hline to 193px,
         curve to 209px 30px with 201.837px 46px / 209px 38.837px,
         curve to 239px 0 with 209px 13.431px / 222.431px 0,
@@ -3233,7 +3233,8 @@ button.pf-vin-request__car-icon.is-open {
         curve to calc(100% - 30px) 100% with 100% calc(100% - 13.431px) / calc(100% - 13.431px) 100%,
         hline to 30px,
         curve to 0 calc(100% - 30px) with 13.431px 100% / 0 calc(100% - 13.431px),
-        vline to 46px,
+        vline to 76px,
+        curve to 30px 46px with 0 59.431px / 13.431px 46px,
         close
       );
     }
@@ -3250,6 +3251,10 @@ button.pf-vin-request__car-icon.is-open {
 
     .pf-picker-surface--vehicle .pf-tab:last-child[aria-selected="false"] {
       z-index: 3;
+      flex: 0 0 329px;
+      width: 329px;
+      margin-right: -16px;
+      padding-right: 48px;
       border-radius: 0;
       border-shape: shape(
         from 16px 46px,
@@ -3257,13 +3262,16 @@ button.pf-vin-request__car-icon.is-open {
         curve to 30px 0 with 0 13.431px / 13.431px 0,
         hline to 283px,
         curve to 313px 30px with 299.569px 0 / 313px 13.431px,
-        vline to 46px,
+        curve to 329px 46px with 313px 38.837px / 320.163px 46px,
         close
       );
     }
 
     .pf-picker-surface--vin .pf-tab:first-child[aria-selected="false"] {
       z-index: 3;
+      align-items: flex-start;
+      align-self: flex-start;
+      height: 76px;
       border-radius: 0;
       border-shape: shape(
         from 0 30px,
@@ -3271,7 +3279,8 @@ button.pf-vin-request__car-icon.is-open {
         hline to 179px,
         curve to 209px 30px with 195.569px 0 / 209px 13.431px,
         curve to 193px 46px with 209px 38.837px / 201.837px 46px,
-        hline to 0,
+        hline to 30px,
+        curve to 0 76px with 13.431px 46px / 0 59.431px,
         close
       );
     }
