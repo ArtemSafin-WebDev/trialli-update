@@ -3196,6 +3196,14 @@ button.pf-vin-request__car-icon.is-open {
       padding: 61px 15px 15px;
       border: 1px solid #bed600 !important;
       border-radius: 0;
+      background:
+        linear-gradient(
+            0.854773deg,
+            #0d2026 49.821%,
+            #bed600 258.8%
+          )
+          left top / 209px 46px no-repeat,
+        #0d2026;
       border-shape: shape(
         from 0 30px,
         curve to 30px 0 with 0 13.431px / 13.431px 0,
@@ -3219,6 +3227,14 @@ button.pf-vin-request__car-icon.is-open {
       padding-top: 46px;
       border: 1px solid #bed600 !important;
       border-radius: 0;
+      background:
+        linear-gradient(
+            0.559859deg,
+            #0d2026 49.821%,
+            #bed600 258.8%
+          )
+          209px top / 313px 46px no-repeat,
+        #0d2026;
       border-shape: shape(
         from 30px 46px,
         hline to 193px,

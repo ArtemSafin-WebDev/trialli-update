@@ -1178,7 +1178,7 @@
           ? multiLabel
           : control.value?.label || control.placeholder;
       const searchValue = this.search[control.id] || "";
-      const searchPlaceholder = "Начните ввод";
+      const searchPlaceholder = control.placeholder;
       const fieldBody = isOpen
         ? `<input class="pf-field__input" type="search" value="${escapeAttr(searchValue)}" placeholder="${escapeAttr(searchPlaceholder)}" data-search="${control.id}" data-autofocus autocomplete="off">`
         : `<span class="pf-field__text">${escapeHtml(label)}</span>`;
@@ -1306,7 +1306,6 @@
       return `
         <button class="pf-option ${selected ? "is-selected" : ""}" type="button" role="option" aria-selected="${selected}" data-action="select-option" data-id="${control.id}" data-value="${escapeAttr(option.id)}">
           <span class="pf-option__label">${escapeHtml(option.label)}</span>
-          ${selected ? `<span class="pf-option__check" aria-hidden="true">${iconCheck()}</span>` : ""}
         </button>
       `;
     }
