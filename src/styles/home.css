@@ -59,6 +59,10 @@
   display: block;
 }
 
+.tri-home-picker-teaser {
+  display: none;
+}
+
 .tri-home [hidden] {
   display: none !important;
 }
@@ -1220,7 +1224,12 @@
 }
 
 .tri-home-weekly .tri-home-section-heading {
+  align-items: baseline;
   margin-bottom: 32px;
+}
+
+.tri-home-weekly__controls {
+  align-self: center;
 }
 
 .tri-home-weekly .tri-home-section-heading > a {
@@ -1328,30 +1337,6 @@
     background-color 0.25s ease;
 }
 
-.tri-home-weekly-card:hover,
-.tri-home-weekly-card:focus-visible {
-  border-color: transparent !important;
-  outline: none;
-  background-image:
-    radial-gradient(
-      ellipse 46% 130% at 100% 50%,
-      rgb(190 214 0 / 22%) 0%,
-      rgb(190 214 0 / 8%) 46%,
-      transparent 76%
-    ),
-    linear-gradient(var(--tri-bg), var(--tri-bg)),
-    linear-gradient(
-      90deg,
-      var(--tri-accent) 0%,
-      var(--tri-accent) 34%,
-      rgb(190 214 0 / 52%) 46%,
-      rgb(190 214 0 / 12%) 58%,
-      rgb(190 214 0 / 0%) 70%
-    );
-  background-origin: border-box;
-  background-clip: padding-box, padding-box, border-box;
-}
-
 .tri-home-weekly-card__media {
   position: absolute;
   z-index: 0;
@@ -1366,11 +1351,6 @@
   height: 100%;
   object-fit: fill;
   object-position: center bottom;
-}
-
-.tri-home-weekly-card:hover .tri-home-weekly-card__media,
-.tri-home-weekly-card:focus-visible .tri-home-weekly-card__media {
-  opacity: 0;
 }
 
 .tri-home-weekly-card strong {
@@ -1430,10 +1410,41 @@
   fill: currentColor;
 }
 
-.tri-home-weekly-card:hover .tri-home-weekly-card__arrow,
-.tri-home-weekly-card:focus-visible .tri-home-weekly-card__arrow {
-  background: var(--tri-accent);
-  color: var(--tri-bg);
+@media (hover: hover) and (pointer: fine) {
+  .tri-home-weekly-card:hover,
+  .tri-home-weekly-card:focus-visible {
+    border-color: transparent !important;
+    outline: none;
+    background-image:
+      radial-gradient(
+        ellipse 46% 130% at 100% 50%,
+        rgb(190 214 0 / 22%) 0%,
+        rgb(190 214 0 / 8%) 46%,
+        transparent 76%
+      ),
+      linear-gradient(var(--tri-bg), var(--tri-bg)),
+      linear-gradient(
+        90deg,
+        var(--tri-accent) 0%,
+        var(--tri-accent) 34%,
+        rgb(190 214 0 / 52%) 46%,
+        rgb(190 214 0 / 12%) 58%,
+        rgb(190 214 0 / 0%) 70%
+      );
+    background-origin: border-box;
+    background-clip: padding-box, padding-box, border-box;
+  }
+
+  .tri-home-weekly-card:hover .tri-home-weekly-card__media,
+  .tri-home-weekly-card:focus-visible .tri-home-weekly-card__media {
+    opacity: 0;
+  }
+
+  .tri-home-weekly-card:hover .tri-home-weekly-card__arrow,
+  .tri-home-weekly-card:focus-visible .tri-home-weekly-card__arrow {
+    background: var(--tri-accent);
+    color: var(--tri-bg);
+  }
 }
 
 .tri-home-weekly .tri-home-pagination {
@@ -2178,6 +2189,80 @@
 }
 
 @media (max-width: 767px) {
+  .tri-home-picker-teaser {
+    display: block;
+    padding-block: 16px;
+  }
+
+  .tri-home-picker-teaser__card {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 158px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    overflow: hidden;
+    padding: 16px;
+    border-radius: 24px;
+    background: #fff;
+  }
+
+  .tri-home-picker-teaser__background {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+  }
+
+  .tri-home-picker-teaser__title {
+    position: relative;
+    z-index: 1;
+    width: 254px;
+    margin: 0;
+    color: #0d2026;
+    font-family: "TTHover", "TT Hoves", Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 22px;
+    text-transform: uppercase;
+  }
+
+  .tri-home-picker-teaser__title span {
+    color: #4d7613;
+  }
+
+  .tri-home .tri-home-picker-teaser__button {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 20px;
+    border-radius: 31px;
+    background: #bed600;
+    color: #0d2026;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+  }
+
+  .tri-home-picker-teaser__button svg {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
+    fill: currentColor;
+  }
+
+  .tri-home .tri-home-picker-teaser__button:hover,
+  .tri-home .tri-home-picker-teaser__button:focus-visible {
+    background: #d4ed0e;
+  }
+
   .tri-home {
     --tri-container: none;
     padding-bottom: 83px;
@@ -2394,7 +2479,7 @@
 
   .tri-home-categories__slider-shell::before,
   .tri-home-categories__slider-shell::after {
-    width: 72px;
+    display: none;
   }
 
   .tri-home-categories__viewport {
@@ -2503,7 +2588,7 @@
 
   .tri-home-weekly__slider-shell::before,
   .tri-home-weekly__slider-shell::after {
-    width: 72px;
+    display: none;
   }
 
   .tri-home-weekly__track {
@@ -2532,7 +2617,7 @@
   }
 
   .tri-home-weekly .tri-home-pagination {
-    margin-top: 8px;
+    margin-top: 16px;
   }
 
   .tri-home-promo--shop {
@@ -2542,14 +2627,14 @@
   .tri-home-shop {
     width: 358px;
     max-width: calc(100% - 32px);
-    aspect-ratio: 358 / 189;
+    aspect-ratio: auto;
     border-radius: 24px;
   }
 
   .tri-home-shop__content {
     align-items: flex-start;
     justify-content: flex-start;
-    padding: 15px 0 14px 17px;
+    padding: 15px 0 15px 17px;
   }
 
   .tri-home-shop__logo {
@@ -2885,30 +2970,56 @@
 
   .tri-home-bottom-nav a,
   .tri-home-bottom-nav button {
+    position: relative;
     display: flex;
     min-width: 0;
     height: 51px;
     flex: 1 1 0;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding-top: 10px;
+    justify-content: flex-start;
+    gap: 8px;
+    padding-top: 13px;
     border-radius: 0;
     color: var(--tri-muted-dark);
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 500;
+    line-height: 1.2;
+    text-decoration: none;
   }
 
-  .tri-home-bottom-nav a span,
-  .tri-home-bottom-nav button span {
-    font-size: 16px;
+  .tri-home-bottom-nav .tri-home-bottom-nav__icon,
+  .tri-home-bottom-nav .tri-home-bottom-nav__icon svg {
+    display: block;
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
+  }
+
+  .tri-home-bottom-nav .tri-home-bottom-nav__icon svg {
+    fill: currentColor;
+  }
+
+  .tri-home-bottom-nav__label {
+    white-space: nowrap;
   }
 
   .tri-home-bottom-nav .is-active {
+    padding-top: 12px;
     border-top: 1px solid var(--tri-accent) !important;
     background: linear-gradient(to bottom, rgb(190 214 0 / 10%), transparent);
     color: var(--tri-accent);
+  }
+
+  .tri-home-bottom-nav__home-indicator {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    width: 139px;
+    height: 5px;
+    border-radius: 100px;
+    background: #000;
+    transform: translateX(-50%);
   }
 
   .tri-home-modal__dialog {
@@ -3007,7 +3118,7 @@
   }
 
   .tri-home-shop__content {
-    padding: 12px 0 10px 14px;
+    padding: 12px 0 12px 14px;
   }
 
   .tri-home-shop__logo {
@@ -3036,4 +3147,5 @@
     width: 46px;
     height: 46px;
   }
+
 }

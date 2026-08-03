@@ -508,7 +508,6 @@
     template() {
       return `
         <article class="parts-finder ${this.mobileFinderOpen ? "is-mobile-open" : ""}" aria-labelledby="parts-finder-title">
-          ${this.mobileBannerTemplate()}
           <h1 id="parts-finder-title" class="parts-finder__title">${formatDesktopTitle(this.response.title)}</h1>
           <div class="parts-finder__workspace">
             <div class="pf-picker-surface pf-picker-surface--${escapeAttr(this.mode)}">
@@ -520,17 +519,6 @@
           ${this.mobileFinderTemplate()}
         </article>
         ${this.hasFoundVehicle() ? this.vinFoundDisclaimerTemplate() : ""}
-      `;
-    }
-
-    mobileBannerTemplate() {
-      return `
-        <div class="pf-mobile-banner" aria-hidden="false">
-          <h2 class="pf-mobile-banner__title">${formatMobileTitle(this.response.title)}</h2>
-          <button class="pf-mobile-banner__button" type="button" data-action="open-mobile-finder">
-            Подобрать детали
-          </button>
-        </div>
       `;
     }
 
@@ -2347,10 +2335,23 @@
       ...initialState,
       initialVinRequest: config.initialVinRequest,
     });
-    window.LuzarPartsFinder = {
-      ...(window.LuzarPartsFinder || {}),
+    const publicApi = {
+      openMobileFinder: () => partsFinder.openMobileFinder(),
       openVinRequestModal: () => partsFinder.openVinRequestModal(),
     };
+    window.TrialliPartsFinder = {
+      ...(window.TrialliPartsFinder || {}),
+      ...publicApi,
+    };
+    window.LuzarPartsFinder = {
+      ...(window.LuzarPartsFinder || {}),
+      ...publicApi,
+    };
+
+    document.addEventListener("parts-finder:open-mobile", (event) => {
+      event.preventDefault();
+      partsFinder.openMobileFinder();
+    });
 
     document.addEventListener("parts-finder:open-vin-request-modal", (event) => {
       event.preventDefault();

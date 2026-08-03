@@ -3306,3 +3306,16 @@ button.pf-vin-request__car-icon.is-open {
     }
   }
 }
+
+@media (max-width: 767.98px) {
+  .tri-home-picker-section {
+    min-height: 0;
+    height: 0;
+    padding: 0;
+  }
+
+  .parts-finder-shell {
+    min-height: 0;
+    height: 0;
+  }
+}
