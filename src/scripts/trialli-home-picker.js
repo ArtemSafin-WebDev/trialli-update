@@ -623,7 +623,7 @@
         ["Марка", item.brand?.label],
         ["Модель", item.model?.label],
         ["Год", item.year?.label],
-        ["Объём двигателя", item.engine?.label],
+        ["Объем двигателя", item.engine?.label],
         ["Модификация", item.modification?.label],
         ["VIN", item.vin],
         ["Госномер", item.plate],

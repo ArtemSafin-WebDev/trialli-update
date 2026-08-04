@@ -94,7 +94,15 @@ if (root) {
     }
 
     if (target.matches("[data-open-request]")) {
-      setModal(requestModal, true);
+      if (requestModal) {
+        setModal(requestModal, true);
+      } else {
+        document.dispatchEvent(
+          new CustomEvent("parts-finder:open-vin-request-modal", {
+            bubbles: true,
+          }),
+        );
+      }
     }
 
     if (target.matches("[data-close-request]")) {
