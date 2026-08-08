@@ -2530,44 +2530,54 @@ button.pf-vin-request__car-icon.is-open {
     font-family: "TTHover", "TT Hoves", Arial, sans-serif;
   }
 
-  .parts-finder__background {
+  .parts-finder__background-layer {
     position: absolute;
     z-index: 0;
     inset: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
     border-radius: inherit;
-    object-fit: cover;
-    object-position: center top;
+    overflow: hidden;
     pointer-events: none;
   }
 
-  .parts-finder::before,
-  .parts-finder::after {
+  .parts-finder__background {
+    position: absolute;
+    inset: 0 auto auto 0;
+    display: block;
+    width: 100%;
+    height: 284px;
+    object-fit: cover;
+    object-position: center bottom;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%);
+  }
+
+  .parts-finder__background-layer::before,
+  .parts-finder__background-layer::after {
     position: absolute;
     z-index: 1;
-    inset: 0;
-    border-radius: inherit;
+    top: 0;
+    right: 0;
+    left: 0;
     content: "";
     pointer-events: none;
   }
 
-  .parts-finder::before {
+  .parts-finder__background-layer::before {
+    height: 412px;
     background-image:
       linear-gradient(-9.458deg, #ffffff 1.298%, rgba(255, 255, 255, 0) 15.965%),
       linear-gradient(97.66deg, #ffffff 11.444%, rgba(255, 255, 255, 0.612) 37.463%, rgba(255, 255, 255, 0) 53.991%);
   }
 
-  .parts-finder::after {
-    top: var(--pf-background-gradient-start);
-    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #b7b7b7 100%);
+  .parts-finder__background-layer::after {
+    height: 412px;
+    background-image: linear-gradient(3.3757deg, #b7b7b7 7.9107%, rgba(255, 255, 255, 0) 38.941%);
     opacity: 0.82;
   }
 
   .parts-finder__title {
     z-index: 2;
-    width: 966px;
+    width: min(966px, 100%);
     padding: 0;
     background: url("/assets/trialli-home/picker-title-gradient.webp") center / cover no-repeat;
     background-clip: text;
@@ -3047,8 +3057,9 @@ button.pf-vin-request__car-icon.is-open {
 
   .pf-vin-found {
     gap: 12px;
-    margin-top: 0;
-    padding: 0 16px 16px;
+    height: 154px;
+    margin-top: -2px;
+    padding: 24px 16px 16px;
     border: 1px solid #bed600 !important;
     border-top: 0 !important;
     border-radius: 0 0 30px 30px;
@@ -3060,58 +3071,73 @@ button.pf-vin-request__car-icon.is-open {
     border-radius: 0;
   }
 
+  .pf-vin-panel:has(+ .pf-vin-found) .pf-vin-search {
+    min-height: 64px;
+    padding: 15px 15px 0;
+  }
+
   .pf-vin-found__caption {
     color: #fff;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 16px;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.2;
   }
 
   .pf-vin-found__card {
-    min-height: 54px;
-    gap: 24px;
-    padding: 0;
-    border-radius: 0;
-    background: transparent;
+    min-height: 80px;
+    gap: 26px;
+    padding: 16px 24px 16px 16px;
+    border-radius: 30px;
+    background: #162d35;
   }
 
   .pf-vin-found__info {
-    gap: 16px;
+    gap: 24px;
   }
 
   .pf-vin-found__icon {
-    width: 40px;
-    height: 40px;
-    flex-basis: 40px;
-    border-radius: 20px;
-    background: #203840;
+    width: 48px;
+    height: 48px;
+    flex-basis: 48px;
+    border-radius: 16px;
+    background: rgb(190 214 0 / 10%);
     color: #bed600;
   }
 
   .pf-vin-found__grid {
-    grid-template-columns: 80px 100px 60px 130px minmax(170px, 1fr);
+    grid-template-columns: 100px 140px 100px 160px minmax(170px, 1fr);
+    gap: 8px;
+  }
+
+  .pf-vin-found__cell {
     gap: 8px;
   }
 
   .pf-vin-found__label {
-    color: #8a9998;
-    font-size: 10px;
-    line-height: 12px;
+    color: #b2b4b3;
+    font-size: 14px;
+    line-height: 1.2;
   }
 
   .pf-vin-found__cell .pf-vin-found__value {
     color: #fff;
-    font-size: 12px;
-    line-height: 14px;
+    font-size: 14px;
+    line-height: 1.2;
   }
 
   .parts-finder .pf-vin-found__reject {
-    color: #8a9998;
-    font-size: 12px;
+    color: #a1b0b2;
+    font-size: 14px;
   }
 
   .parts-finder .pf-vin-found__reject:hover {
     color: #bed600;
+  }
+
+  @media (max-width: 1199px) {
+    .pf-vin-found__grid {
+      grid-template-columns: 80px 100px 60px 130px minmax(150px, 1fr);
+    }
   }
 
   .pf-vin-request {
@@ -3270,7 +3296,8 @@ button.pf-vin-request__car-icon.is-open {
       );
     }
 
-    .pf-picker-surface--vin > .pf-vin-panel {
+    .pf-picker-surface--vin > .pf-vin-body {
+      position: relative;
       z-index: 4;
       margin-top: -46px;
       padding-top: 46px;
@@ -3302,6 +3329,19 @@ button.pf-vin-request__car-icon.is-open {
         curve to 30px 46px with 0 59.431px / 13.431px 46px,
         close
       );
+    }
+
+    .pf-picker-surface--vin > .pf-vin-body > .pf-vin-panel {
+      z-index: auto;
+      border: 0 !important;
+      border-radius: 0;
+      background: transparent;
+    }
+
+    .pf-picker-surface--vin > .pf-vin-body > .pf-vin-found {
+      border: 0 !important;
+      border-radius: 0;
+      background: transparent;
     }
 
     .tri-home .pf-tab[aria-selected="true"] {
@@ -3639,9 +3679,9 @@ button.pf-vin-request__car-icon.is-open {
   }
 
   .tri-home .pf-mobile-tag.is-selected {
-    border-color: #bed600 !important;
-    background: #bed600;
-    color: #0d2026;
+    border: 1px solid #bed600 !important;
+    background: transparent !important;
+    color: #ffffff;
   }
 
   .tri-home .pf-mobile-tag--more {

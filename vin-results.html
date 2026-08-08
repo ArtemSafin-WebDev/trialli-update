@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>Результаты подбора по VIN — TRIALLI</title>
+    <!-- @include /src/partials/site-head.html -->
+    <link rel="stylesheet" href="/src/styles/vin-results.css" />
+  </head>
+  <body id="top" class="tri-home-body">
+    <div class="tri-home tri-results" data-tri-home data-site-shell data-catalog-results>
+      <a class="tri-home__skip" href="#vin-results-main">Перейти к результатам</a>
+
+      <!-- @include /src/partials/site-header.html -->
+
+      <main id="vin-results-main">
+        <script>
+          window.PartsFinderConfig = {
+            initialMode: "vin",
+            initialVin: "Y6DTF69Y080144158",
+            initialVinResult: "found",
+          };
+        </script>
+        <!-- @include /src/partials/parts-finder.html -->
+
+        <section class="tri-results-mobile-car" aria-label="Найденный автомобиль">
+          <div class="tri-results-mobile-heading">
+            <a href="/" aria-label="Вернуться назад">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11H6.8l4.1-4.1-1.4-1.4L3 12l6.5 6.5 1.4-1.4L6.8 13h13.7z"/></svg>
+            </a>
+            <span>Найдено 48 товаров</span>
+            <button type="button" aria-label="Закрыть результаты">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.47 3.53 3.53 3.53 3.53-3.53.94.94L8.94 8l3.53 3.53-.94.94L8 8.94l-3.53 3.53-.94-.94L7.06 8 3.53 4.47z"/></svg>
+            </button>
+          </div>
+          <div class="tri-results-mobile-car__card">
+            <span class="tri-results-mobile-car__visual"><img src="/assets/trialli-catalog/found-car.png" alt="" /></span>
+            <strong>Audi A4 B8 (08-), 2015, 2.0 бензиновый, A4 2.0 TFSI quattro 190 л.с.</strong>
+          </div>
+          <button class="tri-results-mobile-car__reject" type="button" data-open-request>
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.6 9.9a.7.7 0 0 1 .5.2l.9 1 .9-1a.7.7 0 1 1 1 1l-1 .9 1 .9a.7.7 0 1 1-1 1l-.9-1-.9 1a.7.7 0 1 1-1-1l1-.9-1-.9a.7.7 0 0 1 .5-1.2ZM10.9 2c.5 0 .9.3 1.2.7l2.5 4.3a.7.7 0 0 1-1.2.7l-2.5-4.4H5.1L2.7 7.5v3l.7 1.5h1.3v-.7c0-.3.3-.6.6-.6H8A.7.7 0 1 1 8 12H6a1.3 1.3 0 0 1-1.3 1.3H3.4a1.3 1.3 0 0 1-1.2-.7l-.7-1.5a1.3 1.3 0 0 1-.2-.6v-3c0-.2.1-.5.2-.7l2.4-4.1c.2-.4.7-.7 1.2-.7h5.8Z"/></svg>
+            <span>Не моё авто</span>
+          </button>
+        </section>
+
+        <section class="tri-results-catalog" aria-labelledby="vin-results-title">
+          <div class="tri-home-container">
+            <header class="tri-results-head">
+              <div class="tri-results-title">
+                <p>Результаты подбора по VIN</p>
+                <h1 id="vin-results-title">Y6DTF69Y080144158</h1>
+              </div>
+              <form class="tri-results-search" role="search" data-catalog-search>
+                <label class="tri-home-visually-hidden" for="vin-product-search">Искать в подобранных товарах</label>
+                <input id="vin-product-search" type="search" placeholder="Найти товары для вашего авто" autocomplete="off" />
+                <button type="button" class="tri-results-search__clear" aria-label="Очистить поиск" data-search-clear hidden>
+                  <img src="/assets/vin-results/search-clear.svg" alt="" />
+                </button>
+                <button class="tri-results-search__submit" type="submit" aria-label="Найти">
+                  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.99881 1.33301C8.06279 1.33294 9.10588 1.63252 10.0076 2.19727C10.9091 2.76193 11.6331 3.56935 12.0974 4.52637C12.5618 5.48363 12.7472 6.5526 12.6326 7.61035C12.518 8.66801 12.1085 9.67228 11.45 10.5078L13.8846 12.9424C14.0059 13.068 14.0725 13.2365 14.0711 13.4111C14.0696 13.5859 13.9994 13.7533 13.8758 13.877C13.7523 14.0004 13.5856 14.0707 13.4109 14.0723C13.2361 14.0738 13.0669 14.0072 12.9412 13.8857L10.5066 11.4502C9.79692 12.0095 8.96406 12.3917 8.07694 12.5635C7.18984 12.7353 6.2742 12.6924 5.40702 12.4385C4.5399 12.1846 3.74592 11.7266 3.09159 11.1035C2.43732 10.4804 1.94128 9.71008 1.6453 8.85645C1.3493 8.00277 1.26226 7.09069 1.39041 6.19629C1.51861 5.30189 1.85876 4.45103 2.3826 3.71484C2.90651 2.97862 3.59906 2.37809 4.40213 1.96387C5.2051 1.54975 6.09535 1.33311 6.99881 1.33301ZM6.99881 2.66699C5.84959 2.66703 4.74698 3.12292 3.93436 3.93555C3.12174 4.7482 2.6658 5.85076 2.6658 7C2.6658 8.14924 3.12174 9.2518 3.93436 10.0645C4.74698 10.8771 5.84959 11.333 6.99881 11.333C8.14805 11.333 9.25061 10.8771 10.0633 10.0645C10.8759 9.2518 11.3318 8.14927 11.3318 7C11.3318 5.85073 10.8759 4.7482 10.0633 3.93555C9.25061 3.12293 8.14805 2.66699 6.99881 2.66699Z" /></svg>
+                </button>
+              </form>
+              <div class="tri-results-sort" data-sort>
+                <button class="tri-results-sort__toggle" type="button" aria-haspopup="listbox" aria-expanded="false" data-sort-toggle>
+                  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M14.4717 5.52832L13.5283 6.47168L12 4.94238V13.333H10.667V4.94238L9.1377 6.47168L8.19531 5.52832L10.8623 2.8623H11.8047L14.4717 5.52832ZM5.33301 11.0576L6.8623 9.52832L7.80469 10.4717L5.1377 13.1377H4.19531L1.52832 10.4717L2.47168 9.52832L4 11.0576V2.66699H5.33301V11.0576Z"/></svg>
+                  <span data-sort-label>По популярности</span>
+                </button>
+                <div class="tri-results-sort__popover" data-sort-popover>
+                  <button class="tri-results-modal-backdrop" type="button" aria-label="Закрыть сортировку" data-sort-close></button>
+                  <div class="tri-results-sort__menu" role="dialog" aria-modal="true" aria-labelledby="sort-title">
+                    <header><h2 id="sort-title">Сортировать</h2><button type="button" aria-label="Закрыть" data-sort-close>×</button></header>
+                    <div role="listbox">
+                      <button class="is-active" type="button" role="option" aria-selected="true" data-sort-value="popular"><i></i>По популярности</button>
+                      <button type="button" role="option" aria-selected="false" data-sort-value="price-asc"><i></i>Сначала дешевле</button>
+                      <button type="button" role="option" aria-selected="false" data-sort-value="price-desc"><i></i>Сначала дороже</button>
+                      <button type="button" role="option" aria-selected="false" data-sort-value="new"><i></i>По новизне</button>
+                      <button type="button" role="option" aria-selected="false" data-sort-value="discount"><i></i>По величине скидки</button>
+                    </div>
+                    <button class="tri-results-sort__apply" type="button" data-sort-apply>Выбрать</button>
+                  </div>
+                </div>
+              </div>
+            </header>
+
+            <aside class="tri-results-disclaimer">
+              <span>!</span>
+              <p>Инструменты подбора деталей на сайте не гарантируют 100% точность. Проверяйте совместимость с помощью оригинальных автомобильных каталогов.</p>
+            </aside>
+
+            <div class="tri-results-mobile-tools">
+              <button class="tri-results-filter-open" type="button" aria-label="Открыть фильтры" aria-controls="catalog-filters" aria-expanded="false" data-filter-open>
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.3 2.7v1.2H2.7V2.7zm-2 4.7v1.2H4.7V7.4zm-2 4.7v1.2H6.7v-1.2z"/></svg>
+                <span data-filter-count hidden>0</span>
+              </button>
+              <div data-mobile-sort-host></div>
+              <div class="tri-results-view" aria-label="Вид товаров">
+                <button class="is-active" type="button" aria-label="Плитка" data-view="grid">▦</button>
+                <button type="button" aria-label="Список" data-view="list">☷</button>
+              </div>
+            </div>
+
+            <div class="tri-results-layout">
+              <button class="tri-results-modal-backdrop tri-results-filter-backdrop" type="button" aria-label="Закрыть фильтры" data-filter-close></button>
+              <aside class="tri-results-filters" id="catalog-filters" aria-label="Фильтры каталога">
+                <header class="tri-results-filters__mobile-head">
+                  <button type="button" aria-label="Назад" data-filter-close>←</button>
+                  <h2>Фильтры</h2>
+                  <button type="button" aria-label="Закрыть" data-filter-close>×</button>
+                </header>
+                <p class="tri-results-filters__summary">Всего товаров: <span data-total>106</span></p>
+
+                <fieldset class="tri-results-filter" data-filter="groups">
+                  <legend>Доступные группы товаров</legend>
+                  <div class="tri-results-filter__search">
+                    <label class="tri-home-visually-hidden" for="filter-search-groups">Поиск по фильтру Доступные группы товаров</label>
+                    <div class="tri-results-filter__search-field">
+                      <input class="tri-results-filter__search-input" id="filter-search-groups" type="search" placeholder="Начните ввод..." autocomplete="off" data-filter-search="groups" />
+                      <button class="tri-results-filter__search-clear" type="button" aria-label="Очистить поиск по группам товаров" data-filter-search-clear hidden>
+                        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.47 3.53 3.53 3.53 3.53-3.53.94.94L8.94 8l3.53 3.53-.94.94L8 8.94l-3.53 3.53-.94-.94L7.06 8 3.53 4.47z" /></svg>
+                      </button>
+                      <button class="tri-results-filter__search-button" type="button" aria-label="Искать по группам товаров" data-filter-search-submit>
+                        <span class="tri-home-icon tri-home-icon--search" aria-hidden="true"></span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="tri-results-filter__options">
+                    <label><input type="checkbox" value="brakes" /><i></i><span>Тормозная система</span></label>
+                    <label><input type="checkbox" value="shock" /><i></i><span>Амортизаторы и опоры</span></label>
+                    <label><input type="checkbox" value="belts" /><i></i><span>Ремни и ролики</span></label>
+                    <label><input type="checkbox" value="exhaust" /><i></i><span>Система выпуска отработавших газов</span></label>
+                    <label><input type="checkbox" value="hubs" /><i></i><span>Ступицы и ремкомплекты</span></label>
+                    <label><input type="checkbox" value="clutch" /><i></i><span>Сцепление</span></label>
+                    <label><input type="checkbox" value="cv" /><i></i><span>ШРУСы и приводы</span></label>
+                    <label class="is-extra"><input type="checkbox" value="bearings" /><i></i><span>Подшипники</span></label>
+                    <label class="is-extra"><input type="checkbox" value="pipes" /><i></i><span>Трубопроводы кондиционера</span></label>
+                    <label class="is-extra"><input type="checkbox" value="sensors" /><i></i><span>Датчики давления хладагента</span></label>
+                    <label class="is-extra"><input type="checkbox" value="caps" /><i></i><span>Крышки и пробки</span></label>
+                    <label class="is-extra"><input type="checkbox" value="filters" /><i></i><span>Фильтры</span></label>
+                    <label class="is-extra"><input type="checkbox" value="gaskets" /><i></i><span>Прокладки двигателя</span></label>
+                  </div>
+                  <p class="tri-results-filter__empty" data-filter-empty>Ничего не найдено</p>
+                  <button class="tri-results-filter__more" type="button" aria-expanded="false" data-filter-more data-more-label="Еще 6">
+                    <span>Еще 6</span>
+                    <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                      <path d="M13.8047 5.80566L8.47168 11.1387H7.52832L2.19531 5.80566L3.1377 4.86328L8 9.72461L12.8623 4.86328L13.8047 5.80566Z" />
+                    </svg>
+                  </button>
+                </fieldset>
+
+                <fieldset class="tri-results-filter" data-filter="teeth">
+                  <legend>Кол-во зубьев</legend>
+                  <div class="tri-results-filter__chips">
+                    <label><input type="radio" name="teeth" value="01" /><span>variant 01</span></label>
+                    <label><input type="radio" name="teeth" value="02" /><span>variant 02</span></label>
+                    <label><input type="radio" name="teeth" value="03" /><span>variant 03</span></label>
+                    <label><input type="radio" name="teeth" value="04" /><span>variant 04</span></label>
+                    <label><input type="radio" name="teeth" value="05" /><span>variant 05</span></label>
+                    <label><input type="radio" name="teeth" value="06" /><span>variant 06</span></label>
+                  </div>
+                </fieldset>
+
+                <fieldset class="tri-results-filter" data-filter="power">
+                  <legend>Мощность, кВт</legend>
+                  <div class="tri-results-filter__search">
+                    <label class="tri-home-visually-hidden" for="filter-search-power">Поиск по фильтру Мощность, кВт</label>
+                    <div class="tri-results-filter__search-field">
+                      <input class="tri-results-filter__search-input" id="filter-search-power" type="search" placeholder="Начните ввод..." autocomplete="off" data-filter-search="power" />
+                      <button class="tri-results-filter__search-clear" type="button" aria-label="Очистить поиск по мощности" data-filter-search-clear hidden>
+                        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.47 3.53 3.53 3.53 3.53-3.53.94.94L8.94 8l3.53 3.53-.94.94L8 8.94l-3.53 3.53-.94-.94L7.06 8 3.53 4.47z" /></svg>
+                      </button>
+                      <button class="tri-results-filter__search-button" type="button" aria-label="Искать по мощности" data-filter-search-submit>
+                        <span class="tri-home-icon tri-home-icon--search" aria-hidden="true"></span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="tri-results-filter__options tri-results-filter__options--radio">
+                    <label><input type="radio" name="power" value="01" /><i></i><span>Variant 01</span></label>
+                    <label><input type="radio" name="power" value="02" /><i></i><span>Variant 02</span></label>
+                    <label><input type="radio" name="power" value="03" /><i></i><span>Variant 03</span></label>
+                    <label><input type="radio" name="power" value="04" /><i></i><span>Variant 04</span></label>
+                    <label><input type="radio" name="power" value="05" /><i></i><span>Variant 05</span></label>
+                    <label><input type="radio" name="power" value="06" /><i></i><span>Variant 06</span></label>
+                    <label><input type="radio" name="power" value="07" /><i></i><span>Variant 07</span></label>
+                    <label class="is-extra"><input type="radio" name="power" value="08" /><i></i><span>Variant 08</span></label>
+                    <label class="is-extra"><input type="radio" name="power" value="09" /><i></i><span>Variant 09</span></label>
+                    <label class="is-extra"><input type="radio" name="power" value="10" /><i></i><span>Variant 10</span></label>
+                    <label class="is-extra"><input type="radio" name="power" value="11" /><i></i><span>Variant 11</span></label>
+                    <label class="is-extra"><input type="radio" name="power" value="12" /><i></i><span>Variant 12</span></label>
+                    <label class="is-extra"><input type="radio" name="power" value="13" /><i></i><span>Variant 13</span></label>
+                    <label class="is-extra"><input type="radio" name="power" value="14" /><i></i><span>Variant 14</span></label>
+                    <label class="is-extra"><input type="radio" name="power" value="15" /><i></i><span>Variant 15</span></label>
+                    <label class="is-extra"><input type="radio" name="power" value="16" /><i></i><span>Variant 16</span></label>
+                    <label class="is-extra"><input type="radio" name="power" value="17" /><i></i><span>Variant 17</span></label>
+                    <label class="is-extra"><input type="radio" name="power" value="18" /><i></i><span>Variant 18</span></label>
+                  </div>
+                  <p class="tri-results-filter__empty" data-filter-empty>Ничего не найдено</p>
+                  <button class="tri-results-filter__more" type="button" aria-expanded="false" data-filter-more data-more-label="Еще 134">
+                    <span>Еще 134</span>
+                    <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                      <path d="M13.8047 5.80566L8.47168 11.1387H7.52832L2.19531 5.80566L3.1377 4.86328L8 9.72461L12.8623 4.86328L13.8047 5.80566Z" />
+                    </svg>
+                  </button>
+                </fieldset>
+
+                <label class="tri-results-sale"><span>Товары со скидкой</span><input type="checkbox" data-sale /><i></i></label>
+
+                <fieldset class="tri-results-filter tri-results-price" data-price>
+                  <legend>Цена, ₽</legend>
+                  <div class="tri-results-price__content">
+                    <div class="tri-results-price__inputs">
+                      <input class="tri-results-price__input" type="text" inputmode="numeric" pattern="[0-9 ]*" value="459" aria-label="Цена от" data-price-input="min" />
+                      <input class="tri-results-price__input" type="text" inputmode="numeric" pattern="[0-9 ]*" value="9 999 999" aria-label="Цена до" data-price-input="max" />
+                    </div>
+                    <div class="tri-results-price__slider">
+                      <span class="tri-results-price__track" aria-hidden="true"></span>
+                      <button class="tri-results-price__handle tri-results-price__handle--min" type="button" role="slider" aria-label="Минимальная цена" aria-valuemin="459" aria-valuemax="9999999" aria-valuenow="459" data-price-handle="min"></button>
+                      <button class="tri-results-price__handle tri-results-price__handle--max" type="button" role="slider" aria-label="Максимальная цена" aria-valuemin="459" aria-valuemax="9999999" aria-valuenow="9999999" data-price-handle="max"></button>
+                      <input class="tri-results-price__range" type="range" min="459" max="9999999" value="459" tabindex="-1" aria-hidden="true" data-price-range="min" hidden />
+                      <input class="tri-results-price__range" type="range" min="459" max="9999999" value="9999999" tabindex="-1" aria-hidden="true" data-price-range="max" hidden />
+                    </div>
+                  </div>
+                </fieldset>
+
+                <button class="tri-results-reset" type="button" data-reset-filters disabled>
+                  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.3 1.6A6.7 6.7 0 0 1 12.7 3V1.7H14V5l-.7.7H10V4.3h1.9A5.3 5.3 0 1 0 12.6 10.7l1.2.6A6.7 6.7 0 1 1 6.3 1.6Z"/></svg>
+                  Сбросить фильтры
+                </button>
+                <div class="tri-results-filters__mobile-actions">
+                  <button type="button" data-reset-filters>Сбросить</button>
+                  <button type="button" data-filter-apply>Показать <span data-mobile-total>106</span></button>
+                </div>
+              </aside>
+
+              <div class="tri-results-main">
+                <div class="tri-results-active" data-active-filters>
+                  <span>Фильтры:</span>
+                  <div data-active-tags></div>
+                </div>
+                <div class="tri-results-products" id="catalog-products" data-products></div>
+                <!-- @include /src/partials/products-more-button.html -->
+
+                <aside class="tri-results-request">
+                  <span class="tri-results-request__art"><img src="/assets/trialli-home/request-envelope.png" alt="" /></span>
+                  <div><strong>Не уверены в выборе? Оставьте заявку на индивидуальный подбор</strong><small>Наши специалисты помогут подобрать подходящую деталь для вашего авто</small></div>
+                  <button type="button" data-open-request>Запросить подбор</button>
+                </aside>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- @include /src/partials/site-footer.html -->
+      <!-- @include /src/partials/site-bottom-nav.html -->
+      <a id="back-to-top" href="#top" aria-label="Наверх"></a>
+      <!-- @include /src/partials/request-modal.html -->
+    </div>
+
+    <!-- @include /src/partials/site-scripts.html -->
+    <script type="module" src="/src/scripts/vin-results.js"></script>
+  </body>
+</html>

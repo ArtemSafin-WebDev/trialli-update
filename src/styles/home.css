@@ -1520,7 +1520,7 @@
   min-width: 0;
 }
 
-.tri-home-product-card {
+.tri-product-card {
   display: flex;
   min-width: 0;
   height: 430px;
@@ -1535,7 +1535,7 @@
   display: block;
 }
 
-.tri-home-product-card__media {
+.tri-product-card__media {
   display: flex;
   height: 264px;
   flex-direction: column;
@@ -1546,7 +1546,7 @@
   background: #fff;
 }
 
-.tri-home-product-card__tags {
+.tri-product-card__tags {
   display: flex;
   width: 100%;
   flex: 0 0 28px;
@@ -1555,7 +1555,7 @@
   padding: 4px 0 0 4px;
 }
 
-.tri-home-product-card__tag {
+.tri-product-card__tag {
   padding: 5px 10px;
   border-radius: 16px;
   background: var(--tri-accent);
@@ -1565,42 +1565,42 @@
   line-height: 14px;
 }
 
-.tri-home-product-card__tag--low {
+.tri-product-card__tag--low {
   background: #dae4e5;
 }
 
-.tri-home-product-card__discount,
-.tri-home-product-card__discount svg {
+.tri-product-card__discount,
+.tri-product-card__discount svg {
   width: 24px;
   height: 24px;
   flex: 0 0 24px;
 }
 
-.tri-home-product-card__gallery {
+.tri-product-card__gallery {
   width: 100%;
   min-height: 0;
   flex: 1 1 auto;
 }
 
-.tri-home-product-card__gallery .swiper-slide {
+.tri-product-card__gallery .swiper-slide {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.tri-home-product-card__image {
+.tri-product-card__image {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
-.tri-home-product-card__thumbs {
+.tri-product-card__thumbs {
   width: 190px;
   height: 60px;
   flex: 0 0 60px;
 }
 
-.tri-home-product-card__thumb {
+.tri-product-card__thumb {
   position: relative;
   display: block;
   width: 60px;
@@ -1611,18 +1611,18 @@
   background: #fff;
 }
 
-.tri-home-product-card__thumb img {
+.tri-product-card__thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.tri-home-product-card__thumb.swiper-slide-thumb-active,
-.tri-home-product-card__thumb.is-active {
+.tri-product-card__thumb.swiper-slide-thumb-active,
+.tri-product-card__thumb.is-active {
   border-color: #ecf4f8 !important;
 }
 
-.tri-home-product-card__thumb.is-active::after {
+.tri-product-card__thumb.is-active::after {
   position: absolute;
   z-index: 1;
   inset: 0;
@@ -1632,7 +1632,7 @@
   pointer-events: none;
 }
 
-.tri-home-product-card__video {
+.tri-product-card__video {
   position: absolute;
   z-index: 2;
   inset: 0;
@@ -1642,12 +1642,12 @@
   pointer-events: none;
 }
 
-.tri-home-product-card__video img {
+.tri-product-card__video img {
   width: 16px;
   height: 16px;
 }
 
-.tri-home-product-card__body {
+.tri-product-card__body {
   display: flex;
   height: 166px;
   flex-direction: column;
@@ -1657,20 +1657,20 @@
   background: var(--tri-surface);
 }
 
-.tri-home-product-card__details {
+.tri-product-card__details {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.tri-home-product-card__title {
+.tri-product-card__title {
   color: #fff;
   font-size: 16px;
   font-weight: 500;
   line-height: 1.15;
 }
 
-.tri-home .tri-home-product-card__code {
+.tri-product-card__code {
   display: flex;
   width: max-content;
   align-items: center;
@@ -1681,29 +1681,29 @@
   line-height: 1.2;
 }
 
-.tri-home-product-card__code:hover,
-.tri-home-product-card__code:focus-visible {
+.tri-product-card__code:hover,
+.tri-product-card__code:focus-visible {
   color: #fff;
 }
 
-.tri-home-product-card__copy,
-.tri-home-product-card__copy svg {
+.tri-product-card__copy,
+.tri-product-card__copy svg {
   display: block;
   width: 10px;
   height: 10px;
 }
 
-.tri-home-product-card__copy {
+.tri-product-card__copy {
   color: var(--tri-accent);
 }
 
-.tri-home-product-card__copy svg,
-.tri-home-product-card__add svg,
-.tri-home-product-card__counter svg {
+.tri-product-card__copy svg,
+.tri-product-card__add svg,
+.tri-product-card__counter svg {
   fill: currentColor;
 }
 
-.tri-home-product-card__divider {
+.tri-product-card__divider {
   display: block;
   width: 100%;
   height: 1px;
@@ -1711,13 +1711,13 @@
   background: rgb(255 255 255 / 10%);
 }
 
-.tri-home-product-card__price-row {
+.tri-product-card__price-row {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.tri-home-product-card__prices {
+.tri-product-card__prices {
   display: flex;
   min-width: 0;
   flex: 1 1 auto;
@@ -1725,7 +1725,7 @@
   gap: 8px;
 }
 
-.tri-home-product-card__price {
+.tri-product-card__price {
   color: #fff;
   font-size: 18px;
   font-weight: 500;
@@ -1733,7 +1733,7 @@
   white-space: nowrap;
 }
 
-.tri-home-product-card__old-price {
+.tri-product-card__old-price {
   color: var(--tri-muted-dark);
   font-size: 12px;
   font-weight: 500;
@@ -1742,12 +1742,12 @@
   white-space: nowrap;
 }
 
-.tri-home-product-card__cart {
+.tri-product-card__cart {
   flex: 0 0 auto;
   margin: 0;
 }
 
-.tri-home-product-card__add {
+.tri-product-card__add {
   display: grid;
   width: 40px;
   height: 40px;
@@ -1758,12 +1758,12 @@
   color: var(--tri-bg) !important;
 }
 
-.tri-home-product-card__add svg {
+.tri-product-card__add svg {
   width: 16px;
   height: 16px;
 }
 
-.tri-home-product-card__counter {
+.tri-product-card__counter {
   display: inline-flex;
   width: 104px;
   height: 40px;
@@ -1775,12 +1775,12 @@
   color: var(--tri-bg);
 }
 
-.tri-home-product-card__counter[hidden],
-.tri-home-product-card__add[hidden] {
+.tri-product-card__counter[hidden],
+.tri-product-card__add[hidden] {
   display: none;
 }
 
-.tri-home-product-card__counter button {
+.tri-product-card__counter button {
   display: grid;
   width: 32px;
   height: 32px;
@@ -1790,16 +1790,16 @@
   background: rgb(13 32 38 / 10%);
 }
 
-.tri-home-product-card__counter button:hover {
+.tri-product-card__counter button:hover {
   background: rgb(13 32 38 / 20%);
 }
 
-.tri-home-product-card__counter svg {
+.tri-product-card__counter svg {
   width: 16px;
   height: 16px;
 }
 
-.tri-home .tri-home-product-card__quantity {
+.tri-product-card__quantity {
   width: 28px;
   min-width: 0;
   padding: 0;
@@ -1812,13 +1812,13 @@
   font-weight: 500;
 }
 
-.tri-home-product-card__quantity::-webkit-inner-spin-button,
-.tri-home-product-card__quantity::-webkit-outer-spin-button {
+.tri-product-card__quantity::-webkit-inner-spin-button,
+.tri-product-card__quantity::-webkit-outer-spin-button {
   margin: 0;
   appearance: none;
 }
 
-.tri-home .tri-home-more {
+.tri-home .tri-products-more {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1832,13 +1832,13 @@
   line-height: 16px;
 }
 
-.tri-home-more svg {
+.tri-products-more svg {
   width: 16px;
   height: 16px;
   fill: currentColor;
 }
 
-.tri-home .tri-home-more:hover {
+.tri-home .tri-products-more:hover {
   border-color: var(--tri-accent) !important;
   color: var(--tri-accent);
 }
@@ -2140,21 +2140,21 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .tri-home-product-card__body {
+  .tri-product-card__body {
     gap: 14px;
   }
 
-  .tri-home-product-card__prices {
+  .tri-product-card__prices {
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
   }
 
-  .tri-home-product-card__counter {
+  .tri-product-card__counter {
     width: 92px;
   }
 
-  .tri-home-product-card__counter button {
+  .tri-product-card__counter button {
     width: 28px;
     height: 28px;
     flex-basis: 28px;
@@ -2752,7 +2752,7 @@
     gap: 8px 4px;
   }
 
-  .tri-home-product-card {
+  .tri-product-card {
     height: 333px;
   }
 
@@ -2764,93 +2764,93 @@
     display: block;
   }
 
-  .tri-home-product-card__media {
+  .tri-product-card__media {
     height: 187px;
     padding: 0;
     border-radius: 16px 16px 0 0;
   }
 
-  .tri-home-product-card__tags {
+  .tri-product-card__tags {
     z-index: 2;
     flex-basis: 28px;
     margin-bottom: -16px;
     padding: 8px 0 0 8px;
   }
 
-  .tri-home-product-card__discount,
-  .tri-home-product-card__discount svg {
+  .tri-product-card__discount,
+  .tri-product-card__discount svg {
     width: 20px;
     height: 20px;
     flex-basis: 20px;
   }
 
-  .tri-home-product-card__tag {
+  .tri-product-card__tag {
     padding: 3px 8px;
     font-size: 10px;
     line-height: 14px;
   }
 
-  .tri-home-product-card__thumbs {
+  .tri-product-card__thumbs {
     display: none;
   }
 
-  .tri-home-product-card__body {
+  .tri-product-card__body {
     height: 146px;
     gap: 15px;
     padding: 8px;
     border-radius: 0 0 16px 16px;
   }
 
-  .tri-home-product-card__title {
+  .tri-product-card__title {
     font-size: 14px;
     line-height: 16px;
   }
 
-  .tri-home .tri-home-product-card__code {
+  .tri-product-card__code {
     font-size: 12px;
   }
 
-  .tri-home-product-card__price-row {
+  .tri-product-card__price-row {
     gap: 8px;
   }
 
-  .tri-home-product-card__prices {
+  .tri-product-card__prices {
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     gap: 6px;
   }
 
-  .tri-home-product-card__price {
+  .tri-product-card__price {
     font-size: 16px;
     line-height: 1.15;
   }
 
-  .tri-home-product-card__old-price {
+  .tri-product-card__old-price {
     font-size: 12px;
   }
 
-  .tri-home-product-card__add {
+  .tri-product-card__add {
     width: 40px;
     height: 40px;
   }
 
-  .tri-home-product-card__counter {
+  .tri-product-card__counter {
     width: 92px;
   }
 
-  .tri-home-product-card__counter button {
+  .tri-product-card__counter button {
     width: 28px;
     height: 28px;
     flex-basis: 28px;
   }
 
-  .tri-home .tri-home-more {
+  .tri-home .tri-products-more {
     width: 100%;
     margin: 16px auto 24px;
   }
 
-  .tri-home-more svg {
+  .tri-products-more svg {
     display: none;
   }
 

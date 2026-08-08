@@ -511,20 +511,21 @@
     template() {
       return `
         <article class="parts-finder ${this.mobileFinderOpen ? "is-mobile-open" : ""}" aria-labelledby="parts-finder-title">
-          <img
-            class="parts-finder__background"
-            src="/assets/trialli-home/picker-background-desktop.webp"
-            width="2172"
-            height="724"
-            alt=""
-            aria-hidden="true"
-            decoding="async"
-          />
+          <div class="parts-finder__background-layer" aria-hidden="true">
+            <img
+              class="parts-finder__background"
+              src="/assets/trialli-home/picker-background-desktop.webp"
+              width="2172"
+              height="724"
+              alt=""
+              decoding="async"
+            />
+          </div>
           <h1 id="parts-finder-title" class="parts-finder__title">${formatDesktopTitle(this.response.title)}</h1>
           <div class="parts-finder__workspace">
             <div class="pf-picker-surface pf-picker-surface--${escapeAttr(this.mode)}">
               ${this.tabsTemplate()}
-              ${this.mode === "vin" ? this.vinTemplate() : this.inputGroupTemplate()}
+              ${this.mode === "vin" ? `<div class="pf-vin-body">${this.vinTemplate()}</div>` : this.inputGroupTemplate()}
             </div>
             ${this.historyOpen === "tabs" && this.hasHistoryFeature() ? this.historyTemplate("tabs") : ""}
           </div>
@@ -961,7 +962,7 @@
           <p class="pf-vin-found__caption">По вашим данным нашли авто:</p>
           <div class="pf-vin-found__card">
             <div class="pf-vin-found__info">
-              <div class="pf-vin-found__icon" aria-hidden="true"><img class="pf-vin-icon" src="/assets/trialli-home/picker-auto.svg" alt=""></div>
+              <div class="pf-vin-found__icon" aria-hidden="true">${iconVinVehicle()}</div>
               <div class="pf-vin-found__grid">
                 ${cells
                   .map(
