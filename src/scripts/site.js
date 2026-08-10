@@ -34,12 +34,36 @@ export function showToast(message) {
 if (root) {
   const requestModal = root.querySelector("[data-request-modal]");
   const siteHeader = root.querySelector("[data-tri-home-header]");
+  const stickyHeaderSlot = root.querySelector("[data-tri-home-header-slot]");
+  const stickyHeader = root.querySelector("[data-tri-home-header-sticky]");
   const headerMenu = root.querySelector("[data-header-menu]");
   const headerMenuToggle = root.querySelector("[data-header-menu-toggle]");
   const headerMenuBackdrop = root.querySelector(
     "[data-header-menu-backdrop]",
   );
   const mobileHeaderMedia = window.matchMedia("(max-width: 767px)");
+  const stickyHeaderMedia = window.matchMedia("(min-width: 1024px)");
+  let stickyHeaderStart = 0;
+  let stickyHeaderFrame = 0;
+
+  const updateStickyHeader = () => {
+    stickyHeaderFrame = 0;
+    siteHeader?.classList.toggle(
+      "is-stuck",
+      stickyHeaderMedia.matches && window.scrollY >= stickyHeaderStart,
+    );
+  };
+
+  const requestStickyHeaderUpdate = () => {
+    if (stickyHeaderFrame) return;
+    stickyHeaderFrame = window.requestAnimationFrame(updateStickyHeader);
+  };
+
+  const measureStickyHeader = () => {
+    if (!siteHeader || !stickyHeaderSlot || !stickyHeader) return;
+    stickyHeaderStart = stickyHeaderSlot.offsetTop;
+    requestStickyHeaderUpdate();
+  };
 
   const updatePageScrollLock = () => {
     const modalOpen = Boolean(root.querySelector(".tri-home-modal:not([hidden])"));
@@ -131,6 +155,11 @@ if (root) {
   mobileHeaderMedia.addEventListener("change", (event) => {
     if (!event.matches) setHeaderMenu(false);
   });
+
+  window.addEventListener("scroll", requestStickyHeaderUpdate, { passive: true });
+  window.addEventListener("resize", measureStickyHeader);
+  stickyHeaderMedia.addEventListener("change", measureStickyHeader);
+  measureStickyHeader();
 
   root.querySelector('[data-site-nav="home"]')?.classList.toggle(
     "is-active",

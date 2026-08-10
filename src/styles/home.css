@@ -235,7 +235,7 @@
   position: relative;
   z-index: 50;
   display: flex;
-  height: 148px;
+  height: 88px;
   flex-direction: column;
   align-items: center;
   padding-bottom: 16px;
@@ -248,6 +248,7 @@
   height: 60px;
   align-items: center;
   justify-content: space-between;
+  margin-inline: auto;
 }
 
 .tri-home-header__utility-nav {
@@ -415,6 +416,90 @@
 
 .tri-home-header__menu-backdrop {
   display: none;
+}
+
+.tri-home-header__sticky {
+  display: contents;
+}
+
+.tri-home-header__slot {
+  display: contents;
+}
+
+@media (min-width: 1024px) {
+  .tri-home-header__slot {
+    position: relative;
+    z-index: 50;
+    display: block;
+    height: 88px;
+  }
+
+  .tri-home-header {
+    position: relative;
+    display: block;
+    width: 100%;
+    isolation: isolate;
+    background: transparent;
+  }
+
+  .tri-home-header.is-stuck {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+  }
+
+  .tri-home-header__sticky {
+    position: relative;
+    display: block;
+    height: 88px;
+    isolation: isolate;
+  }
+
+  .tri-home-header__sticky::before {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 96px;
+    border-radius: 0 0 20px 20px;
+    content: "";
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+    background: linear-gradient(to top, rgb(22 45 53 / 50%), #08151a);
+    box-shadow: inset 0 -1px 0 #36474d;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
+
+  .tri-home-header__main {
+    position: relative;
+    z-index: 1;
+    margin-inline: auto;
+    will-change: transform;
+    transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .tri-home-header.is-stuck .tri-home-header__sticky::before {
+    opacity: 1;
+  }
+
+  .tri-home-header.is-stuck .tri-home-header__main {
+    transform: translateY(12px);
+  }
+
+  .tri-home-header.is-stuck .tri-catalog-menu {
+    top: 80px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tri-home-header__sticky::before,
+    .tri-home-header__main {
+      transition: none;
+    }
+  }
 }
 
 .tri-home-icon {

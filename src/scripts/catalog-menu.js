@@ -308,7 +308,8 @@ catalogRoots.forEach((root, rootIndex) => {
 
   const menu = root.querySelector("[data-catalog-menu]");
   const header = root.querySelector("[data-tri-home-header]");
-  header?.append(menu);
+  const stickyHeader = root.querySelector("[data-tri-home-header-sticky]");
+  (stickyHeader ?? header)?.append(menu);
   const panel = menu.querySelector(".tri-catalog-menu__panel");
   const columnsRoot = menu.querySelector("[data-catalog-columns]");
   const model = menu.querySelector("[data-catalog-model]");
@@ -324,7 +325,15 @@ catalogRoots.forEach((root, rootIndex) => {
   toggles.forEach((toggle) => toggle.setAttribute("aria-controls", menu.id));
 
   const syncPanelPosition = () => {
-    const headerBottom = header?.getBoundingClientRect().bottom ?? 0;
+    const stickyHeaderRect = stickyHeader?.getBoundingClientRect();
+    const headerRect = stickyHeaderRect?.height
+      ? stickyHeaderRect
+      : header?.getBoundingClientRect();
+    const headerBottom = headerRect
+      ? header.classList.contains("is-stuck")
+        ? headerRect.top + 96
+        : headerRect.bottom
+      : 0;
     const availableHeight = Math.max(320, window.innerHeight - headerBottom - 16);
     menu.style.setProperty("--tri-catalog-available-height", `${Math.round(availableHeight)}px`);
   };
