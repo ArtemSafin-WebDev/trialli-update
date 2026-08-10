@@ -1,3 +1,5 @@
+import "./phone-mask.js";
+
 (function () {
   const DEFAULT_ENDPOINTS = {
     state: "/api/parts-finder",

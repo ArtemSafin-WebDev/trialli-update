@@ -41,6 +41,8 @@ if (root) {
   const headerMenuBackdrop = root.querySelector(
     "[data-header-menu-backdrop]",
   );
+  const headerSearchInput = root.querySelector(".tri-home-header__search input");
+  const headerSearchClear = root.querySelector("[data-header-search-clear]");
   const mobileHeaderMedia = window.matchMedia("(max-width: 767px)");
   const stickyHeaderMedia = window.matchMedia("(min-width: 1024px)");
   let stickyHeaderStart = 0;
@@ -99,6 +101,14 @@ if (root) {
     updatePageScrollLock();
   };
 
+  const updateHeaderSearchClear = () => {
+    if (!headerSearchInput || !headerSearchClear) return;
+    headerSearchClear.hidden = !headerSearchInput.value;
+  };
+
+  headerSearchInput?.addEventListener("input", updateHeaderSearchClear);
+  updateHeaderSearchClear();
+
   root.addEventListener("click", (event) => {
     const target = event.target.closest("button, a");
     if (!target) return;
@@ -110,6 +120,13 @@ if (root) {
 
     if (target.matches("[data-header-menu-backdrop]")) {
       setHeaderMenu(false);
+      return;
+    }
+
+    if (target.matches("[data-header-search-clear]")) {
+      headerSearchInput.value = "";
+      updateHeaderSearchClear();
+      headerSearchInput.focus();
       return;
     }
 

@@ -2,6 +2,19 @@ import { showToast } from "../site.js";
 
 const productCardRoots = new WeakSet();
 
+const productCardInteractiveSelector = [
+  "a",
+  "button",
+  "input",
+  "select",
+  "textarea",
+  "label",
+  "form",
+  "[role='button']",
+  "[role='link']",
+  "[contenteditable='true']",
+].join(", ");
+
 const productCardIcons = {
   discount: `
     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -193,14 +206,22 @@ export function bindProductCardInteractions(root) {
 
   root.addEventListener("click", async (event) => {
     const copyButton = event.target.closest("[data-copy-code]");
-    if (!copyButton) return;
-
-    try {
-      await navigator.clipboard.writeText(copyButton.dataset.copyCode);
-      showToast("Артикул скопирован");
-    } catch {
-      showToast(copyButton.dataset.copyCode);
+    if (copyButton) {
+      try {
+        await navigator.clipboard.writeText(copyButton.dataset.copyCode);
+        showToast("Артикул скопирован");
+      } catch {
+        showToast(copyButton.dataset.copyCode);
+      }
+      return;
     }
+
+    const card = event.target.closest("[data-product-card]");
+    if (!card || event.defaultPrevented) return;
+    if (event.target.closest(productCardInteractiveSelector)) return;
+    if (window.getSelection()?.toString()) return;
+
+    card.querySelector(".tri-product-card__title")?.click();
   });
 
   root.addEventListener("input", (event) => {

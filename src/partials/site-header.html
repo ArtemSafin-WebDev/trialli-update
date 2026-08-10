@@ -54,7 +54,10 @@
         <form class="tri-home-header__search" action="/catalog/" method="get" role="search">
           <label class="tri-home-visually-hidden" for="tri-site-search">Поиск по сайту</label>
           <input id="tri-site-search" type="search" name="q" placeholder="Искать на сайте..." autocomplete="off" />
-          <button type="submit" aria-label="Найти"><span class="tri-home-icon tri-home-icon--search" aria-hidden="true"></span></button>
+          <button class="tri-home-header__search-clear" type="button" aria-label="Очистить поиск" data-header-search-clear hidden>
+            <img src="/assets/vin-results/search-clear.svg" alt="" />
+          </button>
+          <button class="tri-home-header__search-submit" type="submit" aria-label="Найти"><span class="tri-home-icon tri-home-icon--search" aria-hidden="true"></span></button>
         </form>
         <a class="tri-home-header__cart" href="/#popular" aria-label="Корзина, 3 товара">
           <span class="tri-home-icon tri-home-icon--cart" aria-hidden="true"></span>

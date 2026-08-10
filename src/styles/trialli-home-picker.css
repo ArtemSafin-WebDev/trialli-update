@@ -2903,13 +2903,17 @@ button.pf-vin-request__car-icon.is-open {
     line-height: 16px;
   }
 
-  .tri-home .pf-submit:hover {
-    background: #d4ed0e;
+  .tri-home .pf-submit:hover:not(:disabled) {
+    background: #d6e36b;
+  }
+
+  .tri-home .pf-submit:active:not(:disabled) {
+    background: rgb(190 214 0 / 70%);
   }
 
   .tri-home .pf-submit[disabled] {
-    background: #bed600;
-    color: #0d2026;
+    background: rgb(255 255 255 / 10%);
+    color: rgb(255 255 255 / 30%);
     cursor: not-allowed;
     opacity: 1;
   }
@@ -3400,6 +3404,45 @@ button.pf-vin-request__car-icon.is-open {
     .pf-vin-found {
       border-color: transparent !important;
     }
+  }
+}
+
+/* Keep the tablet picker balanced: four vehicle fields on the first row,
+   then modification, product groups and the submit action on the second. */
+@media (min-width: 768px) and (max-width: 1247.98px) {
+  .pf-picker-surface--vehicle > .pf-input-group {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: center;
+    gap: 8px;
+  }
+
+  .pf-picker-surface--vehicle > .pf-input-group > .pf-controls {
+    display: contents;
+  }
+
+  .pf-picker-surface--vehicle .pf-control[data-control="brand"],
+  .pf-picker-surface--vehicle .pf-control[data-control="model"],
+  .pf-picker-surface--vehicle .pf-control[data-control="modification"] {
+    grid-column: span 3;
+  }
+
+  .pf-picker-surface--vehicle .pf-control[data-control="year"] {
+    grid-column: span 2;
+  }
+
+  .pf-picker-surface--vehicle .pf-control[data-control="engine"] {
+    grid-column: span 4;
+  }
+
+  .pf-picker-surface--vehicle .pf-control[data-control="productGroups"] {
+    grid-column: span 6;
+  }
+
+  .pf-picker-surface--vehicle > .pf-input-group > .pf-submit {
+    grid-column: span 3;
+    width: 100%;
+    min-width: 0;
   }
 }
 
@@ -4074,7 +4117,8 @@ html.pf-modal-open {
 .pf-modal__dialog {
   display: grid;
   width: min(794px, calc(100vw - 112px));
-  height: 596px;
+  height: auto;
+  min-height: 596px;
   grid-template-columns: 49% minmax(0, 1fr);
   border: 1px solid transparent !important;
   border-radius: 40px;
@@ -4164,6 +4208,7 @@ html.pf-modal-open {
 .pf-modal__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
   gap: 8px;
 }
 
@@ -4189,6 +4234,44 @@ html.pf-modal-open {
   font-size: 14px;
   font-weight: 400;
   line-height: 16px;
+}
+
+.pf-modal-field,
+.pf-modal .pf-control--modal {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+}
+
+.pf-modal .pf-control--modal {
+  display: flex;
+  min-height: 66px;
+}
+
+.pf-modal-field__error {
+  min-height: 14px;
+  padding: 0 20px;
+  color: #ff4433;
+  font-family: "Lato", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 14px;
+}
+
+.pf-modal-field__error[hidden] {
+  display: none;
+}
+
+.pf-modal-field.is-invalid input,
+.pf-modal-field.is-invalid textarea,
+.pf-modal .pf-control--modal.is-invalid > .pf-field,
+.pf-modal-field.is-invalid input:hover,
+.pf-modal-field.is-invalid input:focus,
+.pf-modal-field.is-invalid textarea:hover,
+.pf-modal-field.is-invalid textarea:focus,
+.pf-modal .pf-control--modal.is-invalid > .pf-field:hover,
+.pf-modal .pf-control--modal.is-invalid > .pf-field:focus-visible {
+  border-color: #ff4433 !important;
 }
 
 .pf-modal .pf-field {
@@ -4379,11 +4462,15 @@ html.pf-modal-open {
   color: #fff;
 }
 
-.pf-modal .pf-option:hover,
-.pf-modal .pf-option:focus-visible,
 .pf-modal .pf-option.is-selected {
   background: #162d35;
   color: #fff;
+}
+
+.pf-modal .pf-option:hover,
+.pf-modal .pf-option:focus-visible {
+  background: #162d35;
+  color: #bed600;
 }
 
 .pf-modal-history__item:hover,
@@ -4421,6 +4508,10 @@ html.pf-modal-open {
 .pf-modal .pf-agreement input:focus-visible + .pf-checkbox::before {
   border-color: #bed600;
   box-shadow: 0 0 0 2px rgb(190 214 0 / 24%);
+}
+
+.pf-modal .pf-agreement.is-invalid .pf-checkbox::before {
+  border-color: #ff4433;
 }
 
 .pf-modal .pf-agreement .pf-checkbox {
@@ -4474,8 +4565,7 @@ html.pf-modal-open {
   background: #d4ed0e;
 }
 
-.pf-modal__close .pf-cross-icon,
-.pf-modal .pf-clear .pf-cross-icon {
+.pf-modal__close .pf-cross-icon {
   display: block;
   flex: 0 0 auto;
   background: currentColor;
@@ -4817,12 +4907,16 @@ html.pf-modal-open {
   text-align: left;
 }
 
-.tri-home .pf-option:hover,
-.tri-home .pf-option:focus-visible,
 .tri-home .pf-option.is-selected,
-.pf-modal .pf-option:hover,
-.pf-modal .pf-option:focus-visible,
 .pf-modal .pf-option.is-selected {
   background: #162d35;
   color: #fff;
+}
+
+.tri-home .pf-option:hover,
+.tri-home .pf-option:focus-visible,
+.pf-modal .pf-option:hover,
+.pf-modal .pf-option:focus-visible {
+  background: #162d35;
+  color: #bed600;
 }

@@ -9,6 +9,7 @@
   --tri-muted: #a1b0b2;
   --tri-muted-dark: #8a9998;
   --tri-container: 1200px;
+  --tri-sticky-header-height: 96px;
   position: relative;
   min-width: 320px;
   overflow: hidden;
@@ -329,6 +330,15 @@
   width: 146px;
   padding: 10px 16px;
   letter-spacing: 0.3px;
+  transition: background-color 0.2s ease;
+}
+
+.tri-home-header__catalog:hover {
+  background: #d6e36b;
+}
+
+.tri-home-header__catalog:active {
+  background: rgb(190 214 0 / 70%);
 }
 
 .tri-home-header__search {
@@ -361,23 +371,60 @@
   opacity: 1;
 }
 
+.tri-home-header__search input::-webkit-search-cancel-button {
+  display: none;
+}
+
 .tri-home-header__search button {
   display: grid;
+  place-items: center;
+  border: 0;
+}
+
+.tri-home-header__search-submit {
   width: 40px;
   height: 40px;
   flex: 0 0 40px;
-  place-items: center;
   border-right: 1px solid var(--tri-accent) !important;
   border-radius: 40px;
   background: transparent;
   transition: border-right-color 160ms ease;
 }
 
+.tri-home-header__search-clear[hidden] {
+  display: none;
+}
+
+.tri-home-header__search .tri-home-header__search-clear {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  margin-right: 4px;
+  background: transparent;
+}
+
+.tri-home-header__search-clear img {
+  width: 8px;
+  height: 8px;
+  transition: filter 160ms ease;
+}
+
+.tri-home-header__search-clear:hover img,
+.tri-home-header__search-clear:focus-visible img {
+  filter: brightness(0) invert(1);
+}
+
+.tri-home-header__search-clear:focus-visible,
+.tri-home-header__search-submit:focus-visible {
+  outline: 1px solid #fff;
+  outline-offset: -3px;
+}
+
 .tri-home-header__search:focus-within {
   outline-color: var(--tri-accent);
 }
 
-.tri-home-header__search:focus-within button {
+.tri-home-header__search:focus-within .tri-home-header__search-submit {
   border-right-color: transparent !important;
 }
 
@@ -391,6 +438,10 @@
   place-items: center;
   border-radius: 50%;
   background: var(--tri-bg);
+}
+
+.tri-home-header__cart:hover {
+  background: #203840;
 }
 
 .tri-home-header__cart-count {
@@ -462,7 +513,7 @@
     top: 0;
     right: 0;
     left: 0;
-    height: 96px;
+    height: var(--tri-sticky-header-height);
     border-radius: 0 0 20px 20px;
     content: "";
     opacity: 0;
@@ -1611,6 +1662,11 @@
   min-width: 0;
   height: 430px;
   flex-direction: column;
+  cursor: pointer;
+}
+
+.tri-product-card input {
+  cursor: text;
 }
 
 .tri-home-products__item:nth-child(n + 13) {
@@ -1842,6 +1898,12 @@
   border-radius: 50%;
   background: var(--tri-accent) !important;
   color: var(--tri-bg) !important;
+  transition: background-color 0.2s ease;
+}
+
+.tri-product-card__add:hover,
+.tri-product-card__add:focus-visible {
+  background-color: #d6e36b !important;
 }
 
 .tri-product-card__add svg {
@@ -1995,6 +2057,14 @@
   font-weight: 500;
   line-height: 16px;
   white-space: nowrap;
+}
+
+.tri-home-request-banner__content > button:hover {
+  background: #203840;
+}
+
+.tri-home-request-banner__content > button:active {
+  background: #162d35;
 }
 
 /* New isolated footer */

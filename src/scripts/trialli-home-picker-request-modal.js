@@ -1,4 +1,18 @@
+import "./phone-mask.js";
+
 (function () {
+  const FIELD_MESSAGES = {
+    brand: "Обязательно",
+    model: "Обязательно",
+    plate: "Обязательно",
+    name: "Обязательно",
+    phone: "Обязательно",
+    parts: "Обязательно",
+  };
+  const PHONE_INVALID_MESSAGE =
+    "Введите российский номер в формате +7 (999) 999-99-99";
+  const VIN_INVALID_MESSAGE = "VIN должен содержать 17 символов";
+  const EMAIL_INVALID_MESSAGE = "Введите корректный email";
   const EMPTY_VALUES = {
     brand: null,
     model: null,
@@ -18,6 +32,8 @@
       this.handleClick = this.handleClick.bind(this);
       this.handleCancel = this.handleCancel.bind(this);
       this.handleInput = this.handleInput.bind(this);
+      this.handleFocusOut = this.handleFocusOut.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this);
       this.closeTimer = null;
       this.optionsRequestId = 0;
     }
@@ -44,6 +60,8 @@
         historyOpen: false,
         openControl: null,
         search: {},
+        touched: new Set(),
+        validationStarted: false,
         loadingOptions: false,
         optionsError: false,
       };
@@ -85,11 +103,6 @@
         this.returnFocusTo.focus({ preventScroll: true });
       }
       this.returnFocusTo = null;
-    }
-
-    updateSubmitState() {
-      const submit = document.querySelector(".pf-modal__submit");
-      if (submit) submit.disabled = !this.isComplete();
     }
 
     replaceControl(id) {
@@ -207,11 +220,10 @@
 
     collapseOpenControl() {
       if (!this.state.openControl) return;
+      const openControl = this.state.openControl;
       this.state.openControl = null;
-      const control = document.querySelector(".pf-control--modal.is-open");
-      control?.classList.remove("is-open");
-      control?.querySelector(".pf-field")?.setAttribute("aria-expanded", "false");
-      control?.querySelector(".pf-dropdown")?.remove();
+      this.state.touched.add(openControl);
+      this.replaceControl(openControl);
     }
 
     focusOpenControlSearch() {
@@ -275,6 +287,8 @@
       host.addEventListener("cancel", this.handleCancel);
       host.addEventListener("input", this.handleInput);
       host.addEventListener("change", this.handleInput);
+      host.addEventListener("focusout", this.handleFocusOut);
+      host.addEventListener("submit", this.handleSubmit);
       document.body.append(host);
       window.LuzarPhoneMask?.init(host);
       host.showModal();
@@ -284,7 +298,6 @@
 
     template() {
       const values = this.state.values;
-      const disabled = !this.isComplete();
 
       return `
         <section class="pf-modal__dialog">
@@ -298,12 +311,12 @@
               <span class="pf-modal__title-mobile">Оставьте заявку на подбор деталей по VIN или госномеру</span>
             </h2>
           </div>
-          <form class="pf-modal__form" action="${escapeAttr(this.state.endpoint)}" method="post">
+          <form class="pf-modal__form" action="${escapeAttr(this.state.endpoint)}" method="post" novalidate>
             <input type="hidden" name="mode" value="vin-request">
             <div class="pf-modal__grid">
               ${this.vehicleRowTemplate()}
               ${this.inputTemplate("vin", "VIN", values.vin, "text", false, "pf-modal-field--wide pf-modal-field--vin")}
-              ${this.inputTemplate("plate", "Госномер*", values.plate, "text", false, "pf-modal-field--wide pf-modal-field--plate")}
+              ${this.inputTemplate("plate", "Госномер*", values.plate, "text", true, "pf-modal-field--wide pf-modal-field--plate")}
               ${this.inputTemplate("name", "ФИО*", values.name, "text", true, "pf-modal-field--wide pf-modal-field--name")}
               ${this.inputTemplate("phone", "Телефон*", values.phone, "tel", true, "pf-modal-field--phone")}
               ${this.inputTemplate("email", "Email", values.email, "email", false, "pf-modal-field--email")}
@@ -311,14 +324,14 @@
             </div>
             <div class="pf-modal__actions">
               <label class="pf-agreement pf-agreement--modal">
-                <input type="checkbox" name="agreement" value="1" ${values.agreement ? "checked" : ""} data-modal-field="agreement">
+                <input type="checkbox" name="agreement" value="1" ${values.agreement ? "checked" : ""} aria-invalid="false" data-modal-field="agreement">
                 <span class="pf-checkbox" aria-hidden="true">${iconCheck()}</span>
                 <span class="pf-agreement__text">
                   Я принимаю <a href="#">Пользовательское соглашение</a> и
                   <a href="#">Политику обработки персональных данных</a>
                 </span>
               </label>
-              <button class="pf-submit pf-submit--with-icon pf-modal__submit" type="submit" ${disabled ? "disabled" : ""}>
+              <button class="pf-submit pf-submit--with-icon pf-modal__submit" type="submit">
                 ${iconSent()}
                 <span>Отправить запрос</span>
               </button>
@@ -391,6 +404,11 @@
     controlTemplate(control) {
       const isOpen = this.state.openControl === control.id;
       const hasValue = Boolean(control.value);
+      const error = this.getFieldError(control.id);
+      const showError =
+        this.state.validationStarted &&
+        this.state.touched.has(control.id) &&
+        Boolean(error);
       const label = control.value?.label || control.placeholder;
       const searchValue = this.state.search[control.id] || "";
       const fieldBody = isOpen
@@ -404,7 +422,7 @@
             : "";
 
       return `
-        <div class="pf-control pf-control--request pf-control--modal ${isOpen ? "is-open" : ""}" data-modal-control="${escapeAttr(control.id)}">
+        <div class="pf-control pf-control--request pf-control--modal ${isOpen ? "is-open" : ""} ${showError ? "is-invalid" : ""}" data-modal-control="${escapeAttr(control.id)}">
           <div
             class="pf-field ${hasValue ? "has-value" : ""}"
             role="button"
@@ -412,6 +430,8 @@
             aria-haspopup="listbox"
             aria-expanded="${isOpen}"
             aria-disabled="${control.disabled}"
+            aria-invalid="${showError}"
+            aria-describedby="pf-modal-${escapeAttr(control.id)}-error"
             data-modal-action="toggle-control"
             data-id="${escapeAttr(control.id)}"
           >
@@ -420,6 +440,7 @@
             ${iconArrow()}
           </div>
           ${control.value ? `<input type="hidden" name="${escapeAttr(control.queryKey)}" value="${escapeAttr(control.value.id)}">` : ""}
+          <span class="pf-modal-field__error" id="pf-modal-${escapeAttr(control.id)}-error" ${showError ? "" : "hidden"}>${escapeHtml(showError ? error : "")}</span>
           ${isOpen && !control.disabled ? this.dropdownTemplate(control) : ""}
         </div>
       `;
@@ -467,21 +488,47 @@
     }
 
     inputTemplate(id, placeholder, value, type = "text", required = false, className = "") {
+      const error = this.getFieldError(id);
+      const showError =
+        this.state.validationStarted &&
+        this.state.touched.has(id) &&
+        Boolean(error);
+      const inputAttributes = this.inputAttributes(id);
       return `
-        <label class="pf-modal-field ${className}">
+        <label class="pf-modal-field ${className} ${showError ? "is-invalid" : ""}">
           <span class="visually-hidden">${escapeHtml(placeholder)}</span>
-          <input type="${escapeAttr(type)}" name="${escapeAttr(id)}" value="${escapeAttr(value || "")}" placeholder="${escapeAttr(placeholder)}" ${required ? "required" : ""} ${id === "phone" ? 'data-phone-mask="ru"' : ""} data-modal-field="${escapeAttr(id)}">
+          <input type="${escapeAttr(type)}" name="${escapeAttr(id)}" value="${escapeAttr(value || "")}" placeholder="${escapeAttr(placeholder)}" ${required ? "required" : ""} ${id === "phone" ? 'data-phone-mask="ru"' : ""} ${inputAttributes} aria-invalid="${showError}" aria-describedby="pf-modal-${escapeAttr(id)}-error" data-modal-field="${escapeAttr(id)}">
+          <span class="pf-modal-field__error" id="pf-modal-${escapeAttr(id)}-error" ${showError ? "" : "hidden"}>${escapeHtml(showError ? error : "")}</span>
         </label>
       `;
     }
 
     textareaTemplate(id, placeholder, value) {
+      const error = this.getFieldError(id);
+      const showError =
+        this.state.validationStarted &&
+        this.state.touched.has(id) &&
+        Boolean(error);
       return `
-        <label class="pf-modal-field pf-modal-field--textarea">
+        <label class="pf-modal-field pf-modal-field--textarea ${showError ? "is-invalid" : ""}">
           <span class="visually-hidden">${escapeHtml(placeholder)}</span>
-          <textarea name="${escapeAttr(id)}" placeholder="${escapeAttr(placeholder)}" required data-modal-field="${escapeAttr(id)}">${escapeHtml(value || "")}</textarea>
+          <textarea name="${escapeAttr(id)}" placeholder="${escapeAttr(placeholder)}" required aria-invalid="${showError}" aria-describedby="pf-modal-${escapeAttr(id)}-error" data-modal-field="${escapeAttr(id)}">${escapeHtml(value || "")}</textarea>
+          <span class="pf-modal-field__error" id="pf-modal-${escapeAttr(id)}-error" ${showError ? "" : "hidden"}>${escapeHtml(showError ? error : "")}</span>
         </label>
       `;
+    }
+
+    inputAttributes(id) {
+      if (id === "vin") {
+        return 'maxlength="17" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false"';
+      }
+      if (id === "plate") {
+        return 'maxlength="16" autocomplete="off" autocapitalize="characters" spellcheck="false"';
+      }
+      if (id === "name") return 'maxlength="120" autocomplete="name"';
+      if (id === "phone") return 'autocomplete="tel"';
+      if (id === "email") return 'maxlength="254" autocomplete="email" inputmode="email"';
+      return "";
     }
 
     handleClick(event) {
@@ -521,6 +568,7 @@
         }
         const openControl = this.state.openControl;
         this.state.openControl = null;
+        this.state.touched.add(openControl);
         this.replaceControl(openControl);
       }
     }
@@ -550,7 +598,12 @@
       this.state.historyOpen = false;
       this.updateHistoryPopover();
       const previousControl = this.state.openControl;
-      this.state.openControl = this.state.openControl === id ? null : id;
+      const isClosing = this.state.openControl === id;
+      this.state.openControl = isClosing ? null : id;
+      if (isClosing) this.state.touched.add(id);
+      if (previousControl && previousControl !== id) {
+        this.state.touched.add(previousControl);
+      }
       this.state.search[id] = "";
       if (previousControl && previousControl !== id) this.replaceControl(previousControl);
       this.replaceControl(id);
@@ -570,6 +623,7 @@
 
     async clearControl(id) {
       this.state.values[id] = null;
+      this.state.touched.add(id);
       if (id === "brand") {
         this.state.values.model = null;
       }
@@ -584,6 +638,7 @@
       if (!option) return;
 
       this.state.values[id] = option;
+      this.state.touched.add(id);
       if (id === "brand") {
         this.state.values.model = null;
       }
@@ -612,20 +667,107 @@
       if (!field) return;
       const key = field.dataset.modalField;
 
+      if (event.type === "input" && key === "vin") {
+        field.value = normalizeVin(field.value);
+      }
+      if (event.type === "input" && key === "plate") {
+        field.value = normalizePlate(field.value);
+      }
+
       this.state.values[key] =
         field.type === "checkbox" ? field.checked : field.value;
-      this.updateSubmitState();
+      if (key === "agreement") {
+        if (this.state.validationStarted) this.updateAgreementError();
+        return;
+      }
+      if (this.state.validationStarted) this.updateFieldError(key);
     }
 
-    isComplete() {
-      const values = this.state.values;
-      return Boolean(
-        values.name.trim() &&
-          window.LuzarPhoneMask?.isValid(values.phone) &&
-          values.parts.trim() &&
-          values.agreement,
-      );
+    handleFocusOut(event) {
+      if (!this.state.validationStarted) return;
+      const field = event.target.closest("[data-modal-field]");
+      if (!field) return;
+      const key = field.dataset.modalField;
+      this.state.touched.add(key);
+      this.updateFieldError(key);
     }
+
+    handleSubmit(event) {
+      const fields = ["brand", "model", "plate", "name", "phone", "email", "parts"];
+      this.state.validationStarted = true;
+      fields.forEach((key) => this.state.touched.add(key));
+      fields.forEach((key) => this.updateFieldError(key));
+      this.updateAgreementError();
+
+      const firstInvalid = fields.find((key) => this.getFieldError(key));
+      if (!firstInvalid && this.state.values.agreement) return;
+
+      event.preventDefault();
+      const target = firstInvalid
+        ? document.querySelector(
+            `[data-modal-field="${selectorEscape(firstInvalid)}"], [data-modal-control="${selectorEscape(firstInvalid)}"] .pf-field`,
+          )
+        : document.querySelector('[data-modal-field="agreement"]');
+      target?.focus({ preventScroll: false });
+    }
+
+    updateAgreementError() {
+      const input = document.querySelector('[data-modal-field="agreement"]');
+      const wrapper = input?.closest(".pf-agreement");
+      const showError =
+        this.state.validationStarted && !this.state.values.agreement;
+      wrapper?.classList.toggle("is-invalid", showError);
+      input?.setAttribute("aria-invalid", String(showError));
+    }
+
+    updateFieldError(key) {
+      const error = this.getFieldError(key);
+      const wrapper = document.querySelector(
+        `[data-modal-field="${selectorEscape(key)}"]`,
+      )?.closest(".pf-modal-field") || document.querySelector(
+        `[data-modal-control="${selectorEscape(key)}"]`,
+      );
+      if (!wrapper) return;
+
+      const control = wrapper.matches(".pf-control--modal")
+        ? wrapper.querySelector(".pf-field")
+        : wrapper.querySelector("input, textarea");
+      const errorNode = wrapper.querySelector(".pf-modal-field__error");
+      const showError =
+        this.state.validationStarted &&
+        this.state.touched.has(key) &&
+        Boolean(error);
+
+      wrapper.classList.toggle("is-invalid", showError);
+      control?.setAttribute("aria-invalid", String(showError));
+      if (errorNode) {
+        errorNode.textContent = showError ? error : "";
+        errorNode.hidden = !showError;
+      }
+    }
+
+    getFieldError(key) {
+      const values = this.state.values;
+      if ((key === "brand" || key === "model") && !values[key]) {
+        return FIELD_MESSAGES[key];
+      }
+
+      const value = String(values[key] || "").trim();
+      if (["plate", "name", "phone", "parts"].includes(key) && !value) {
+        return FIELD_MESSAGES[key];
+      }
+      if (key === "vin" && value && value.length !== 17) {
+        return VIN_INVALID_MESSAGE;
+      }
+      if (key === "phone" && value && !window.LuzarPhoneMask?.isValid(value)) {
+        return PHONE_INVALID_MESSAGE;
+      }
+      if (key === "email" && value && !isValidEmail(value)) {
+        return EMAIL_INVALID_MESSAGE;
+      }
+      return "";
+    }
+
   }
 
   function cloneVehicleValues(values) {
@@ -655,6 +797,27 @@
   function selectorEscape(value) {
     if (window.CSS?.escape) return CSS.escape(value);
     return String(value).replaceAll("\\", "\\\\").replaceAll('"', '\\"');
+  }
+
+  function normalizeVin(value) {
+    return String(value || "")
+      .toUpperCase()
+      .replace(/[^A-HJ-NPR-Z0-9]/g, "")
+      .slice(0, 17);
+  }
+
+  function normalizePlate(value) {
+    return String(value || "")
+      .toUpperCase()
+      .replace(/[^A-ZА-ЯЁ0-9]/g, "")
+      .slice(0, 16);
+  }
+
+  function isValidEmail(value) {
+    const input = document.createElement("input");
+    input.type = "email";
+    input.value = value;
+    return input.checkValidity();
   }
 
   function iconCross() {
