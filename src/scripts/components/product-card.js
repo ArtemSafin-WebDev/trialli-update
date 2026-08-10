@@ -105,7 +105,7 @@ export function productCardTemplate(product, index = 0) {
             <span class="tri-product-card__old-price">${formatPrice(product.oldPrice)}</span>
           </div>
 
-          <form class="tri-product-card__cart" action="/cart/update/" method="post" data-product-cart data-quantity="0">
+          <form class="tri-product-card__cart" action="/cart/update/" method="post" data-product-cart>
             <input type="hidden" name="id" value="${product.id}" />
             <button class="tri-product-card__add" type="submit" name="action" value="add" data-add-product aria-label="Добавить ${product.code} в корзину">
               ${productCardIcons.plus}
@@ -176,25 +176,15 @@ function clampProductQuantity(value) {
   return Math.max(1, Math.min(99, Number(value) || 1));
 }
 
-function setProductQuantity(root, cart, quantity) {
-  const previous = Number(cart.dataset.quantity) || 0;
-  const next = Math.max(0, Math.min(99, Number(quantity) || 0));
+function syncProductCart(cart, quantity) {
   const addButton = cart.querySelector("[data-add-product]");
   const counter = cart.querySelector("[data-product-counter]");
   const input = cart.querySelector(".tri-product-card__quantity");
-  const headerCount = root.querySelector(".tri-home-header__cart-count");
+  const inCart = quantity > 0;
 
-  cart.dataset.quantity = String(next);
-  if (addButton) addButton.hidden = next > 0;
-  if (counter) counter.hidden = next === 0;
-  if (input) input.value = String(next || 1);
-
-  if (headerCount) {
-    const current = Number(headerCount.textContent) || 0;
-    headerCount.textContent = String(Math.max(0, current + next - previous));
-  }
-
-  return next;
+  if (addButton) addButton.hidden = inCart;
+  if (counter) counter.hidden = !inCart;
+  if (input) input.value = String(inCart ? quantity : 1);
 }
 
 export function bindProductCardInteractions(root) {
@@ -215,8 +205,8 @@ export function bindProductCardInteractions(root) {
 
   root.addEventListener("input", (event) => {
     if (!event.target.matches(".tri-product-card__quantity")) return;
-    const cart = event.target.closest("[data-product-cart]");
-    if (cart) setProductQuantity(root, cart, clampProductQuantity(event.target.value));
+
+    event.target.value = String(clampProductQuantity(event.target.value));
   });
 
   root.addEventListener("submit", (event) => {
@@ -224,8 +214,9 @@ export function bindProductCardInteractions(root) {
 
     event.preventDefault();
     const cart = event.target;
+    const input = cart.querySelector(".tri-product-card__quantity");
     const action = event.submitter?.value || "update";
-    const current = Number(cart.dataset.quantity) || 0;
+    const current = clampProductQuantity(input?.value);
     let next = current;
 
     if (action === "add") {
@@ -236,7 +227,6 @@ export function bindProductCardInteractions(root) {
       next = current <= 1 ? 0 : current - 1;
     }
 
-    setProductQuantity(root, cart, next);
-    showToast(next > 0 ? `В корзине: ${next}` : "Товар удален из корзины");
+    syncProductCart(cart, next);
   });
 }

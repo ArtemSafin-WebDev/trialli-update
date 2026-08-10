@@ -3050,9 +3050,16 @@ button.pf-vin-request__car-icon.is-open {
     color: rgb(255 255 255 / 10%);
   }
 
-  .pf-vin-search__clear {
+  .tri-home .pf-vin-search__clear {
     right: 16px;
+    width: 16px;
+    height: 16px;
     color: #8a9998;
+  }
+
+  .tri-home .pf-vin-search__clear .pf-cross-icon {
+    width: 16px;
+    height: 16px;
   }
 
   .pf-vin-found {
