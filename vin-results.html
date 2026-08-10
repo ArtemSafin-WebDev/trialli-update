@@ -110,14 +110,19 @@
               <button class="tri-results-modal-backdrop tri-results-filter-backdrop" type="button" aria-label="Закрыть фильтры" data-filter-close></button>
               <aside class="tri-results-filters" id="catalog-filters" aria-label="Фильтры каталога">
                 <header class="tri-results-filters__mobile-head">
-                  <button type="button" aria-label="Назад" data-filter-close>←</button>
+                  <button class="tri-results-filters__mobile-back" type="button" aria-label="Закрыть фильтры" data-filter-close>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.59473 18.4785C9.32957 18.4785 9.07522 18.373 8.8877 18.1855L3.23047 12.5283C3.04309 12.3408 2.9375 12.0864 2.9375 11.8213C2.93755 11.5562 3.04302 11.3017 3.23047 11.1143L8.8877 5.45703C9.0752 5.26968 9.32965 5.16504 9.59473 5.16504C9.85981 5.16505 10.1143 5.26966 10.3018 5.45703C10.4893 5.64457 10.5947 5.89982 10.5947 6.16504C10.5946 6.4301 10.4892 6.68464 10.3018 6.87207L6.35156 10.8213H20.4229C20.6849 10.8258 20.9354 10.9332 21.1191 11.1201C21.3029 11.3071 21.4062 11.5591 21.4063 11.8213C21.4063 12.0835 21.3029 12.3354 21.1191 12.5225C20.9354 12.7094 20.685 12.8167 20.4229 12.8213H6.35156L10.3018 16.7715C10.4892 16.959 10.5947 17.2134 10.5947 17.4785C10.5947 17.7437 10.4892 17.9981 10.3018 18.1855C10.1142 18.373 9.85989 18.4785 9.59473 18.4785Z" /></svg>
+                  </button>
                   <h2>Фильтры</h2>
-                  <button type="button" aria-label="Закрыть" data-filter-close>×</button>
+                  <button class="tri-results-filters__mobile-reset" type="button" data-reset-filters>
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.274 1.561A6.67 6.67 0 0 1 12.667 3.24V1.667H14L13.999 5l-.666.667H10V4.334h1.871A5.333 5.333 0 1 0 12.618 10.667l1.155.667A6.667 6.667 0 1 1 6.274 1.561Z" /></svg>
+                    <span>Сбросить</span>
+                  </button>
                 </header>
                 <p class="tri-results-filters__summary">Всего товаров: <span data-total>106</span></p>
 
                 <fieldset class="tri-results-filter" data-filter="groups">
-                  <legend>Доступные группы товаров</legend>
+                  <legend>Категория</legend>
                   <div class="tri-results-filter__search">
                     <label class="tri-home-visually-hidden" for="filter-search-groups">Поиск по фильтру Доступные группы товаров</label>
                     <div class="tri-results-filter__search-field">
@@ -131,13 +136,14 @@
                     </div>
                   </div>
                   <div class="tri-results-filter__options">
-                    <label><input type="checkbox" value="brakes" /><i></i><span>Тормозная система</span></label>
+                    <label><input type="checkbox" data-filter-select-all /><i></i><span>Выбрать все</span></label>
+                    <label><input type="checkbox" value="brakes" /><i></i><span>Дисковая Тормозная система</span></label>
+                    <label><input type="checkbox" value="clutch" /><i></i><span>Сцепление</span></label>
                     <label><input type="checkbox" value="shock" /><i></i><span>Амортизаторы и опоры</span></label>
                     <label><input type="checkbox" value="belts" /><i></i><span>Ремни и ролики</span></label>
-                    <label><input type="checkbox" value="exhaust" /><i></i><span>Система выпуска отработавших газов</span></label>
                     <label><input type="checkbox" value="hubs" /><i></i><span>Ступицы и ремкомплекты</span></label>
-                    <label><input type="checkbox" value="clutch" /><i></i><span>Сцепление</span></label>
-                    <label><input type="checkbox" value="cv" /><i></i><span>ШРУСы и приводы</span></label>
+                    <label class="is-extra"><input type="checkbox" value="exhaust" /><i></i><span>Система выпуска отработавших газов</span></label>
+                    <label class="is-extra"><input type="checkbox" value="cv" /><i></i><span>ШРУСы и приводы</span></label>
                     <label class="is-extra"><input type="checkbox" value="bearings" /><i></i><span>Подшипники</span></label>
                     <label class="is-extra"><input type="checkbox" value="pipes" /><i></i><span>Трубопроводы кондиционера</span></label>
                     <label class="is-extra"><input type="checkbox" value="sensors" /><i></i><span>Датчики давления хладагента</span></label>
@@ -146,10 +152,10 @@
                     <label class="is-extra"><input type="checkbox" value="gaskets" /><i></i><span>Прокладки двигателя</span></label>
                   </div>
                   <p class="tri-results-filter__empty" data-filter-empty>Ничего не найдено</p>
-                  <button class="tri-results-filter__more" type="button" aria-expanded="false" data-filter-more data-more-label="Еще 6">
-                    <span>Еще 6</span>
+                  <button class="tri-results-filter__more" type="button" aria-expanded="false" data-filter-more>
+                    <span>Еще 8</span>
                     <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                      <path d="M13.8047 5.80566L8.47168 11.1387H7.52832L2.19531 5.80566L3.1377 4.86328L8 9.72461L12.8623 4.86328L13.8047 5.80566Z" />
+                      <path d="M6.1952 3.52818C6.45551 3.26793 6.87724 3.26797 7.13758 3.52818L11.1376 7.52818C11.3979 7.78851 11.3979 8.21021 11.1376 8.47057L7.13758 12.4706C6.87723 12.7309 6.45555 12.7309 6.1952 12.4706C5.93497 12.2102 5.93489 11.7885 6.1952 11.5282L9.72352 7.99986L6.1952 4.47057C5.93497 4.21021 5.93489 3.78849 6.1952 3.52818Z" />
                     </svg>
                   </button>
                 </fieldset>
@@ -157,17 +163,17 @@
                 <fieldset class="tri-results-filter" data-filter="teeth">
                   <legend>Кол-во зубьев</legend>
                   <div class="tri-results-filter__chips">
-                    <label><input type="radio" name="teeth" value="01" /><span>variant 01</span></label>
-                    <label><input type="radio" name="teeth" value="02" /><span>variant 02</span></label>
-                    <label><input type="radio" name="teeth" value="03" /><span>variant 03</span></label>
-                    <label><input type="radio" name="teeth" value="04" /><span>variant 04</span></label>
-                    <label><input type="radio" name="teeth" value="05" /><span>variant 05</span></label>
-                    <label><input type="radio" name="teeth" value="06" /><span>variant 06</span></label>
+                    <label><input type="radio" name="teeth" value="01" /><span>Вариант 1</span></label>
+                    <label><input type="radio" name="teeth" value="02" /><span>Вариант 2</span></label>
+                    <label><input type="radio" name="teeth" value="03" /><span>Вариант 3</span></label>
+                    <label><input type="radio" name="teeth" value="04" /><span>Вариант 4</span></label>
+                    <label><input type="radio" name="teeth" value="05" /><span>Вариант 5</span></label>
+                    <label><input type="radio" name="teeth" value="06" /><span>Вариант 6</span></label>
                   </div>
                 </fieldset>
 
                 <fieldset class="tri-results-filter" data-filter="power">
-                  <legend>Мощность, кВт</legend>
+                  <legend>Напряжение</legend>
                   <div class="tri-results-filter__search">
                     <label class="tri-home-visually-hidden" for="filter-search-power">Поиск по фильтру Мощность, кВт</label>
                     <div class="tri-results-filter__search-field">
@@ -181,30 +187,30 @@
                     </div>
                   </div>
                   <div class="tri-results-filter__options tri-results-filter__options--radio">
-                    <label><input type="radio" name="power" value="01" /><i></i><span>Variant 01</span></label>
-                    <label><input type="radio" name="power" value="02" /><i></i><span>Variant 02</span></label>
-                    <label><input type="radio" name="power" value="03" /><i></i><span>Variant 03</span></label>
-                    <label><input type="radio" name="power" value="04" /><i></i><span>Variant 04</span></label>
-                    <label><input type="radio" name="power" value="05" /><i></i><span>Variant 05</span></label>
-                    <label><input type="radio" name="power" value="06" /><i></i><span>Variant 06</span></label>
-                    <label><input type="radio" name="power" value="07" /><i></i><span>Variant 07</span></label>
-                    <label class="is-extra"><input type="radio" name="power" value="08" /><i></i><span>Variant 08</span></label>
-                    <label class="is-extra"><input type="radio" name="power" value="09" /><i></i><span>Variant 09</span></label>
-                    <label class="is-extra"><input type="radio" name="power" value="10" /><i></i><span>Variant 10</span></label>
-                    <label class="is-extra"><input type="radio" name="power" value="11" /><i></i><span>Variant 11</span></label>
-                    <label class="is-extra"><input type="radio" name="power" value="12" /><i></i><span>Variant 12</span></label>
-                    <label class="is-extra"><input type="radio" name="power" value="13" /><i></i><span>Variant 13</span></label>
-                    <label class="is-extra"><input type="radio" name="power" value="14" /><i></i><span>Variant 14</span></label>
-                    <label class="is-extra"><input type="radio" name="power" value="15" /><i></i><span>Variant 15</span></label>
-                    <label class="is-extra"><input type="radio" name="power" value="16" /><i></i><span>Variant 16</span></label>
-                    <label class="is-extra"><input type="radio" name="power" value="17" /><i></i><span>Variant 17</span></label>
-                    <label class="is-extra"><input type="radio" name="power" value="18" /><i></i><span>Variant 18</span></label>
+                    <label><input type="radio" name="power" value="01" /><i></i><span>Вариант 1</span></label>
+                    <label><input type="radio" name="power" value="02" /><i></i><span>Вариант 2</span></label>
+                    <label><input type="radio" name="power" value="03" /><i></i><span>Вариант 3</span></label>
+                    <label><input type="radio" name="power" value="04" /><i></i><span>Вариант 4</span></label>
+                    <label><input type="radio" name="power" value="05" /><i></i><span>Вариант 5</span></label>
+                    <label><input type="radio" name="power" value="06" /><i></i><span>Вариант 6</span></label>
+                    <label><input type="radio" name="power" value="07" /><i></i><span>Вариант 7</span></label>
+                    <label class="is-extra"><input type="radio" name="power" value="08" /><i></i><span>Вариант 8</span></label>
+                    <label class="is-extra"><input type="radio" name="power" value="09" /><i></i><span>Вариант 9</span></label>
+                    <label class="is-extra"><input type="radio" name="power" value="10" /><i></i><span>Вариант 10</span></label>
+                    <label class="is-extra"><input type="radio" name="power" value="11" /><i></i><span>Вариант 11</span></label>
+                    <label class="is-extra"><input type="radio" name="power" value="12" /><i></i><span>Вариант 12</span></label>
+                    <label class="is-extra"><input type="radio" name="power" value="13" /><i></i><span>Вариант 13</span></label>
+                    <label class="is-extra"><input type="radio" name="power" value="14" /><i></i><span>Вариант 14</span></label>
+                    <label class="is-extra"><input type="radio" name="power" value="15" /><i></i><span>Вариант 15</span></label>
+                    <label class="is-extra"><input type="radio" name="power" value="16" /><i></i><span>Вариант 16</span></label>
+                    <label class="is-extra"><input type="radio" name="power" value="17" /><i></i><span>Вариант 17</span></label>
+                    <label class="is-extra"><input type="radio" name="power" value="18" /><i></i><span>Вариант 18</span></label>
                   </div>
                   <p class="tri-results-filter__empty" data-filter-empty>Ничего не найдено</p>
-                  <button class="tri-results-filter__more" type="button" aria-expanded="false" data-filter-more data-more-label="Еще 134">
-                    <span>Еще 134</span>
+                  <button class="tri-results-filter__more" type="button" aria-expanded="false" data-filter-more>
+                    <span>Еще 11</span>
                     <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                      <path d="M13.8047 5.80566L8.47168 11.1387H7.52832L2.19531 5.80566L3.1377 4.86328L8 9.72461L12.8623 4.86328L13.8047 5.80566Z" />
+                      <path d="M6.1952 3.52818C6.45551 3.26793 6.87724 3.26797 7.13758 3.52818L11.1376 7.52818C11.3979 7.78851 11.3979 8.21021 11.1376 8.47057L7.13758 12.4706C6.87723 12.7309 6.45555 12.7309 6.1952 12.4706C5.93497 12.2102 5.93489 11.7885 6.1952 11.5282L9.72352 7.99986L6.1952 4.47057C5.93497 4.21021 5.93489 3.78849 6.1952 3.52818Z" />
                     </svg>
                   </button>
                 </fieldset>
@@ -235,9 +241,41 @@
                   </button>
                 </div>
                 <div class="tri-results-filters__mobile-actions">
-                  <button type="button" data-reset-filters>Сбросить</button>
-                  <button type="button" data-filter-apply>Показать <span data-mobile-total>106</span></button>
+                  <button type="button" data-filter-apply>
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.274 1.561A6.67 6.67 0 0 1 12.667 3.24V1.667H14L13.999 5l-.666.667H10V4.334h1.871A5.333 5.333 0 1 0 12.618 10.667l1.155.667A6.667 6.667 0 1 1 6.274 1.561Z" /></svg>
+                    <span>Показать <span data-mobile-total>2 657</span> товаров</span>
+                  </button>
                 </div>
+
+                <section class="tri-results-filter-detail" data-filter-detail hidden aria-label="Расширенный фильтр">
+                  <header class="tri-results-filter-detail__head">
+                    <button type="button" aria-label="Вернуться к фильтрам" data-filter-detail-close>
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.59473 18.4785C9.32957 18.4785 9.07522 18.373 8.8877 18.1855L3.23047 12.5283C3.04309 12.3408 2.9375 12.0864 2.9375 11.8213C2.93755 11.5562 3.04302 11.3017 3.23047 11.1143L8.8877 5.45703C9.0752 5.26968 9.32965 5.16504 9.59473 5.16504C9.85981 5.16505 10.1143 5.26966 10.3018 5.45703C10.4893 5.64457 10.5947 5.89982 10.5947 6.16504C10.5946 6.4301 10.4892 6.68464 10.3018 6.87207L6.35156 10.8213H20.4229C20.6849 10.8258 20.9354 10.9332 21.1191 11.1201C21.3029 11.3071 21.4062 11.5591 21.4063 11.8213C21.4063 12.0835 21.3029 12.3354 21.1191 12.5225C20.9354 12.7094 20.685 12.8167 20.4229 12.8213H6.35156L10.3018 16.7715C10.4892 16.959 10.5947 17.2134 10.5947 17.4785C10.5947 17.7437 10.4892 17.9981 10.3018 18.1855C10.1142 18.373 9.85989 18.4785 9.59473 18.4785Z" /></svg>
+                    </button>
+                    <h2 data-filter-detail-title>Категория</h2>
+                  </header>
+                  <div class="tri-results-filter-detail__card">
+                    <div class="tri-results-filter-detail__search">
+                      <label class="tri-home-visually-hidden" for="filter-detail-search">Поиск по фильтру</label>
+                      <input id="filter-detail-search" type="search" placeholder="Начните ввод..." autocomplete="off" data-filter-detail-search />
+                      <span class="tri-results-filter-detail__search-actions">
+                        <button class="tri-results-filter-detail__search-clear" type="button" aria-label="Очистить поиск" data-filter-detail-search-clear hidden>
+                          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8613 4.19526C11.1216 3.93491 11.5443 3.93491 11.8046 4.19526C12.0647 4.45557 12.0648 4.87735 11.8046 5.13764L8.94233 7.99995L11.8046 10.8613L11.8496 10.9121C12.0631 11.1739 12.0487 11.5606 11.8046 11.8046C11.5606 12.0487 11.1739 12.0631 10.9121 11.8496L10.8613 11.8046L7.99995 8.94233L5.13764 11.8046C4.87735 12.0648 4.45557 12.0647 4.19526 11.8046C3.93491 11.5443 3.93491 11.1216 4.19526 10.8613L7.05659 7.99995L4.19526 5.13764C3.93491 4.8773 3.93491 4.45561 4.19526 4.19526C4.45561 3.93491 4.8773 3.93491 5.13764 4.19526L7.99995 7.05659L10.8613 4.19526Z" /></svg>
+                        </button>
+                        <span class="tri-results-filter-detail__search-icon" aria-hidden="true"><span class="tri-home-icon tri-home-icon--search"></span></span>
+                      </span>
+                    </div>
+                    <div class="tri-results-filter-detail__selected" data-filter-detail-selected></div>
+                    <div class="tri-results-filter-detail__group">
+                      <div class="tri-results-filter-detail__popular">Популярные</div>
+                      <div class="tri-results-filter-detail__list" data-filter-detail-list></div>
+                    </div>
+                  </div>
+                  <div class="tri-results-filter-detail__actions">
+                    <button type="button" data-filter-detail-save>Сохранить</button>
+                    <button type="button" data-filter-detail-close>Уточнить параметры</button>
+                  </div>
+                </section>
               </aside>
 
               <div class="tri-results-main">
@@ -248,18 +286,7 @@
                 <div class="tri-results-products" id="catalog-products" data-products></div>
                 <!-- @include /src/partials/products-more-button.html -->
 
-                <aside class="tri-home-request-banner" aria-labelledby="vin-results-request-title">
-                  <div class="tri-home-request-banner__visual">
-                    <img src="/assets/trialli-home/request-envelope.png" alt="" />
-                  </div>
-                  <div class="tri-home-request-banner__content">
-                    <div class="tri-home-request-banner__copy">
-                      <h2 id="vin-results-request-title">Не уверены в выборе? Оставьте заявку на индивидуальный подбор</h2>
-                      <p>Наши специалисты помогут подобрать подходящую деталь для вашего авто</p>
-                    </div>
-                    <button type="button" data-open-request>Запросить подбор</button>
-                  </div>
-                </aside>
+                <!-- @include /src/partials/request-banner.html -->
               </div>
             </div>
           </div>
@@ -278,7 +305,6 @@
       </div>
       <!-- @include /src/partials/site-bottom-nav.html -->
       <a id="back-to-top" href="#top" aria-label="Наверх"></a>
-      <!-- @include /src/partials/request-modal.html -->
     </div>
 
     <!-- @include /src/partials/site-scripts.html -->

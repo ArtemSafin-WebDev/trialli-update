@@ -4185,11 +4185,10 @@ html.pf-modal-open {
 }
 
 .pf-modal .pf-field {
+  gap: 4px;
   padding-right: 12px;
 }
 
-.pf-modal .pf-field:hover:not([aria-disabled="true"]),
-.pf-modal .pf-control.is-open .pf-field,
 .pf-modal-field input:hover,
 .pf-modal-field input:focus,
 .pf-modal-field textarea:hover,
@@ -4197,8 +4196,19 @@ html.pf-modal-open {
   border-color: #bed600 !important;
 }
 
-.pf-modal .pf-field[aria-disabled="true"],
-.pf-modal .pf-field[aria-disabled="true"] .pf-arrow,
+.pf-modal .pf-field:hover:not([aria-disabled="true"]) {
+  border-color: rgb(190 214 0 / 55%) !important;
+}
+
+.pf-modal .pf-control.is-open .pf-field {
+  border-color: #bed600 !important;
+}
+
+.pf-modal .pf-field[aria-disabled="true"] {
+  background: rgb(32 56 64 / 50%);
+  color: rgb(255 255 255 / 10%);
+}
+
 .pf-modal-field input::placeholder,
 .pf-modal-field textarea::placeholder {
   color: #8a9998;
@@ -4206,6 +4216,20 @@ html.pf-modal-open {
 
 .pf-modal .pf-field.has-value {
   color: #fff;
+}
+
+.pf-modal .pf-field__input {
+  color: #fff;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.pf-modal .pf-field__input::placeholder {
+  color: #8a9998;
+}
+
+.pf-modal .pf-field__input::-webkit-search-cancel-button {
+  display: none;
 }
 
 .pf-modal .pf-arrow {
@@ -4216,9 +4240,26 @@ html.pf-modal-open {
   mask: url("/assets/trialli-home/request-modal-arrow.svg") center / 10.667px 6px no-repeat;
 }
 
+.pf-modal .pf-field[aria-disabled="true"] .pf-arrow {
+  background: rgb(255 255 255 / 10%);
+}
+
+.pf-modal .pf-control.is-open .pf-arrow,
+.pf-modal .pf-field.has-value:hover .pf-arrow,
+.pf-modal .pf-control:focus-within .pf-field.has-value .pf-arrow {
+  display: block;
+}
+
+.pf-modal .pf-clear {
+  width: 24px;
+  height: 24px;
+  padding: 4px;
+  color: #8a9998;
+}
+
 .pf-modal .pf-clear .pf-cross-icon {
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
 }
 
 .pf-modal-field textarea {
@@ -4276,7 +4317,6 @@ html.pf-modal-open {
   line-height: 24px;
 }
 
-.pf-modal .pf-dropdown,
 .pf-modal-history__list {
   border: 1px solid #36515a !important;
   border-radius: 16px;
@@ -4285,29 +4325,47 @@ html.pf-modal-open {
 }
 
 .pf-modal .pf-dropdown {
-  scrollbar-color: #526970 transparent;
-  scrollbar-width: thin;
+  top: calc(100% + 4px);
+  max-height: 360px;
+  padding: 16px 0;
+  border: 0 !important;
+  border-right: 8px solid #203840 !important;
+  border-radius: 20px;
+  background: #203840;
+  box-shadow: 0 8px 20px rgb(22 45 53 / 25%);
 }
 
 .pf-modal .pf-dropdown::-webkit-scrollbar {
-  width: 3px;
+  width: 2px;
 }
 
 .pf-modal .pf-dropdown::-webkit-scrollbar-track {
-  margin-block: 6px;
-  background: transparent;
+  margin-block: 16px;
+  border-radius: 10px;
+  background: rgb(255 255 255 / 10%);
 }
 
 .pf-modal .pf-dropdown::-webkit-scrollbar-thumb {
-  border-radius: 999px;
-  background: #526970;
+  border-radius: 10px;
+  background: rgb(255 255 255 / 30%);
 }
 
 .pf-modal .pf-options {
-  padding: 8px 0;
+  padding: 0;
 }
 
-.pf-modal .pf-option,
+.pf-modal .pf-option {
+  min-height: 32px;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 0 !important;
+  background: #203840;
+  color: #c2cacc;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: left;
+}
+
 .pf-modal-history__item {
   border: 0 !important;
   background: #162d35;
@@ -4315,13 +4373,15 @@ html.pf-modal-open {
 }
 
 .pf-modal .pf-option:hover,
-.pf-modal .pf-option.is-selected,
-.pf-modal-history__item:hover {
-  background: #203840;
-  color: #bed600;
+.pf-modal .pf-option:focus-visible,
+.pf-modal .pf-option.is-selected {
+  background: #162d35;
+  color: #fff;
 }
 
-.pf-modal .pf-option__check {
+.pf-modal-history__item:hover,
+.pf-modal-history__item:focus-visible {
+  background: #203840;
   color: #bed600;
 }
 
@@ -4554,7 +4614,7 @@ html.pf-modal-open {
 
   .pf-modal .pf-dropdown {
     position: absolute;
-    top: calc(100% + 8px);
+    top: calc(100% + 4px);
     left: 0;
     z-index: 50;
     width: 100%;
@@ -4636,4 +4696,126 @@ html.pf-modal-open {
   .pf-modal__dialog {
     grid-template-columns: 389px minmax(0, 1fr);
   }
+}
+
+/* The modal and the main picker intentionally share one select skin. */
+.tri-home .pf-field,
+.pf-modal .pf-field {
+  height: 48px;
+  gap: 4px;
+  padding: 12px 12px 12px 20px;
+  border: 1px solid transparent !important;
+  border-radius: 24px;
+  background: #203840;
+  color: #8a9998;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.tri-home .pf-field:hover:not([aria-disabled="true"]),
+.pf-modal .pf-field:hover:not([aria-disabled="true"]) {
+  border-color: rgb(190 214 0 / 55%) !important;
+}
+
+.tri-home .pf-control.is-open .pf-field,
+.pf-modal .pf-control.is-open .pf-field {
+  border-color: #bed600 !important;
+}
+
+.tri-home .pf-field[aria-disabled="true"],
+.pf-modal .pf-field[aria-disabled="true"] {
+  background: rgb(32 56 64 / 50%);
+  color: rgb(255 255 255 / 10%);
+}
+
+.tri-home .pf-field.has-value,
+.tri-home .pf-field__input,
+.pf-modal .pf-field.has-value,
+.pf-modal .pf-field__input {
+  color: #fff;
+}
+
+.tri-home .pf-field__input,
+.pf-modal .pf-field__input {
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.tri-home .pf-field__input::placeholder,
+.pf-modal .pf-field__input::placeholder {
+  color: #8a9998;
+}
+
+.tri-home .pf-field__input::-webkit-search-cancel-button,
+.pf-modal .pf-field__input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.tri-home .pf-arrow,
+.pf-modal .pf-arrow {
+  display: block;
+  width: 16px;
+  height: 16px;
+  background: transparent;
+  color: #8a9998;
+  fill: currentColor;
+  -webkit-mask: none;
+  mask: none;
+}
+
+.tri-home .pf-field[aria-disabled="true"] .pf-arrow,
+.pf-modal .pf-field[aria-disabled="true"] .pf-arrow {
+  background: transparent;
+  color: rgb(255 255 255 / 10%);
+}
+
+.tri-home .pf-control.is-open .pf-arrow,
+.tri-home .pf-field.has-value:hover .pf-arrow,
+.tri-home .pf-control:focus-within .pf-field.has-value .pf-arrow,
+.pf-modal .pf-control.is-open .pf-arrow,
+.pf-modal .pf-field.has-value:hover .pf-arrow,
+.pf-modal .pf-control:focus-within .pf-field.has-value .pf-arrow {
+  display: block;
+}
+
+.tri-home .pf-clear,
+.pf-modal .pf-clear {
+  width: 24px;
+  height: 24px;
+  padding: 4px;
+  color: #8a9998;
+}
+
+.tri-home .pf-clear .pf-cross-icon,
+.pf-modal .pf-clear .pf-cross-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.tri-home .pf-options,
+.pf-modal .pf-options {
+  padding: 0;
+}
+
+.tri-home .pf-option,
+.pf-modal .pf-option {
+  min-height: 32px;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 0 !important;
+  background: #203840;
+  color: #c2cacc;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: left;
+}
+
+.tri-home .pf-option:hover,
+.tri-home .pf-option:focus-visible,
+.tri-home .pf-option.is-selected,
+.pf-modal .pf-option:hover,
+.pf-modal .pf-option:focus-visible,
+.pf-modal .pf-option.is-selected {
+  background: #162d35;
+  color: #fff;
 }

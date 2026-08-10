@@ -11,6 +11,7 @@
   --tri-container: 1200px;
   position: relative;
   min-width: 320px;
+  overflow: hidden;
   overflow: clip;
   background: var(--tri-bg);
   color: var(--tri-text);
@@ -1500,7 +1501,7 @@
   padding: 40px 0 80px;
 }
 
-.tri-home-popular h2 {
+.tri-home-popular > .tri-home-container > h2 {
   margin-bottom: 32px;
   font-size: 28px;
   font-weight: 600;
@@ -2741,7 +2742,7 @@
     padding: 16px 0 40px;
   }
 
-  .tri-home-popular h2 {
+  .tri-home-popular > .tri-home-container > h2 {
     margin-bottom: 16px;
     font-size: 20px;
     line-height: 24px;

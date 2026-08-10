@@ -3,7 +3,6 @@ import {
   initProductCardGalleries,
   productCardTemplate,
 } from "./components/product-card.js";
-import { setProductsMoreButtonExpanded } from "./components/products-more-button.js";
 
 const root = document.querySelector("[data-tri-home]");
 
@@ -260,12 +259,6 @@ if (root) {
       if (track) {
         track.style.transform = `translateX(-${sliderState[sliderName] * sliderStep[sliderName]}px)`;
       }
-      return;
-    }
-
-    if (target.matches("[data-products-more]")) {
-      const expanded = productsRoot?.classList.toggle("is-expanded");
-      setProductsMoreButtonExpanded(target, expanded);
       return;
     }
 

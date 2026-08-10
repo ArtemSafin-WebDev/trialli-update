@@ -43,6 +43,7 @@
         history: options.history || null,
         historyOpen: false,
         openControl: null,
+        search: {},
         loadingOptions: false,
         optionsError: false,
       };
@@ -213,6 +214,53 @@
       control?.querySelector(".pf-dropdown")?.remove();
     }
 
+    focusOpenControlSearch() {
+      if (!this.state.openControl) return;
+      requestAnimationFrame(() => {
+        const input = document.querySelector(
+          `[data-modal-search="${selectorEscape(this.state.openControl)}"]`,
+        );
+        if (!input) return;
+        input.focus();
+        if (typeof input.setSelectionRange === "function") {
+          input.setSelectionRange(input.value.length, input.value.length);
+        }
+      });
+    }
+
+    updateOpenDropdownOptions(id) {
+      const control = this.getControl(id);
+      const optionsHost = document.querySelector(
+        `[data-modal-control="${selectorEscape(id)}"] .pf-options`,
+      );
+      if (!control || !optionsHost) return;
+
+      const query = (this.state.search[id] || "").trim().toLowerCase();
+      const options = control.options.filter((option) =>
+        option.label.toLowerCase().includes(query),
+      );
+      optionsHost.innerHTML = options.length
+        ? options.map((option) => this.optionTemplate(option, control)).join("")
+        : emptyTemplate();
+    }
+
+    updateSearchClearButton(id) {
+      const field = document.querySelector(
+        `[data-modal-control="${selectorEscape(id)}"] .pf-field`,
+      );
+      if (!field) return;
+      const clear = field.querySelector(".pf-clear--search");
+      const searchValue = this.state.search[id] || "";
+
+      if (searchValue && !clear) {
+        field.querySelector(".pf-arrow")?.insertAdjacentHTML(
+          "beforebegin",
+          `<button class="pf-clear pf-clear--search" type="button" aria-label="Очистить поиск" data-modal-action="clear-search" data-id="${escapeAttr(id)}">${iconPickerCross()}</button>`,
+        );
+      }
+      if (!searchValue && clear) clear.remove();
+    }
+
     hasHistoryItems() {
       return Boolean(this.state.history?.enabled && this.state.history.items?.length);
     }
@@ -344,6 +392,16 @@
       const isOpen = this.state.openControl === control.id;
       const hasValue = Boolean(control.value);
       const label = control.value?.label || control.placeholder;
+      const searchValue = this.state.search[control.id] || "";
+      const fieldBody = isOpen
+        ? `<input class="pf-field__input" type="search" value="${escapeAttr(searchValue)}" placeholder="${escapeAttr(control.placeholder)}" data-modal-search="${escapeAttr(control.id)}" autocomplete="off">`
+        : `<span class="pf-field__text">${escapeHtml(label)}</span>`;
+      const clearButton =
+        searchValue && isOpen
+          ? `<button class="pf-clear pf-clear--search" type="button" aria-label="Очистить поиск по полю ${escapeAttr(control.label)}" data-modal-action="clear-search" data-id="${escapeAttr(control.id)}">${iconPickerCross()}</button>`
+          : hasValue && !isOpen
+            ? `<button class="pf-clear" type="button" aria-label="Очистить ${escapeAttr(control.label)}" data-modal-action="clear-control" data-id="${escapeAttr(control.id)}">${iconPickerCross()}</button>`
+            : "";
 
       return `
         <div class="pf-control pf-control--request pf-control--modal ${isOpen ? "is-open" : ""}" data-modal-control="${escapeAttr(control.id)}">
@@ -357,12 +415,8 @@
             data-modal-action="toggle-control"
             data-id="${escapeAttr(control.id)}"
           >
-            <span class="pf-field__text">${escapeHtml(label)}</span>
-            ${
-              hasValue
-                ? `<button class="pf-clear" type="button" aria-label="Очистить ${escapeAttr(control.label)}" data-modal-action="clear-control" data-id="${escapeAttr(control.id)}">${iconCross()}</button>`
-                : ""
-            }
+            ${fieldBody}
+            ${clearButton}
             ${iconArrow()}
           </div>
           ${control.value ? `<input type="hidden" name="${escapeAttr(control.queryKey)}" value="${escapeAttr(control.value.id)}">` : ""}
@@ -372,7 +426,10 @@
     }
 
     dropdownTemplate(control) {
-      const options = control.options || [];
+      const query = (this.state.search[control.id] || "").trim().toLowerCase();
+      const options = (control.options || []).filter((option) =>
+        option.label.toLowerCase().includes(query),
+      );
 
       return `
         <div class="pf-dropdown" role="listbox">
@@ -388,7 +445,6 @@
       return `
         <button class="pf-option ${selected ? "is-selected" : ""}" type="button" role="option" aria-selected="${selected}" data-modal-action="select-option" data-id="${escapeAttr(control.id)}" data-value="${escapeAttr(option.id)}">
           <span class="pf-option__label">${escapeHtml(option.label)}</span>
-          ${selected ? `<span class="pf-option__check" aria-hidden="true">${iconCheck()}</span>` : ""}
         </button>
       `;
     }
@@ -429,6 +485,8 @@
     }
 
     handleClick(event) {
+      if (event.target.matches("[data-modal-search]")) return;
+
       if (event.target === event.currentTarget || event.target.closest("[data-modal-close]")) {
         event.preventDefault();
         this.close();
@@ -477,6 +535,10 @@
         this.clearControl(id);
         return;
       }
+      if (action.dataset.modalAction === "clear-search") {
+        this.clearSearch(id);
+        return;
+      }
       if (action.dataset.modalAction === "select-option") {
         this.selectOption(id, action.dataset.value);
       }
@@ -489,8 +551,21 @@
       this.updateHistoryPopover();
       const previousControl = this.state.openControl;
       this.state.openControl = this.state.openControl === id ? null : id;
+      this.state.search[id] = "";
       if (previousControl && previousControl !== id) this.replaceControl(previousControl);
       this.replaceControl(id);
+      this.focusOpenControlSearch();
+    }
+
+    clearSearch(id) {
+      this.state.search[id] = "";
+      const input = document.querySelector(
+        `[data-modal-search="${selectorEscape(id)}"]`,
+      );
+      if (input) input.value = "";
+      this.updateOpenDropdownOptions(id);
+      this.updateSearchClearButton(id);
+      input?.focus();
     }
 
     async clearControl(id) {
@@ -523,6 +598,16 @@
     }
 
     handleInput(event) {
+      const search = event.target.closest("[data-modal-search]");
+      if (search) {
+        if (event.type !== "input") return;
+        const id = search.dataset.modalSearch;
+        this.state.search[id] = search.value;
+        this.updateOpenDropdownOptions(id);
+        this.updateSearchClearButton(id);
+        return;
+      }
+
       const field = event.target.closest("[data-modal-field]");
       if (!field) return;
       const key = field.dataset.modalField;
@@ -576,8 +661,12 @@
     return `<span class="pf-cross-icon" aria-hidden="true"></span>`;
   }
 
+  function iconPickerCross() {
+    return `<svg class="pf-cross-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8613 4.19526C11.1216 3.93491 11.5443 3.93491 11.8047 4.19526C12.0648 4.45557 12.0648 4.87735 11.8047 5.13765L8.94234 7.99996L11.8047 10.8613L11.8496 10.9121C12.0631 11.1739 12.0487 11.5606 11.8047 11.8047C11.5606 12.0487 11.1739 12.0631 10.9121 11.8496L10.8613 11.8047L7.99996 8.94234L5.13765 11.8047C4.87735 12.0648 4.45557 12.0648 4.19526 11.8047C3.93491 11.5443 3.93491 11.1216 4.19526 10.8613L7.0566 7.99996L4.19526 5.13765C3.93491 4.8773 3.93491 4.45561 4.19526 4.19526C4.45561 3.93491 4.8773 3.93491 5.13765 4.19526L7.99996 7.0566L10.8613 4.19526Z"/></svg>`;
+  }
+
   function iconArrow() {
-    return `<span class="pf-arrow" aria-hidden="true"></span>`;
+    return `<svg class="pf-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M12.1946 5.52821C12.4549 5.26791 12.8776 5.26798 13.1379 5.52821C13.3983 5.78856 13.3983 6.21122 13.1379 6.47157L8.47096 11.1376C8.21061 11.3979 7.78892 11.3979 7.52857 11.1376L2.86158 6.47157C2.60123 6.21122 2.60123 5.78856 2.86158 5.52821C3.1218 5.26818 3.54364 5.26836 3.80397 5.52821L7.99928 9.72352L12.1946 5.52821Z"/></svg>`;
   }
 
   function iconCar() {
