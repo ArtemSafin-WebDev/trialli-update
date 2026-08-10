@@ -62,10 +62,13 @@ if (root) {
   const search = root.querySelector("[data-catalog-search]");
   const desktopSortParent = sort?.parentElement;
   const mobileSortHost = root.querySelector("[data-mobile-sort-host]");
+  const categoryChip = root.querySelector("[data-category-chip]");
+  const carToast = root.querySelector("[data-car-toast]");
   const mobileMedia = window.matchMedia("(max-width: 767px)");
 
   const icons = {
     close: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.47 3.53 3.53 3.53 3.53-3.53.94.94L8.94 8l3.53 3.53-.94.94L8 8.94l-3.53 3.53-.94-.94L7.06 8 3.53 4.47z"/></svg>',
+    reset: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.27441 1.56147C7.6919 1.1817 9.19598 1.27919 10.5518 1.84076C11.3452 2.16945 12.0617 2.64755 12.667 3.24115V1.66693H14L13.999 5.00092L13.333 5.66693H10V4.33393H11.8711C11.3592 3.79349 10.7373 3.36162 10.041 3.07318C8.95656 2.62403 7.75394 2.54491 6.62012 2.84857C5.48612 3.15243 4.48326 3.82247 3.76855 4.75385C3.05393 5.68523 2.66701 6.82696 2.66699 8.00092C2.66706 9.17468 3.05411 10.3157 3.76855 11.247C4.48326 12.1784 5.4861 12.8484 6.62012 13.1523C7.75402 13.456 8.95649 13.3769 10.041 12.9277C11.1256 12.4784 12.0312 11.6836 12.6182 10.6669L13.7734 11.3339C13.0397 12.6047 11.9074 13.5985 10.5518 14.1601C9.19596 14.7217 7.69192 14.8202 6.27441 14.4404C4.85708 14.0605 3.60427 13.2236 2.71094 12.0595C1.81763 10.8953 1.33308 9.46835 1.33301 8.00092C1.33303 6.53347 1.81766 5.10656 2.71094 3.94232C3.60424 2.77821 4.85708 1.94133 6.27441 1.56147Z"/></svg>',
   };
 
   const formatPrice = (price) => new Intl.NumberFormat("ru-RU").format(price);
@@ -89,6 +92,7 @@ if (root) {
     const minHandle = price.querySelector('[data-price-handle="min"]');
     const maxHandle = price.querySelector('[data-price-handle="max"]');
 
+    price.classList.toggle("is-changed", hasActivePriceFilter());
     price.style.setProperty("--range-min", `${minPercent}%`);
     price.style.setProperty("--range-max", `${maxPercent}%`);
     minInput.value = formatPrice(state.price.currentMin);
@@ -178,16 +182,27 @@ if (root) {
     const active = root.querySelector("[data-active-filters]");
     const tags = root.querySelector("[data-active-tags]");
     const values = Array.from(state.selected.entries());
+    const categories = values.filter(([key]) => key.startsWith("groups:"));
     active.hidden = values.length === 0;
-    tags.innerHTML = values
+    const filterTags = values
       .map(([key, label]) => `<button type="button" data-clear-filter="${key}"><span>${label}</span>${icons.close}</button>`)
       .join("");
+    const resetButton = values.length >= 2
+      ? `<button class="tri-results-active__reset" type="button" data-reset-filters>${icons.reset}<span>Сбросить фильтры</span></button>`
+      : "";
+    tags.innerHTML = filterTags + resetButton;
     const count = root.querySelector("[data-filter-count]");
     count.textContent = String(values.length);
     count.hidden = values.length === 0;
     root.querySelectorAll("[data-reset-filters]").forEach((button) => {
       button.disabled = values.length === 0;
     });
+    if (categoryChip) {
+      const label = categoryChip.querySelector("[data-category-chip-label]");
+      const suffix = categories.length > 1 ? ` +${categories.length - 1}` : "";
+      label.textContent = categories.length ? `${categories[0][1]}${suffix}` : "Категория";
+      categoryChip.classList.toggle("is-selected", categories.length > 0);
+    }
     syncTotals();
   }
 
@@ -299,7 +314,16 @@ if (root) {
     }
     if (button.matches("[data-sort-apply]")) applySort();
     if (button.matches("[data-filter-open]")) setFilterOpen(true);
+    if (button.matches("[data-category-chip]")) setFilterOpen(true);
     if (button.matches("[data-filter-close], [data-filter-apply]")) setFilterOpen(false);
+    if (button.matches("[data-mobile-search-focus]")) {
+      search.scrollIntoView({ behavior: "smooth", block: "center" });
+      window.setTimeout(() => search.querySelector("input")?.focus(), 220);
+    }
+    if (button.matches("[data-car-toast-close]")) {
+      carToast?.classList.remove("is-visible");
+      carToast?.setAttribute("aria-hidden", "true");
+    }
     if (button.matches("[data-filter-more]")) {
       const filter = button.closest("[data-filter]");
       const expanded = !filter.classList.contains("is-expanded");
@@ -454,6 +478,10 @@ if (root) {
 
   mobileMedia.addEventListener("change", moveSortForViewport);
   bindProductCardInteractions(root);
+  root.querySelectorAll(".tri-home-bottom-nav .is-active").forEach((item) => item.classList.remove("is-active"));
+  const pickerNavigationItem = root.querySelector(".tri-home-bottom-nav [data-open-picker]");
+  pickerNavigationItem?.classList.add("is-active");
+  pickerNavigationItem?.setAttribute("aria-current", "page");
   updatePriceControls();
   collectFilters();
   moveSortForViewport();

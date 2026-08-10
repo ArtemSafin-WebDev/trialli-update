@@ -1888,13 +1888,13 @@
   gap: 6px;
 }
 
-.tri-home-request-banner__copy strong {
+.tri-home-request-banner__copy h2 {
   font-size: 16px;
   font-weight: 600;
   line-height: 16px;
 }
 
-.tri-home-request-banner__copy span {
+.tri-home-request-banner__copy p {
   color: rgb(13 32 38 / 50%);
   font-size: 14px;
   line-height: 16px;
@@ -2902,13 +2902,13 @@
     gap: 8px;
   }
 
-  .tri-home-request-banner__copy strong {
+  .tri-home-request-banner__copy h2 {
     font-size: 14px;
     font-weight: 500;
     line-height: 16px;
   }
 
-  .tri-home-request-banner__copy span {
+  .tri-home-request-banner__copy p {
     color: rgb(255 255 255 / 80%);
     font-size: 12px;
     line-height: 14px;
