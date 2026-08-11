@@ -133,6 +133,7 @@ import {
           window.matchMedia("(max-width: 767.98px)").matches,
       );
       this.mobileExpandedControl = null;
+      this.mobileExternalControl = false;
       this.mobileHistoryOpen = false;
       this.vinSearch = {
         value: options.initialVin || "",
@@ -1576,6 +1577,7 @@ import {
       const payload = await this.api.getControls({ selected: this.selected });
       this.response.controls = payload.controls;
       this.response.submit = payload.submit;
+      this.emitSelectionChange(id);
       if (this.mobileFinderOpen) {
         this.render({
           mobileScrollTop,
@@ -1752,6 +1754,7 @@ import {
       const payload = await this.api.getControls({ selected: this.selected });
       this.response.controls = payload.controls;
       this.response.submit = payload.submit;
+      this.emitSelectionChange(id);
       if (this.mobileFinderOpen) {
         this.render({
           mobileScrollTop,
@@ -2134,6 +2137,7 @@ import {
 
     openMobileFinder() {
       this.mobileFinderOpen = true;
+      this.mobileExternalControl = false;
       this.mobileExpandedControl = null;
       this.mobileHistoryOpen = false;
       this.historyOpen = null;
@@ -2141,8 +2145,58 @@ import {
       this.render();
     }
 
+    async openMobileControl(id) {
+      if (!STEPS.includes(id)) return false;
+      if (!this.response) await this.refresh();
+      if (this.mode !== "vehicle") {
+        this.mode = "vehicle";
+        await this.refresh();
+      }
+      const control = this.response?.controls?.find((item) => item.id === id);
+      if (!control || this.isControlDisabled(control)) return false;
+      this.mobileFinderOpen = true;
+      this.mobileExternalControl = true;
+      this.mobileExpandedControl = id;
+      this.mobileHistoryOpen = false;
+      this.historyOpen = null;
+      this.openControl = null;
+      this.search[id] = "";
+      this.render();
+      return true;
+    }
+
+    getSelection() {
+      return normalizeSelected(this.selected);
+    }
+
+    async resetVehicleSelection() {
+      this.selected = normalizeSelected({});
+      const payload = await this.api.getControls({ selected: this.selected });
+      this.response.controls = payload.controls;
+      this.response.submit = payload.submit;
+      this.emitSelectionChange("reset");
+      this.render();
+    }
+
+    async clearVehicleSelection(id) {
+      if (!STEPS.includes(id)) return;
+      await this.clearControl(id);
+    }
+
+    emitSelectionChange(changedField) {
+      document.dispatchEvent(
+        new CustomEvent("parts-finder:selection-change", {
+          detail: {
+            changedField,
+            selected: this.getSelection(),
+          },
+        }),
+      );
+    }
+
     closeMobileFinder() {
       this.mobileFinderOpen = false;
+      this.mobileExternalControl = false;
       this.mobileExpandedControl = null;
       this.mobileHistoryOpen = false;
       this.historyOpen = null;
@@ -2153,6 +2207,7 @@ import {
     openMobileHistory() {
       if (!this.hasHistoryFeature()) return;
       this.mobileFinderOpen = true;
+      this.mobileExternalControl = false;
       this.mobileHistoryOpen = true;
       this.mobileExpandedControl = null;
       this.historyOpen = null;
@@ -2176,11 +2231,19 @@ import {
     }
 
     closeMobileOptions() {
+      if (this.mobileExternalControl) {
+        this.closeMobileFinder();
+        return;
+      }
       this.mobileExpandedControl = null;
       this.render();
     }
 
     saveMobileOptions() {
+      if (this.mobileExternalControl) {
+        this.closeMobileFinder();
+        return;
+      }
       this.mobileExpandedControl = null;
       this.render();
     }
@@ -2584,7 +2647,11 @@ import {
     });
     const publicApi = {
       openMobileFinder: () => partsFinder.openMobileFinder(),
+      openMobileControl: (id) => partsFinder.openMobileControl(id),
       openVinRequestModal: () => partsFinder.openVinRequestModal(),
+      getSelection: () => partsFinder.getSelection(),
+      resetSelection: () => partsFinder.resetVehicleSelection(),
+      clearSelection: (id) => partsFinder.clearVehicleSelection(id),
     };
     window.TrialliPartsFinder = {
       ...(window.TrialliPartsFinder || {}),

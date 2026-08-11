@@ -1,0 +1,323 @@
+.tri-category-picker-bridge {
+  position: absolute;
+  z-index: 500;
+  width: 100%;
+  height: 0;
+  overflow: visible;
+}
+
+.tri-category-picker-bridge .tri-home-picker-section {
+  height: 0;
+  padding: 0;
+}
+
+.tri-category-picker-bridge .tri-home-container,
+.tri-category-picker-bridge .parts-finder-shell,
+.tri-category-picker-bridge .parts-finder {
+  width: 0;
+  height: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.tri-category-picker-bridge .parts-finder > :not(.pf-mobile-screen) {
+  display: none;
+}
+
+.tri-category-head {
+  grid-template-columns: minmax(0, 1fr) 210px;
+  min-height: 112px;
+  padding: 32px 0 24px;
+}
+
+.tri-category-product-search {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.tri-category-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  color: #4c5759;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.tri-category .tri-category-breadcrumbs__link {
+  color: var(--results-muted);
+}
+
+.tri-category-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tri-category-title-back {
+  display: none;
+}
+
+.tri-category-tree {
+  padding: 16px 0;
+  border-radius: 24px 24px 0 0;
+  background: var(--results-surface);
+}
+
+.tri-category-tree__title {
+  margin: 0 0 8px;
+  padding: 0 16px;
+  color: var(--results-heading);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+}
+
+.tri-category-tree__navigation {
+  display: grid;
+  padding: 0 16px;
+}
+
+.tri-category .tri-category-tree__link {
+  display: flex;
+  min-height: 32px;
+  align-items: center;
+  padding: 8px;
+  border-radius: 8px;
+  color: var(--results-text);
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.tri-category .tri-category-tree__link:not(.tri-category-tree__link--current):hover,
+.tri-category .tri-category-tree__link:not(.tri-category-tree__link--current):focus-visible {
+  color: #fff;
+}
+
+.tri-category .tri-category-tree__link--current {
+  padding-left: 16px;
+  background: var(--results-accent);
+  color: var(--results-bg);
+  cursor: default;
+}
+
+.tri-category .tri-category-tree__link--child {
+  padding-left: 24px;
+}
+
+.tri-category .tri-category-tree__link--back {
+  gap: 4px;
+}
+
+.tri-category-tree__back-icon {
+  flex: 0 0 12px;
+  fill: currentColor;
+}
+
+.tri-category .tri-results-filters__summary {
+  display: none;
+}
+
+.tri-category-vehicle-filter--disabled {
+  display: block;
+  height: 56px;
+  padding: 0;
+  background: var(--results-surface);
+  color: var(--results-muted-dark);
+}
+
+.tri-category-vehicle-filter--disabled legend {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  float: none;
+  width: auto;
+  margin: 0;
+  color: var(--results-muted-dark);
+  transform: translateY(-50%);
+}
+
+.tri-category-vehicle-filter--disabled > :not(legend) {
+  display: none;
+}
+
+.tri-category-vehicle-filter .tri-results-filter__more[hidden] {
+  display: none;
+}
+
+.tri-category .tri-results-active {
+  display: none;
+}
+
+.tri-category-vehicle-chip,
+.tri-category-mobile-reset {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .tri-category {
+    padding-top: 64px;
+  }
+
+  .tri-category > .tri-home-header__slot {
+    display: block;
+  }
+
+  .tri-category .tri-home-header__logo {
+    display: none;
+  }
+
+  .tri-category .tri-home-header__main {
+    gap: 8px;
+  }
+
+  .tri-category-picker-bridge .tri-home-picker-section {
+    position: static;
+    display: block;
+  }
+
+  .tri-category-picker-bridge .tri-home-container,
+  .tri-category-picker-bridge .parts-finder-shell,
+  .tri-category-picker-bridge .parts-finder {
+    width: 0;
+    height: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .tri-category .tri-results-catalog {
+    padding-top: 24px;
+  }
+
+  .tri-category .tri-results-title {
+    margin-bottom: 12px;
+  }
+
+  .tri-category-breadcrumbs {
+    display: none;
+  }
+
+  .tri-category-title-row {
+    gap: 8px;
+  }
+
+  .tri-category-title-back {
+    display: grid;
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+    place-items: center;
+    color: #fff;
+  }
+
+  .tri-category-title-back__icon {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+  }
+
+  .tri-category-title-row__heading {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24px;
+  }
+
+  .tri-category-product-search {
+    display: none;
+  }
+
+  .tri-category-vehicle-chip {
+    display: flex;
+    max-width: 229px;
+    height: 32px;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+    margin: 0;
+    padding: 0 10px 0 12px;
+    border: 0;
+    border-radius: 20px;
+    background: var(--results-surface);
+    color: var(--results-summary);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 16px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .tri-category-vehicle-chip[hidden],
+  .tri-category-mobile-reset[hidden] {
+    display: none;
+  }
+
+  .tri-category-vehicle-chip__label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .tri-category-vehicle-chip__icon {
+    width: 12px;
+    height: 12px;
+    flex: 0 0 12px;
+    fill: var(--results-muted-dark);
+  }
+
+  .tri-category-vehicle-chip--filled {
+    background: rgb(190 214 0 / 10%);
+    color: var(--results-accent);
+  }
+
+  .tri-category-vehicle-chip--filled .tri-category-vehicle-chip__icon {
+    fill: currentColor;
+  }
+
+  .tri-category-vehicle-chip:disabled {
+    color: rgb(194 202 204 / 35%);
+    cursor: default;
+  }
+
+  .tri-category-mobile-reset:not(:disabled) {
+    display: flex;
+    height: 32px;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+    padding: 0 4px;
+    border: 0;
+    background: transparent;
+    color: var(--results-text);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .tri-category-mobile-reset__icon {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+
+  .tri-category-tree {
+    display: none;
+  }
+
+  .tri-category .tri-category-vehicle-filter {
+    display: none;
+  }
+}

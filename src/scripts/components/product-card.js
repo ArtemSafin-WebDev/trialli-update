@@ -124,11 +124,11 @@ export function productCardTemplate(product, index = 0) {
               ${productCardIcons.plus}
             </button>
             <div class="tri-product-card__counter" data-product-counter hidden>
-              <button type="submit" name="action" value="decrease" aria-label="Уменьшить количество">
+              <button class="tri-product-card__counter-button" type="submit" name="action" value="decrease" aria-label="Уменьшить количество">
                 ${productCardIcons.minus}
               </button>
               <input class="tri-product-card__quantity" type="number" name="quantity" min="1" max="99" value="1" aria-label="Количество ${product.code}" />
-              <button type="submit" name="action" value="increase" aria-label="Увеличить количество">
+              <button class="tri-product-card__counter-button" type="submit" name="action" value="increase" aria-label="Увеличить количество">
                 ${productCardIcons.plus}
               </button>
             </div>

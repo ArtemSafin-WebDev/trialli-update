@@ -509,19 +509,27 @@ if (root) {
 
   function clearFilter(key) {
     hideFilterPreview();
+    let changedInput = null;
     if (key === "price") {
       state.price.currentMin = state.price.min;
       state.price.currentMax = state.price.max;
       updatePriceControls();
     } else if (key === "sale") {
       const sale = filters.querySelector("[data-sale]");
-      if (sale) sale.checked = false;
+      if (sale) {
+        sale.checked = false;
+        changedInput = sale;
+      }
     } else {
       const [group, value] = key.split(":");
       const input = Array.from(filters.querySelectorAll(`[data-filter="${group}"] input`)).find((item) => item.value === value);
-      if (input) input.checked = false;
+      if (input) {
+        input.checked = false;
+        changedInput = input;
+      }
     }
-    collectFilters();
+    if (changedInput) changedInput.dispatchEvent(new Event("change", { bubbles: true }));
+    else collectFilters();
   }
 
   function resetFilters() {
@@ -534,6 +542,7 @@ if (root) {
     updatePriceControls();
     collectFilters();
     syncMobileFilterDetail();
+    document.dispatchEvent(new CustomEvent("catalog-filters:reset"));
   }
 
   function setSortOpen(open) {
@@ -613,6 +622,13 @@ if (root) {
     const allOptions = getFilterDetailOptions(filter);
     const selectedOptions = getFilterDetailOptions(filter, "").filter((option) => option.input.checked);
     const hasSearchValue = Boolean(searchInput?.value.trim());
+    const primaryAction = filterDetail.querySelector("[data-filter-detail-primary]");
+    const secondaryAction = filterDetail.querySelector("[data-filter-detail-secondary]");
+    const isSequentialFilter = filter.hasAttribute("data-filter-next");
+    const nextFilter = isSequentialFilter && filter.dataset.filterNext
+      ? filters.querySelector(`[data-filter="${filter.dataset.filterNext}"]`)
+      : null;
+    const canOpenNext = Boolean(nextFilter && !nextFilter.disabled && selectedOptions.length);
 
     if (titleNode) titleNode.textContent = title;
     if (searchInput && searchField && searchClear) {
@@ -655,6 +671,17 @@ if (root) {
         : '<p class="tri-results-filter-detail__empty">Ничего не найдено</p>';
       list.innerHTML = selectAllOption + options;
     }
+    if (primaryAction && secondaryAction) {
+      primaryAction.hidden = isSequentialFilter && !canOpenNext;
+      primaryAction.textContent = canOpenNext
+        ? `Выбрать ${nextFilter.dataset.filterActionLabel || getFilterTitle(nextFilter).toLocaleLowerCase("ru-RU")}`
+        : "Сохранить";
+      primaryAction.dataset.filterDetailAction = canOpenNext ? "next" : "save";
+      primaryAction.dataset.filterDetailNext = canOpenNext ? nextFilter.dataset.filter : "";
+      secondaryAction.hidden = false;
+      secondaryAction.textContent = isSequentialFilter ? "Сохранить" : "Уточнить параметры";
+      secondaryAction.dataset.filterDetailAction = isSequentialFilter ? "save" : "close";
+    }
   }
 
   function openMobileFilterDetail(filter) {
@@ -683,7 +710,7 @@ if (root) {
     } else {
       input.checked = checked ?? !input.checked;
     }
-    collectFilters();
+    input.dispatchEvent(new Event("change", { bubbles: true }));
     syncMobileFilterDetail();
     filters.scrollTo({ top: 0 });
   }
@@ -703,10 +730,13 @@ if (root) {
 
   function resetMobileDetailValues() {
     const filter = filters.querySelector(`[data-filter="${state.mobileDetailFilter}"]`);
+    let changedInput = null;
     filter?.querySelectorAll("input[type='checkbox'], input[type='radio']").forEach((input) => {
+      if (input.checked && !changedInput) changedInput = input;
       input.checked = false;
     });
-    collectFilters();
+    if (changedInput) changedInput.dispatchEvent(new Event("change", { bubbles: true }));
+    else collectFilters();
     syncMobileFilterDetail();
     filters.scrollTo({ top: 0 });
   }
@@ -856,10 +886,26 @@ if (root) {
       if (!mobileMedia.matches) applySort();
     }
     if (button.matches("[data-sort-apply]")) applySort();
+    if (button.matches("[data-filter-chip]") && !event.target.closest("[data-filter-chip-clear]")) {
+      const filter = filters.querySelector(`[data-filter="${button.dataset.filterChip}"]`);
+      if (filter && !filter.disabled) {
+        setFilterOpen(true);
+        openMobileFilterDetail(filter);
+      }
+    }
     if (button.matches("[data-filter-open]")) setFilterOpen(true);
     if (button.matches("[data-filter-close], [data-filter-apply]")) setFilterOpen(false);
     if (button.matches("[data-filter-detail-close]")) closeMobileFilterDetail();
     if (button.matches("[data-filter-detail-save]")) setFilterOpen(false);
+    if (button.matches("[data-filter-detail-action]")) {
+      const action = button.dataset.filterDetailAction;
+      if (action === "next") {
+        const nextFilter = filters.querySelector(`[data-filter="${button.dataset.filterDetailNext}"]`);
+        if (nextFilter && !nextFilter.disabled) openMobileFilterDetail(nextFilter);
+      }
+      if (action === "save") setFilterOpen(false);
+      if (action === "close") closeMobileFilterDetail();
+    }
     if (button.matches("[data-filter-detail-option]")) {
       setMobileDetailValue(button.dataset.filterDetailOption);
     }
@@ -1073,9 +1119,9 @@ if (root) {
   filters.addEventListener("scroll", requestFilterPreviewPositionUpdate, { passive: true });
   document.fonts?.ready.then(queueMobileMoreLayout);
   bindProductCardInteractions(root);
-  root.querySelectorAll(".tri-home-bottom-nav .is-active").forEach((item) => item.classList.remove("is-active"));
+  root.querySelectorAll(".tri-home-bottom-nav__item--active").forEach((item) => item.classList.remove("tri-home-bottom-nav__item--active"));
   const pickerNavigationItem = root.querySelector(".tri-home-bottom-nav [data-open-picker]");
-  pickerNavigationItem?.classList.add("is-active");
+  pickerNavigationItem?.classList.add("tri-home-bottom-nav__item--active");
   pickerNavigationItem?.setAttribute("aria-current", "page");
   filters.querySelectorAll("input[type='checkbox'], input[type='radio']").forEach((input) => {
     input.checked = input.defaultChecked;

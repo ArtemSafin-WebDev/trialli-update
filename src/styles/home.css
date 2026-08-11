@@ -30,25 +30,6 @@
   border-width: 0 !important;
 }
 
-.tri-home button,
-.tri-home input {
-  font: inherit;
-}
-
-.tri-home button,
-.tri-home a {
-  -webkit-tap-highlight-color: transparent;
-}
-
-.tri-home button {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: inherit;
-  cursor: pointer;
-}
-
 .tri-home a {
   color: inherit;
 }
@@ -334,12 +315,17 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
+  margin: 0;
   padding: 12px 24px;
+  border: 0;
   border-radius: 31px;
   background: var(--tri-accent);
   color: var(--tri-bg) !important;
+  cursor: pointer;
+  font-family: inherit;
   font-weight: 500;
   line-height: 16px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .tri-home-header__catalog {
@@ -400,8 +386,15 @@
 
 .tri-home-header__search button {
   display: grid;
+  margin: 0;
+  padding: 0;
   place-items: center;
   border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .tri-home-header__search-submit {
@@ -468,6 +461,16 @@
   background: var(--tri-bg);
 }
 
+.tri-home-header__burger {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
 @media (hover: hover) and (pointer: fine) {
   .tri-home-header__cart:hover {
     background: #203840;
@@ -497,6 +500,14 @@
 
 .tri-home-header__menu-backdrop {
   display: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .tri-home-header__sticky {
@@ -951,12 +962,18 @@
   display: grid;
   width: 40px;
   height: 28px;
+  margin: 0;
+  padding: 0;
   place-items: center;
   border: 1px solid #36515a !important;
   border-radius: 20px;
+  background: transparent;
   color: var(--tri-accent);
+  cursor: pointer;
+  font-family: inherit;
   font-size: 22px;
   line-height: 1;
+  -webkit-tap-highlight-color: transparent;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1830,9 +1847,15 @@
   width: 60px;
   height: 60px;
   overflow: hidden;
+  margin: 0;
+  padding: 0;
   border: 1px solid #ecf4f8 !important;
   border-radius: 8px;
   background: #fff;
+  color: inherit;
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .tri-product-card__thumb img {
@@ -1906,7 +1929,12 @@
   width: max-content;
   align-items: center;
   gap: 8px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
   color: rgb(255 255 255 / 70%);
+  cursor: pointer;
+  font-family: inherit;
   font-size: 12px;
   font-weight: 500;
   line-height: 1.2;
@@ -1988,10 +2016,16 @@
   width: 40px;
   height: 40px;
   flex: 0 0 40px;
+  margin: 0;
+  padding: 0;
   place-items: center;
+  border: 0;
   border-radius: 50%;
   background: var(--tri-accent) !important;
   color: var(--tri-bg) !important;
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
   transition: background-color 0.2s ease;
 }
 
@@ -2027,23 +2061,30 @@
   display: none;
 }
 
-.tri-product-card__counter button {
+.tri-product-card__counter-button {
   display: grid;
   width: 32px;
   height: 32px;
   flex: 0 0 32px;
   place-items: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
   border-radius: 30px;
   background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
   transition: background-color 0.2s ease;
 }
 
-.tri-product-card__counter button:focus-visible {
+.tri-product-card__counter-button:focus-visible {
   background: rgb(255 255 255 / 50%);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .tri-product-card__counter button:hover {
+  .tri-product-card__counter-button:hover {
     background: rgb(255 255 255 / 50%);
   }
 }
@@ -2082,9 +2123,13 @@
   padding: 15px 23px;
   border: 1px solid var(--tri-muted) !important;
   border-radius: 31px;
+  background: transparent;
   color: var(--tri-muted);
+  cursor: pointer;
+  font-family: inherit;
   font-weight: 500;
   line-height: 16px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .tri-products-more svg {
@@ -2158,14 +2203,19 @@
 }
 
 .tri-home-request-banner__content > button {
+  margin: 0;
   padding: 16px 24px;
+  border: 0;
   border-radius: 28px;
   background: var(--tri-surface);
   color: #fff;
+  cursor: pointer;
+  font-family: inherit;
   font-size: 14px;
   font-weight: 500;
   line-height: 16px;
   white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -2339,10 +2389,17 @@
   display: grid;
   width: 40px;
   height: 40px;
+  margin: 0;
+  padding: 0;
   place-items: center;
+  border: 0;
   border-radius: 50%;
   background: var(--tri-bg) !important;
+  color: inherit;
+  cursor: pointer;
+  font-family: inherit;
   font-size: 26px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .tri-home-modal__dialog--request p {
@@ -2427,7 +2484,7 @@
     width: 92px;
   }
 
-  .tri-product-card__counter button {
+  .tri-product-card__counter-button {
     width: 28px;
     height: 28px;
     flex-basis: 28px;
@@ -2530,13 +2587,18 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
+    margin: 0;
     padding: 12px 20px;
+    border: 0;
     border-radius: 31px;
     background: #bed600;
     color: #0d2026;
+    cursor: pointer;
+    font-family: inherit;
     font-size: 14px;
     font-weight: 500;
     line-height: 16px;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .tri-home-picker-teaser__button svg {
@@ -3160,7 +3222,7 @@
     width: 92px;
   }
 
-  .tri-product-card__counter button {
+  .tri-product-card__counter-button {
     width: 28px;
     height: 28px;
     flex-basis: 28px;
@@ -3355,8 +3417,7 @@
     transform: translateY(100%);
   }
 
-  .tri-home-bottom-nav a,
-  .tri-home-bottom-nav button {
+  .tri-home-bottom-nav__item {
     position: relative;
     display: flex;
     min-width: 0;
@@ -3366,24 +3427,29 @@
     align-items: center;
     justify-content: flex-start;
     gap: 8px;
-    padding-top: 13px;
+    margin: 0;
+    padding: 13px 0 0;
+    border: 0;
     border-radius: 0;
+    background: transparent;
     color: var(--tri-muted-dark);
     font-size: 12px;
     font-weight: 500;
     line-height: 1.2;
     text-decoration: none;
+    cursor: pointer;
+    font-family: inherit;
   }
 
-  .tri-home-bottom-nav .tri-home-bottom-nav__icon,
-  .tri-home-bottom-nav .tri-home-bottom-nav__icon svg {
+  .tri-home-bottom-nav__icon,
+  .tri-home-bottom-nav__icon svg {
     display: block;
     width: 16px;
     height: 16px;
     flex: 0 0 16px;
   }
 
-  .tri-home-bottom-nav .tri-home-bottom-nav__icon svg {
+  .tri-home-bottom-nav__icon svg {
     fill: currentColor;
   }
 
@@ -3391,7 +3457,7 @@
     white-space: nowrap;
   }
 
-  .tri-home-bottom-nav .is-active {
+  .tri-home-bottom-nav__item--active {
     padding-top: 12px;
     border-top: 1px solid var(--tri-accent) !important;
     background: linear-gradient(to bottom, rgb(190 214 0 / 10%), transparent);

@@ -718,6 +718,7 @@ body.pf-mobile-lock {
   background: #00205c;
   color: #ffffff;
   cursor: pointer;
+  font-family: inherit;
   font-size: 1.4rem;
   font-weight: 500;
   line-height: 1.6rem;
@@ -981,6 +982,7 @@ body.pf-mobile-lock {
   background: transparent;
   color: #797d86;
   cursor: pointer;
+  font-family: inherit;
   transform: translateY(-50%);
 }
 
@@ -1067,6 +1069,7 @@ body.pf-mobile-lock {
   border-radius: 0.8rem;
   border: 0;
   padding: 0;
+  font-family: inherit;
 }
 
 button.pf-vin-request__car-icon {
@@ -1137,6 +1140,7 @@ button.pf-vin-request__car-icon.is-open {
   background: transparent;
   color: #00205c;
   cursor: pointer;
+  font-family: inherit;
   font-size: 1.4rem;
   font-weight: 500;
   line-height: 1.6rem;

@@ -598,8 +598,8 @@ catalogRoots.forEach((root, rootIndex) => {
   };
 
   const restoreMobileNavigation = () => {
-    bottomNav?.querySelectorAll(".is-active").forEach((item) => item.classList.remove("is-active"));
-    mobileNavActive.forEach((item) => item.classList.add("is-active"));
+    bottomNav?.querySelectorAll(".tri-home-bottom-nav__item--active").forEach((item) => item.classList.remove("tri-home-bottom-nav__item--active"));
+    mobileNavActive.forEach((item) => item.classList.add("tri-home-bottom-nav__item--active"));
     mobileNavActive = [];
   };
 
@@ -609,8 +609,8 @@ catalogRoots.forEach((root, rootIndex) => {
 
     if (open) {
       mobileNavActive = [...(bottomNav?.querySelectorAll(".is-active") ?? [])];
-      bottomNav?.querySelectorAll(".is-active").forEach((item) => item.classList.remove("is-active"));
-      bottomCatalogToggle?.classList.add("is-active");
+      bottomNav?.querySelectorAll(".tri-home-bottom-nav__item--active").forEach((item) => item.classList.remove("tri-home-bottom-nav__item--active"));
+      bottomCatalogToggle?.classList.add("tri-home-bottom-nav__item--active");
       bottomNav?.classList.remove("is-scroll-hidden");
 
       root.querySelector("[data-header-menu]")?.classList.remove("is-open");

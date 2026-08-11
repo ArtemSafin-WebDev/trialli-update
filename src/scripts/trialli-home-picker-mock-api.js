@@ -11,6 +11,13 @@
   };
   const STEPS = ["brand", "model", "year", "engine", "modification"];
   const MODES = ["vehicle", "vin"];
+  const FALLBACK_YEAR_OPTIONS = [
+    { id: "2024", label: "2024" },
+    { id: "2023", label: "2023" },
+    { id: "2022", label: "2022" },
+    { id: "2021", label: "2021" },
+    { id: "2020", label: "2020" },
+  ];
   const EMPTY_VIN_REQUEST = {
     brand: null,
     model: null,
@@ -588,7 +595,9 @@
       return {
         brand: this.data.vehicles.map(toOption),
         model: (brand?.models || []).map(toOption),
-        year: (model?.years || []).map(toOption),
+        year: model
+          ? (model.years?.length ? model.years : FALLBACK_YEAR_OPTIONS).map(toOption)
+          : [],
         engine: (year?.engines || []).map(toOption),
         modification: (engine?.modifications || []).map(toOption),
       };
