@@ -2575,7 +2575,6 @@ button.pf-vin-request__car-icon.is-open {
   position: relative;
   z-index: 30;
   height: auto;
-  min-height: 306px;
 }
 
 .parts-finder-shell {
@@ -2584,6 +2583,10 @@ button.pf-vin-request__car-icon.is-open {
 }
 
 @media (min-width: 768px) {
+  .tri-home-picker-section {
+    padding-bottom: 32px;
+  }
+
   .parts-finder {
     --pf-background-gradient-start: 170px;
 
@@ -3253,7 +3256,7 @@ button.pf-vin-request__car-icon.is-open {
 
   .pf-vin-request {
     gap: 16px;
-    padding: 0 16px 24px;
+    padding: 9px 16px 24px;
   }
 
   .pf-vin-request__intro {
@@ -3733,6 +3736,10 @@ button.pf-vin-request__car-icon.is-open {
     border-radius: 24px;
   }
 
+  .pf-mobile-vin {
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  }
+
   .pf-mobile-vin .pf-vin-panel {
     display: grid;
     gap: 16px;
@@ -4021,6 +4028,29 @@ button.pf-vin-request__car-icon.is-open {
     color: #a1b0b2;
     font-size: 12px;
     line-height: 1.2;
+  }
+
+  .pf-mobile-vin .pf-agreement .pf-checkbox {
+    width: 16px;
+    height: 16px;
+    color: #0d2026;
+  }
+
+  .tri-home .pf-mobile-vin .pf-agreement .pf-checkbox::before {
+    inset: 1px;
+    border: 1px solid rgb(255 255 255 / 30%) !important;
+    border-radius: 4px;
+    background: transparent;
+  }
+
+  .tri-home .pf-mobile-vin .pf-agreement input:checked + .pf-checkbox::before {
+    border-color: #bed600 !important;
+    background: #bed600;
+  }
+
+  .tri-home .pf-mobile-vin .pf-agreement input:focus-visible + .pf-checkbox::before {
+    border-color: #bed600 !important;
+    box-shadow: 0 0 0 2px rgb(190 214 0 / 24%);
   }
 
   .pf-mobile-vin .pf-agreement a {
