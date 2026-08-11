@@ -60,6 +60,23 @@
             initialVin: "Y6DTF69Y080144158",
             initialVinResult: "found",
           };
+          window.VinResultsConfig = {
+            api: "mock",
+            mockData: {
+              filterPreview: {
+                enabled: false,
+                total: 106,
+                resultsUrl: "#catalog-products",
+              },
+            },
+            endpoints: {
+              filterPreview: "/api/catalog/filter-preview",
+            },
+            context: {
+              selectionType: "vin",
+              vin: "Y6DTF69Y080144158",
+            },
+          };
         </script>
         <!-- @include /src/partials/parts-finder.html -->
 
@@ -315,6 +332,18 @@
                   </div>
                 </section>
               </aside>
+
+              <div
+                class="tri-results-filter-preview"
+                role="status"
+                aria-live="polite"
+                aria-hidden="true"
+                data-filter-preview
+                hidden
+              >
+                <span class="tri-results-filter-preview__text" data-filter-preview-text></span>
+                <a class="tri-results-filter-preview__link" href="#catalog-products" data-filter-preview-link>Показать</a>
+              </div>
 
               <div class="tri-results-main">
                 <div class="tri-results-active" data-active-filters>

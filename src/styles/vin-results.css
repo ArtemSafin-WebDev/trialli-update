@@ -556,6 +556,100 @@
   pointer-events: none;
 }
 
+.tri-results-filter-preview {
+  position: fixed;
+  z-index: 700;
+  top: var(--results-filter-preview-top, -999px);
+  left: var(--results-filter-preview-left, -999px);
+  display: inline-flex;
+  min-width: 320px;
+  min-height: 64px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-radius: 12px;
+  padding: 16px 24px;
+  background: var(--results-accent);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 24%);
+  color: #697800;
+  cursor: default;
+  font-size: 16px;
+  line-height: 20px;
+  pointer-events: auto;
+  transform: translateY(-50%);
+  animation: tri-results-filter-preview-in 160ms ease-out both;
+}
+
+.tri-results-filter-preview[hidden] {
+  display: none;
+}
+
+.tri-results-filter-preview::before {
+  position: absolute;
+  top: 50%;
+  left: -8px;
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  background: var(--results-accent);
+  content: "";
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.tri-results-filter-preview__text,
+.tri-results-filter-preview__link {
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.tri-results-filter-preview__text {
+  font-weight: 400;
+}
+
+.tri-results-filter-preview__link {
+  color: var(--results-bg) !important;
+  font-weight: 500;
+  text-decoration: none;
+  transition: opacity 160ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-results-filter-preview__link:hover {
+    opacity: 0.68;
+  }
+}
+
+.tri-results-filter-preview__link:focus-visible {
+  border-radius: 2px;
+  outline: 2px solid var(--results-bg);
+  outline-offset: 4px;
+}
+
+@keyframes tri-results-filter-preview-in {
+  from {
+    opacity: 0;
+    transform: translate(-8px, -50%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tri-results-filter-preview {
+    animation: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .tri-results-filter-preview {
+    display: none !important;
+  }
+}
+
 .tri-results-filter__options i {
   position: relative;
   width: 16px;

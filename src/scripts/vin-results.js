@@ -13,6 +13,19 @@ if (root) {
   const PRICE_STEP = 100;
   const MOBILE_SCROLL_HEADER_THRESHOLD = 80;
   const MOBILE_STICKY_TOOLS_TOP = 68;
+  const FILTER_PREVIEW_DELAY = 180;
+  const vinResultsConfig = window.VinResultsConfig || {};
+  const filterPreviewMockData = vinResultsConfig.mockData?.filterPreview || {};
+  const filterPreviewConfig = {
+    enabled: vinResultsConfig.api !== "mock" || filterPreviewMockData.enabled !== false,
+    api: vinResultsConfig.api || "fetch",
+    mockData: filterPreviewMockData,
+    endpoints: {
+      filterPreview: "/api/catalog/filter-preview",
+      ...(vinResultsConfig.endpoints || {}),
+    },
+    context: vinResultsConfig.context || {},
+  };
 
   const productSeed = [
     ["lrac-1980", "LRAC 1980", 2710, 3710, true],
@@ -77,10 +90,18 @@ if (root) {
   const desktopActiveFiltersNextSibling = activeFilters?.nextElementSibling;
   const carToast = root.querySelector("[data-car-toast]");
   const filterDetail = root.querySelector("[data-filter-detail]");
+  const filterPreview = root.querySelector("[data-filter-preview]");
+  const filterPreviewText = filterPreview?.querySelector("[data-filter-preview-text]");
+  const filterPreviewLink = filterPreview?.querySelector("[data-filter-preview-link]");
   const mobileMedia = window.matchMedia("(max-width: 767px)");
   const desktopExtraOptions = new WeakSet(filters.querySelectorAll(".tri-results-filter__options .is-extra"));
   let mobileMoreLayoutFrame = 0;
   let scrollHeaderFrame = 0;
+  let filterPreviewFrame = 0;
+  let filterPreviewTimer = 0;
+  let filterPreviewVersion = 0;
+  let filterPreviewAnchor = null;
+  let filterPreviewController = null;
 
   const icons = {
     close: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.47 3.53 3.53 3.53 3.53-3.53.94.94L8.94 8l3.53 3.53-.94.94L8 8.94l-3.53 3.53-.94-.94L7.06 8 3.53 4.47z"/></svg>',
@@ -165,6 +186,7 @@ if (root) {
     clampPrice(type, Math.round(rawValue / PRICE_STEP) * PRICE_STEP);
     updatePriceControls();
     collectFilters();
+    queueFilterPreview(slider);
   }
 
   function getHandleCenter(slider, type) {
@@ -180,6 +202,237 @@ if (root) {
   function getFilterValueInputs(filter) {
     return Array.from(filter?.querySelectorAll(".tri-results-filter__options input, .tri-results-filter__chips input") || [])
       .filter((input) => !input.matches("[data-filter-select-all]"));
+  }
+
+  function serializeFilters() {
+    const values = {};
+
+    filters.querySelectorAll("[data-filter]").forEach((filter) => {
+      const selected = getFilterValueInputs(filter).filter((input) => input.checked);
+      if (!selected.length) return;
+
+      values[filter.dataset.filter] = selected.every((input) => input.type === "radio")
+        ? selected[0].value
+        : selected.map((input) => input.value);
+    });
+
+    const sale = filters.querySelector("[data-sale]");
+    if (sale?.checked) values.discount = true;
+    if (hasActivePriceFilter()) {
+      values.price = {
+        min: state.price.currentMin,
+        max: state.price.currentMax,
+      };
+    }
+
+    return values;
+  }
+
+  function getChangedFilter(control) {
+    if (!control) return null;
+
+    if (control.closest("[data-price]")) {
+      return {
+        id: "price",
+        value: {
+          min: state.price.currentMin,
+          max: state.price.currentMax,
+        },
+      };
+    }
+
+    const sale = control.closest(".tri-results-sale")?.querySelector("[data-sale]");
+    if (sale) {
+      return {
+        id: "discount",
+        value: sale.checked,
+      };
+    }
+
+    const filter = control.closest("[data-filter]");
+    const input = control.matches("input") ? control : control.querySelector("input");
+    if (!filter || !input) return null;
+
+    if (input.matches("[data-filter-select-all]")) {
+      return {
+        id: filter.dataset.filter,
+        value: getFilterValueInputs(filter)
+          .filter((item) => item.checked)
+          .map((item) => item.value),
+      };
+    }
+
+    return {
+      id: filter.dataset.filter,
+      value: input.value,
+      selected: input.checked,
+    };
+  }
+
+  function getFilterPreviewAnchor(control) {
+    if (!control) return null;
+    return control.closest("[data-price], .tri-results-sale, .tri-results-filter__options label, .tri-results-filter__chips label, [data-filter]");
+  }
+
+  function isFilterPreviewAnchorVisible(anchor) {
+    if (!anchor?.offsetWidth || !anchor.offsetHeight || mobileMedia.matches) return false;
+
+    const anchorRect = anchor.getBoundingClientRect();
+    const filtersRect = filters.getBoundingClientRect();
+
+    return (
+      anchorRect.bottom > Math.max(filtersRect.top, 0) &&
+      anchorRect.top < Math.min(filtersRect.bottom, window.innerHeight) &&
+      anchorRect.right > filtersRect.left &&
+      anchorRect.left < filtersRect.right
+    );
+  }
+
+  function syncFilterPreviewPosition() {
+    filterPreviewFrame = 0;
+    if (!filterPreview || filterPreview.hidden) return;
+
+    const visible = isFilterPreviewAnchorVisible(filterPreviewAnchor);
+    filterPreview.style.visibility = visible ? "visible" : "hidden";
+    if (!visible) return;
+
+    const anchorRect = filterPreviewAnchor.getBoundingClientRect();
+    const filtersRect = filters.getBoundingClientRect();
+    const previewWidth = filterPreview.offsetWidth || 320;
+    const left = Math.min(filtersRect.right + 8, window.innerWidth - previewWidth - 16);
+
+    filterPreview.style.setProperty(
+      "--results-filter-preview-top",
+      `${anchorRect.top + anchorRect.height / 2}px`,
+    );
+    filterPreview.style.setProperty(
+      "--results-filter-preview-left",
+      `${Math.max(16, left)}px`,
+    );
+  }
+
+  function requestFilterPreviewPositionUpdate() {
+    if (filterPreviewFrame) return;
+    filterPreviewFrame = window.requestAnimationFrame(syncFilterPreviewPosition);
+  }
+
+  function hideFilterPreview() {
+    filterPreviewVersion += 1;
+    window.clearTimeout(filterPreviewTimer);
+    filterPreviewController?.abort();
+    filterPreviewController = null;
+    filterPreviewAnchor = null;
+    if (!filterPreview) return;
+
+    filterPreview.hidden = true;
+    filterPreview.removeAttribute("aria-busy");
+    filterPreview.setAttribute("aria-hidden", "true");
+    filterPreview.style.visibility = "";
+  }
+
+  function getFilterPreviewUrl(value) {
+    if (typeof value !== "string" || !value.trim()) return "#catalog-products";
+
+    try {
+      const parsed = new URL(value, window.location.href);
+      return parsed.origin === window.location.origin ? value : "#catalog-products";
+    } catch {
+      return "#catalog-products";
+    }
+  }
+
+  function renderFilterPreview(response) {
+    const total = Number(response?.total);
+    if (!Number.isFinite(total) || total < 0 || !filterPreviewText || !filterPreviewLink) {
+      throw new Error("Filter preview response must contain a non-negative numeric total");
+    }
+
+    filterPreviewText.textContent = `Найдено товаров: ${formatPrice(Math.trunc(total))}`;
+    filterPreviewLink.setAttribute(
+      "href",
+      getFilterPreviewUrl(response.resultsUrl || response.url),
+    );
+  }
+
+  async function loadFilterPreview(payload, signal) {
+    if (filterPreviewConfig.api === "mock") {
+      return {
+        total: Number.isFinite(Number(filterPreviewConfig.mockData.total))
+          ? Number(filterPreviewConfig.mockData.total)
+          : Math.max(1, 106 - Math.max(0, state.selected.size - 2) * 11),
+        resultsUrl: filterPreviewConfig.mockData.resultsUrl || "#catalog-products",
+      };
+    }
+
+    const response = await fetch(filterPreviewConfig.endpoints.filterPreview, {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+      signal,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Filter preview request failed: ${response.status}`);
+    }
+
+    return response.json();
+  }
+
+  function queueFilterPreview(control) {
+    if (
+      !filterPreviewConfig.enabled ||
+      !filterPreview ||
+      !filterPreviewText ||
+      !filterPreviewLink ||
+      mobileMedia.matches
+    ) {
+      hideFilterPreview();
+      return;
+    }
+
+    const anchor = getFilterPreviewAnchor(control);
+    const changedFilter = getChangedFilter(control);
+    if (!anchor || !changedFilter) {
+      hideFilterPreview();
+      return;
+    }
+
+    filterPreviewVersion += 1;
+    const version = filterPreviewVersion;
+    window.clearTimeout(filterPreviewTimer);
+    filterPreviewController?.abort();
+    filterPreviewController = null;
+    filterPreviewAnchor = anchor;
+    filterPreview.hidden = true;
+    filterPreview.style.visibility = "";
+    filterPreview.setAttribute("aria-hidden", "true");
+    filterPreview.removeAttribute("aria-busy");
+
+    filterPreviewTimer = window.setTimeout(async () => {
+      filterPreviewController = new AbortController();
+
+      try {
+        const response = await loadFilterPreview({
+          filters: serializeFilters(),
+          changedFilter,
+          context: filterPreviewConfig.context,
+        }, filterPreviewController.signal);
+
+        if (version !== filterPreviewVersion) return;
+        renderFilterPreview(response);
+        filterPreview.hidden = false;
+        filterPreview.setAttribute("aria-hidden", "false");
+        requestFilterPreviewPositionUpdate();
+      } catch (error) {
+        if (error.name === "AbortError" || version !== filterPreviewVersion) return;
+        console.warn(error);
+        hideFilterPreview();
+      }
+    }, FILTER_PREVIEW_DELAY);
   }
 
   function renderProducts() {
@@ -255,6 +508,7 @@ if (root) {
   }
 
   function clearFilter(key) {
+    hideFilterPreview();
     if (key === "price") {
       state.price.currentMin = state.price.min;
       state.price.currentMax = state.price.max;
@@ -271,6 +525,7 @@ if (root) {
   }
 
   function resetFilters() {
+    hideFilterPreview();
     filters.querySelectorAll("input[type='checkbox'], input[type='radio']").forEach((input) => {
       input.checked = false;
     });
@@ -472,6 +727,7 @@ if (root) {
     filter.classList.toggle("is-search-empty", Boolean(query) && visibleOptions === 0);
     const clear = filter.querySelector("[data-filter-search-clear]");
     if (clear) clear.hidden = !query;
+    requestFilterPreviewPositionUpdate();
   }
 
   function setFilterExpanded(filter, expanded) {
@@ -489,6 +745,7 @@ if (root) {
       if (input) input.value = "";
     }
     updateFilterSearch(filter);
+    requestFilterPreviewPositionUpdate();
   }
 
   function getRenderedRowCount(elements) {
@@ -561,6 +818,7 @@ if (root) {
   function moveSortForViewport() {
     if (!sort || !desktopSortParent || !mobileSortHost || !activeFilters || !mobileToolsTrack) return;
     if (mobileMedia.matches) {
+      hideFilterPreview();
       mobileSortHost.append(sort);
       mobileToolsTrack.append(activeFilters);
     } else {
@@ -579,6 +837,16 @@ if (root) {
   root.addEventListener("click", (event) => {
     const button = event.target.closest("button, a");
     if (!button) return;
+
+    if (button.matches("[data-filter-preview-link]")) {
+      const href = button.getAttribute("href") || "";
+      if (href.startsWith("#")) {
+        event.preventDefault();
+        document.querySelector(href)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      hideFilterPreview();
+      return;
+    }
 
     if (button.matches("[data-sort-toggle]")) setSortOpen(!state.sortOpen);
     if (button.matches("[data-sort-close]")) setSortOpen(false);
@@ -672,6 +940,7 @@ if (root) {
       updatePriceControls();
     }
     collectFilters();
+    queueFilterPreview(event.target);
   });
 
   filters.addEventListener("input", (event) => {
@@ -737,6 +1006,7 @@ if (root) {
     clampPrice(type, current + direction * step);
     updatePriceControls();
     collectFilters();
+    queueFilterPreview(handle);
     handle.focus();
   });
 
@@ -793,8 +1063,14 @@ if (root) {
 
   mobileMedia.addEventListener("change", moveSortForViewport);
   mobileMedia.addEventListener("change", requestScrollHeaderUpdate);
+  mobileMedia.addEventListener("change", requestFilterPreviewPositionUpdate);
   window.addEventListener("scroll", requestScrollHeaderUpdate, { passive: true });
-  window.addEventListener("resize", queueMobileMoreLayout);
+  window.addEventListener("scroll", requestFilterPreviewPositionUpdate, { passive: true });
+  window.addEventListener("resize", () => {
+    queueMobileMoreLayout();
+    requestFilterPreviewPositionUpdate();
+  });
+  filters.addEventListener("scroll", requestFilterPreviewPositionUpdate, { passive: true });
   document.fonts?.ready.then(queueMobileMoreLayout);
   bindProductCardInteractions(root);
   root.querySelectorAll(".tri-home-bottom-nav .is-active").forEach((item) => item.classList.remove("is-active"));
