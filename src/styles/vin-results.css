@@ -1976,14 +1976,12 @@ body.tri-results-modal-open {
     opacity: 0;
     pointer-events: none;
     visibility: hidden;
-    transition: opacity 180ms ease, visibility 0s linear 180ms;
   }
 
   .tri-results.is-filter-open .tri-results-filters {
     opacity: 1;
     pointer-events: auto;
     visibility: visible;
-    transition-delay: 0s;
   }
 
   .tri-results-filters__mobile-head {

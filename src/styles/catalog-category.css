@@ -41,18 +41,9 @@
   clip-path: inset(50%);
 }
 
-.tri-category-breadcrumbs {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.tri-category-head .tri-breadcrumbs {
   margin-bottom: 12px;
-  color: #4c5759;
-  font-size: 14px;
-  line-height: 16px;
-}
-
-.tri-category .tri-category-breadcrumbs__link {
-  color: var(--results-muted);
+  --tri-breadcrumbs-color: var(--results-muted);
 }
 
 .tri-category-title-row {
@@ -201,7 +192,7 @@
     margin-bottom: 12px;
   }
 
-  .tri-category-breadcrumbs {
+  .tri-category-head .tri-breadcrumbs {
     display: none;
   }
 
