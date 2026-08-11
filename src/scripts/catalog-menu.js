@@ -9,7 +9,7 @@ const catalog = [
     title: "Тормозная система",
     href: "/catalogue/tormoznaya-sistema/",
     icon: `${assetRoot}/category-brakes.svg`,
-    count: "1 123",
+    count: "3 456",
     model: {
       src: `${assetRoot}/models/brakes.glb`,
       orbit: "-677.6deg 86.24deg 0.4901m",
@@ -19,22 +19,36 @@ const catalog = [
       {
         title: "Дисковая тормозная система",
         href: "/catalogue/tormoznaya-sistema/diskovaya-tormoznaya-sistema/",
-        count: "123",
+        count: "2 456",
         children: [
           leaf("Диски тормозные", "/catalogue/tormoznaya-sistema/diskovaya-tormoznaya-sistema/diski-tormoznye/"),
-          leaf("Колодки тормозные дисковые", "/catalogue/tormoznaya-sistema/diskovaya-tormoznaya-sistema/kolodki-tormoznye-diskovye/"),
           {
-            title: "Датчики износа",
-            href: "/catalogue/tormoznaya-sistema/diskovaya-tormoznaya-sistema/datchiki-iznosa/",
-            count: "56",
+            title: "Колодки тормозные дисковые",
+            href: "/catalogue/tormoznaya-sistema/diskovaya-tormoznaya-sistema/kolodki-tormoznye-diskovye/",
             children: [
-              leaf("Датчики передних колодок"),
-              leaf("Датчики задних колодок"),
-              leaf("Универсальные датчики"),
+              leaf("Колодки для легковых автомобилей"),
+              leaf("Колодки для грузовых автомобилей"),
             ],
           },
-          leaf("Кожухи тормозные", "/catalogue/tormoznaya-sistema/diskovaya-tormoznaya-sistema/kozhukhi-tormoznye/"),
+          leaf("Датчики износа", "/catalogue/tormoznaya-sistema/diskovaya-tormoznaya-sistema/datchiki-iznosa/"),
+          {
+            title: "Кожухи тормозные",
+            href: "/catalogue/tormoznaya-sistema/diskovaya-tormoznaya-sistema/kozhukhi-tormoznye/",
+            children: [leaf("Кожухи передние"), leaf("Кожухи задние")],
+          },
           leaf("Суппорты тормозные", "/catalogue/tormoznaya-sistema/diskovaya-tormoznaya-sistema/supporty-tormoznye/"),
+          leaf("Суппорты тормозные RACE"),
+          {
+            title: "Скобы суппорта",
+            href: "/catalogue/tormoznaya-sistema/diskovaya-tormoznaya-sistema/skoby-supporta/",
+            children: [leaf("Скобы переднего суппорта"), leaf("Скобы заднего суппорта")],
+          },
+          leaf("Комплекты тормозов"),
+          {
+            title: "Цилиндры дискового тормоза",
+            href: "/catalogue/tormoznaya-sistema/diskovaya-tormoznaya-sistema/cilindry/",
+            children: [leaf("Цилиндры переднего тормоза"), leaf("Цилиндры заднего тормоза")],
+          },
         ],
       },
       {
@@ -224,8 +238,68 @@ const collections = [
   },
 ];
 
+const mobileCategoryTitles = [
+  "Тормозная система",
+  "Амортизаторы и опоры",
+  "Ремни и ролики",
+  "Система выпуска отработавших газов",
+  "Ступицы и ремкомплекты",
+  "Сцепление",
+  "ШРУСы и приводы",
+  "Газовые упоры и электроприводы",
+  "Подшипники",
+  "Прокладки",
+  "Резинотехнические изделия",
+  "Рулевое управление и подвеска",
+  "Амортизаторы кабин",
+  "Оси ступицы заднего колеса",
+  "Пружины",
+  "Реклама TRIALLI",
+];
+
+const mobileCategoryExtras = [
+  leaf("Амортизаторы кабин", "/catalogue/amortizatory-kabin/"),
+  leaf("Оси ступицы заднего колеса", "/catalogue/osi-stupitsy/"),
+  leaf("Пружины", "/catalogue/pruzhiny/"),
+  leaf("Реклама TRIALLI", "/catalogue/reklama-trialli/"),
+];
+
+const mobileCatalog = [...catalog.slice(0, 12), ...mobileCategoryExtras].map(
+  (item, index) => ({
+    ...item,
+    title: mobileCategoryTitles[index],
+    mobileCount: "2040",
+    mobileArt: `/assets/trialli-home/category-card-art-${String(index + 1).padStart(2, "0")}.webp`,
+  }),
+);
+
+const mobileCollections = [
+  { title: "Акции", href: "/catalogue/?sale=Y", icon: `${assetRoot}/mobile-sale.svg` },
+  { title: "Новинки", href: "/catalogue/?news=Y", icon: `${assetRoot}/mobile-new.svg` },
+  { title: "Запчасти для китайских авто", href: "/catalogue/?china=Y", icon: `${assetRoot}/mobile-china.svg` },
+  { title: "Снято с производства", href: "/catalogue/?discontinued=Y", icon: `${assetRoot}/mobile-discontinued.svg` },
+];
+
 function arrowMarkup() {
   return '<span class="tri-catalog-menu__arrow" aria-hidden="true"></span>';
+}
+
+function mobileRightArrowMarkup() {
+  return `<svg class="tri-catalog-mobile__arrow" viewBox="0 0 16 16" aria-hidden="true">
+    <path d="M6.1952 3.52818C6.45551 3.26793 6.87724 3.26797 7.13758 3.52818L11.1376 7.52818C11.3979 7.78851 11.3979 8.21021 11.1376 8.47057L7.13758 12.4706C6.87723 12.7309 6.45555 12.7309 6.1952 12.4706C5.93497 12.2102 5.93489 11.7885 6.1952 11.5282L9.72352 7.99986L6.1952 4.47057C5.93497 4.21021 5.93489 3.78849 6.1952 3.52818Z" />
+  </svg>`;
+}
+
+function mobileDownArrowMarkup() {
+  return `<svg class="tri-catalog-mobile__arrow tri-catalog-mobile__arrow--down" viewBox="0 0 16 16" aria-hidden="true">
+    <path d="M12.1949 5.52925C12.4553 5.2689 12.877 5.2689 13.1373 5.52925C13.3975 5.78961 13.3976 6.21133 13.1373 6.47163L8.47033 11.1386C8.21 11.3984 7.78815 11.3986 7.52795 11.1386L2.86096 6.47163C2.60093 6.21143 2.60114 5.78958 2.86096 5.52925C3.12131 5.2689 3.54397 5.2689 3.80432 5.52925L7.99963 9.72456L12.1949 5.52925Z" />
+  </svg>`;
+}
+
+function mobileBackArrowMarkup() {
+  return `<svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M9.59473 18.4785C9.32957 18.4785 9.07522 18.373 8.8877 18.1855L3.23047 12.5283C3.04309 12.3408 2.9375 12.0864 2.9375 11.8213C2.93754 11.5562 3.04302 11.3017 3.23047 11.1143L8.8877 5.45703C9.0752 5.26968 9.32965 5.16504 9.59473 5.16504C9.85981 5.16505 10.1143 5.26966 10.3018 5.45703C10.4893 5.64457 10.5947 5.89982 10.5947 6.16504C10.5946 6.4301 10.4892 6.68464 10.3018 6.87207L6.35156 10.8213L20.4229 10.8213C20.6849 10.8258 20.9354 10.9332 21.1191 11.1201C21.3029 11.3071 21.4062 11.5591 21.4063 11.8213C21.4063 12.0835 21.3029 12.3354 21.1191 12.5225C20.9354 12.7094 20.685 12.8167 20.4229 12.8213L6.35156 12.8213L10.3018 16.7715C10.4892 16.959 10.5947 17.2134 10.5947 17.4785C10.5947 17.7437 10.4892 17.9981 10.3018 18.1855C10.1142 18.373 9.85989 18.4785 9.59473 18.4785Z" />
+  </svg>`;
 }
 
 function categoryMarkup(item, index) {
@@ -303,10 +377,146 @@ function template() {
   `;
 }
 
+function mobileTemplate() {
+  return `
+    <section
+      class="tri-catalog-mobile"
+      hidden
+      role="dialog"
+      aria-modal="true"
+      aria-label="Каталог товаров"
+      data-catalog-mobile
+    >
+      <img class="tri-catalog-mobile__blur" src="${assetRoot}/mobile-blur.svg" alt="" aria-hidden="true" />
+      <div class="tri-catalog-mobile__scroller" data-catalog-mobile-scroller>
+        <div class="tri-catalog-mobile__content" data-catalog-mobile-content></div>
+      </div>
+    </section>
+  `;
+}
+
+function mobilePageHeaderMarkup(title) {
+  return `
+    <header class="tri-catalog-mobile__page-header">
+      <button class="tri-catalog-mobile__back" type="button" aria-label="Назад" data-catalog-mobile-back>
+        ${mobileBackArrowMarkup()}
+      </button>
+      <h2>${title}</h2>
+    </header>
+  `;
+}
+
+function mobileFirstLevelMarkup() {
+  return `
+    ${mobilePageHeaderMarkup("Каталог товаров")}
+    <div class="tri-catalog-mobile__cards">
+      ${mobileCatalog
+        .map(
+          (item, index) => `
+            <a class="tri-catalog-mobile__card" href="${item.href}" data-catalog-mobile-category="${index}">
+              <span class="tri-catalog-mobile__card-title">${item.title}</span>
+              <img class="tri-catalog-mobile__card-shadow" src="/assets/trialli-home/category-card-shadow.webp" alt="" aria-hidden="true" />
+              <img class="tri-catalog-mobile__card-art" src="${item.mobileArt}" alt="" ${index > 5 ? 'loading="lazy"' : ""} />
+              <span class="tri-catalog-mobile__card-count">&gt;${item.mobileCount} SKU</span>
+            </a>
+          `,
+        )
+        .join("")}
+    </div>
+    <nav class="tri-catalog-mobile__collections" aria-label="Подборки каталога">
+      ${mobileCollections
+        .map(
+          (item) => `
+            <a class="tri-catalog-mobile__collection" href="${item.href}">
+              <span class="tri-catalog-mobile__collection-icon"><img src="${item.icon}" width="24" height="24" alt="" /></span>
+              <span>${item.title}</span>
+              ${mobileRightArrowMarkup()}
+            </a>
+          `,
+        )
+        .join("")}
+    </nav>
+  `;
+}
+
+function mobileAllProductsMarkup(item) {
+  return `
+    <a class="tri-catalog-mobile__all" href="${item.href}">
+      <span>Все товары</span>
+      ${item.count ? `<span class="tri-catalog-mobile__count">${item.count}</span>` : ""}
+      ${mobileRightArrowMarkup()}
+    </a>
+  `;
+}
+
+function mobileSecondLevelMarkup(item) {
+  return `
+    ${mobilePageHeaderMarkup(item.title)}
+    <div class="tri-catalog-mobile__level-body">
+      ${mobileAllProductsMarkup(item)}
+      <nav class="tri-catalog-mobile__list" aria-label="${item.title}">
+        ${(item.children ?? [])
+          .map(
+            (child, index) => `
+              <a class="tri-catalog-mobile__list-item" href="${child.href}" data-catalog-mobile-item="${index}">
+                <span>${child.title}</span>
+                ${child.children?.length ? mobileRightArrowMarkup() : ""}
+              </a>
+            `,
+          )
+          .join("")}
+      </nav>
+    </div>
+  `;
+}
+
+function mobileAccordionMarkup(item, index) {
+  if (!item.children?.length) {
+    return `<a class="tri-catalog-mobile__list-item" href="${item.href}"><span>${item.title}</span></a>`;
+  }
+
+  return `
+    <div class="tri-catalog-mobile__accordion" data-catalog-mobile-accordion>
+      <button
+        class="tri-catalog-mobile__list-item tri-catalog-mobile__accordion-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="tri-catalog-mobile-accordion-${index}"
+        data-catalog-mobile-accordion-toggle
+      >
+        <span>${item.title}</span>
+        ${mobileDownArrowMarkup()}
+      </button>
+      <div class="tri-catalog-mobile__accordion-panel" id="tri-catalog-mobile-accordion-${index}">
+        <div class="tri-catalog-mobile__accordion-inner">
+          <a href="${item.href}">Все товары</a>
+          ${item.children.map((child) => `<a href="${child.href}">${child.title}</a>`).join("")}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function mobileThirdLevelMarkup(item) {
+  return `
+    ${mobilePageHeaderMarkup(item.title)}
+    <div class="tri-catalog-mobile__level-body">
+      ${mobileAllProductsMarkup(item)}
+      <nav class="tri-catalog-mobile__list tri-catalog-mobile__list--accordions" aria-label="${item.title}">
+        ${(item.children ?? []).map(mobileAccordionMarkup).join("")}
+      </nav>
+    </div>
+  `;
+}
+
 catalogRoots.forEach((root, rootIndex) => {
   root.insertAdjacentHTML("beforeend", template());
+  root.insertAdjacentHTML("beforeend", mobileTemplate());
 
   const menu = root.querySelector("[data-catalog-menu]");
+  const mobileMenu = root.querySelector("[data-catalog-mobile]");
+  const mobileContent = mobileMenu.querySelector("[data-catalog-mobile-content]");
+  const mobileScroller = mobileMenu.querySelector("[data-catalog-mobile-scroller]");
   const header = root.querySelector("[data-tri-home-header]");
   const stickyHeader = root.querySelector("[data-tri-home-header-sticky]");
   (stickyHeader ?? header)?.append(menu);
@@ -316,13 +526,22 @@ catalogRoots.forEach((root, rootIndex) => {
   const preview = menu.querySelector("[data-catalog-preview]");
   const loader = menu.querySelector("[data-catalog-loader]");
   const toggles = root.querySelectorAll("[data-catalog-toggle]");
+  const bottomNav = root.querySelector(".tri-home-bottom-nav");
+  const bottomCatalogToggle = bottomNav?.querySelector('[data-site-nav="catalog"]');
   const columnState = [];
   let activeCategory = 0;
   let closeTimer;
   let modelRequest = 0;
+  let mobileCloseTimer;
+  let mobilePath = [];
+  let mobileTrigger = null;
+  let mobileNavActive = [];
+  let mobileHeaderWasScrolled = false;
+  let mobileInertState = [];
 
   menu.id = `tri-catalog-menu-${rootIndex + 1}`;
-  toggles.forEach((toggle) => toggle.setAttribute("aria-controls", menu.id));
+  mobileMenu.id = `tri-catalog-mobile-${rootIndex + 1}`;
+  toggles.forEach((toggle) => toggle.setAttribute("aria-controls", `${menu.id} ${mobileMenu.id}`));
 
   const syncPanelPosition = () => {
     const stickyHeaderRect = stickyHeader?.getBoundingClientRect();
@@ -356,7 +575,7 @@ catalogRoots.forEach((root, rootIndex) => {
   };
 
   const updateScrollLock = () => {
-    const catalogOpen = !menu.hidden;
+    const catalogOpen = !menu.hidden || !mobileMenu.hidden;
     const modalOpen = Boolean(root.querySelector(".tri-home-modal:not([hidden])"));
     const mobileMenuOpen = Boolean(root.querySelector("[data-header-menu].is-open"));
     const locked = catalogOpen || modalOpen || mobileMenuOpen;
@@ -364,9 +583,86 @@ catalogRoots.forEach((root, rootIndex) => {
     document.documentElement.style.overflow = locked ? "hidden" : "";
   };
 
+  const renderMobileLevel = () => {
+    if (mobilePath.length === 0) {
+      mobileContent.innerHTML = mobileFirstLevelMarkup();
+    } else if (mobilePath.length === 1) {
+      mobileContent.innerHTML = mobileSecondLevelMarkup(mobilePath[0]);
+    } else {
+      mobileContent.innerHTML = mobileThirdLevelMarkup(mobilePath[1]);
+    }
+
+    mobileScroller.scrollTop = 0;
+    mobileContent.classList.remove("is-entering");
+    requestAnimationFrame(() => mobileContent.classList.add("is-entering"));
+  };
+
+  const restoreMobileNavigation = () => {
+    bottomNav?.querySelectorAll(".is-active").forEach((item) => item.classList.remove("is-active"));
+    mobileNavActive.forEach((item) => item.classList.add("is-active"));
+    mobileNavActive = [];
+  };
+
+  const setMobileOpen = (open) => {
+    window.clearTimeout(mobileCloseTimer);
+    toggles.forEach((toggle) => toggle.setAttribute("aria-expanded", String(open)));
+
+    if (open) {
+      mobileNavActive = [...(bottomNav?.querySelectorAll(".is-active") ?? [])];
+      bottomNav?.querySelectorAll(".is-active").forEach((item) => item.classList.remove("is-active"));
+      bottomCatalogToggle?.classList.add("is-active");
+      bottomNav?.classList.remove("is-scroll-hidden");
+
+      root.querySelector("[data-header-menu]")?.classList.remove("is-open");
+      root.querySelector("[data-header-menu-backdrop]")?.classList.remove("is-open");
+      header?.classList.remove("is-menu-open");
+      mobileHeaderWasScrolled = Boolean(header?.classList.contains("is-mobile-scrolled"));
+      header?.classList.add("is-mobile-scrolled");
+
+      mobilePath = [];
+      renderMobileLevel();
+      mobileInertState = [...root.children]
+        .filter(
+          (element) =>
+            element !== mobileMenu &&
+            element !== bottomNav &&
+            !element.matches(".tri-home-header__slot"),
+        )
+        .map((element) => [element, element.inert]);
+      mobileInertState.forEach(([element]) => {
+        element.inert = true;
+      });
+      root.classList.add("tri-catalog-mobile-open");
+      document.body.classList.add("tri-catalog-mobile-open");
+      mobileMenu.hidden = false;
+      requestAnimationFrame(() => {
+        mobileMenu.classList.add("is-open");
+        mobileMenu.querySelector("[data-catalog-mobile-back]")?.focus();
+      });
+      updateScrollLock();
+      return;
+    }
+
+    mobileMenu.classList.remove("is-open");
+    mobileCloseTimer = window.setTimeout(() => {
+      mobileMenu.hidden = true;
+      root.classList.remove("tri-catalog-mobile-open");
+      document.body.classList.remove("tri-catalog-mobile-open");
+      if (!mobileHeaderWasScrolled) header?.classList.remove("is-mobile-scrolled");
+      mobileInertState.forEach(([element, inert]) => {
+        element.inert = inert;
+      });
+      mobileInertState = [];
+      restoreMobileNavigation();
+      updateScrollLock();
+      mobileTrigger?.focus();
+      mobileTrigger = null;
+    }, 180);
+  };
+
   const setOpen = (open) => {
     if (window.matchMedia("(max-width: 767px)").matches) {
-      if (open) window.location.href = "/catalogue/";
+      setMobileOpen(open);
       return;
     }
 
@@ -525,7 +821,57 @@ catalogRoots.forEach((root, rootIndex) => {
     const toggle = event.target.closest("[data-catalog-toggle]");
     if (toggle && root.contains(toggle)) {
       event.preventDefault();
-      setOpen(menu.hidden || !menu.classList.contains("is-open"));
+      const mobile = window.matchMedia("(max-width: 767px)").matches;
+      mobileTrigger = mobile ? toggle : null;
+      setOpen(
+        mobile
+          ? mobileMenu.hidden || !mobileMenu.classList.contains("is-open")
+          : menu.hidden || !menu.classList.contains("is-open"),
+      );
+      return;
+    }
+
+    const mobileBack = event.target.closest("[data-catalog-mobile-back]");
+    if (mobileBack && mobileMenu.contains(mobileBack)) {
+      if (mobilePath.length === 0) {
+        setMobileOpen(false);
+      } else {
+        mobilePath.pop();
+        renderMobileLevel();
+        mobileMenu.querySelector("[data-catalog-mobile-back]")?.focus();
+      }
+      return;
+    }
+
+    const mobileCategory = event.target.closest("[data-catalog-mobile-category]");
+    if (mobileCategory && mobileMenu.contains(mobileCategory)) {
+      const item = mobileCatalog[Number(mobileCategory.dataset.catalogMobileCategory)];
+      if (item?.children?.length) {
+        event.preventDefault();
+        mobilePath = [item];
+        renderMobileLevel();
+      }
+      return;
+    }
+
+    const mobileItem = event.target.closest("[data-catalog-mobile-item]");
+    if (mobileItem && mobileMenu.contains(mobileItem)) {
+      const parent = mobilePath[0];
+      const item = parent?.children?.[Number(mobileItem.dataset.catalogMobileItem)];
+      if (item?.children?.length) {
+        event.preventDefault();
+        mobilePath = [parent, item];
+        renderMobileLevel();
+      }
+      return;
+    }
+
+    const accordionToggle = event.target.closest("[data-catalog-mobile-accordion-toggle]");
+    if (accordionToggle && mobileMenu.contains(accordionToggle)) {
+      const accordion = accordionToggle.closest("[data-catalog-mobile-accordion]");
+      const open = !accordion.classList.contains("is-open");
+      accordion.classList.toggle("is-open", open);
+      accordionToggle.setAttribute("aria-expanded", String(open));
       return;
     }
 
@@ -571,10 +917,13 @@ catalogRoots.forEach((root, rootIndex) => {
   columnsRoot.addEventListener("scroll", syncConnectors, true);
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !menu.hidden) setOpen(false);
+    if (event.key !== "Escape") return;
+    if (!mobileMenu.hidden) setMobileOpen(false);
+    else if (!menu.hidden) setOpen(false);
   });
 
   window.addEventListener("resize", () => {
+    if (window.innerWidth >= 768 && !mobileMenu.hidden) setMobileOpen(false);
     if (!menu.hidden) {
       syncPanelPosition();
       syncConnectors();

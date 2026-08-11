@@ -132,7 +132,10 @@ if (root) {
   const updatePageScrollLock = () => {
     const modalOpen = Boolean(root.querySelector(".tri-home-modal:not([hidden])"));
     const menuOpen = Boolean(headerMenu?.classList.contains("is-open"));
-    document.body.style.overflow = modalOpen || menuOpen ? "hidden" : "";
+    const catalogOpen = Boolean(root.querySelector("[data-catalog-mobile]:not([hidden])"));
+    const locked = modalOpen || menuOpen || catalogOpen;
+    document.body.style.overflow = locked ? "hidden" : "";
+    document.documentElement.style.overflow = locked ? "hidden" : "";
   };
 
   const setModal = (modal, open) => {
