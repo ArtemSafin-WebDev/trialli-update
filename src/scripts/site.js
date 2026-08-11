@@ -34,6 +34,7 @@ export function showToast(message) {
 if (root) {
   const requestModal = root.querySelector("[data-request-modal]");
   const siteHeader = root.querySelector("[data-tri-home-header]");
+  const bottomNav = root.querySelector(".tri-home-bottom-nav");
   const stickyHeaderSlot = root.querySelector("[data-tri-home-header-slot]");
   const stickyHeader = root.querySelector("[data-tri-home-header-sticky]");
   const headerMenu = root.querySelector("[data-header-menu]");
@@ -45,8 +46,49 @@ if (root) {
   const headerSearchClear = root.querySelector("[data-header-search-clear]");
   const mobileHeaderMedia = window.matchMedia("(max-width: 767px)");
   const stickyHeaderMedia = window.matchMedia("(min-width: 1024px)");
+  const bottomNavHideThreshold = 12;
+  const bottomNavShowThreshold = 6;
   let stickyHeaderStart = 0;
   let stickyHeaderFrame = 0;
+  let bottomNavLastScrollY = Math.max(window.scrollY, 0);
+  let bottomNavScrollDistance = 0;
+  let bottomNavScrollDirection = 0;
+
+  const updateBottomNav = () => {
+    if (!bottomNav) return;
+
+    const maxScrollY = Math.max(
+      document.documentElement.scrollHeight - window.innerHeight,
+      0,
+    );
+    const currentScrollY = Math.min(Math.max(window.scrollY, 0), maxScrollY);
+
+    if (!mobileHeaderMedia.matches || currentScrollY === 0) {
+      bottomNav.classList.remove("is-scroll-hidden");
+      bottomNavLastScrollY = currentScrollY;
+      bottomNavScrollDistance = 0;
+      bottomNavScrollDirection = 0;
+      return;
+    }
+
+    const scrollDelta = currentScrollY - bottomNavLastScrollY;
+    bottomNavLastScrollY = currentScrollY;
+    if (scrollDelta === 0) return;
+
+    const scrollDirection = scrollDelta > 0 ? 1 : -1;
+    if (scrollDirection !== bottomNavScrollDirection) {
+      bottomNavScrollDirection = scrollDirection;
+      bottomNavScrollDistance = 0;
+    }
+
+    bottomNavScrollDistance += Math.abs(scrollDelta);
+    const threshold =
+      scrollDirection > 0 ? bottomNavHideThreshold : bottomNavShowThreshold;
+    if (bottomNavScrollDistance < threshold) return;
+
+    bottomNav.classList.toggle("is-scroll-hidden", scrollDirection > 0);
+    bottomNavScrollDistance = 0;
+  };
 
   const updateStickyHeader = () => {
     stickyHeaderFrame = 0;
@@ -54,6 +96,11 @@ if (root) {
       "is-stuck",
       stickyHeaderMedia.matches && window.scrollY >= stickyHeaderStart,
     );
+    siteHeader?.classList.toggle(
+      "is-mobile-scrolled",
+      mobileHeaderMedia.matches && window.scrollY > 0,
+    );
+    updateBottomNav();
   };
 
   const requestStickyHeaderUpdate = () => {
@@ -171,6 +218,7 @@ if (root) {
 
   mobileHeaderMedia.addEventListener("change", (event) => {
     if (!event.matches) setHeaderMenu(false);
+    requestStickyHeaderUpdate();
   });
 
   window.addEventListener("scroll", requestStickyHeaderUpdate, { passive: true });

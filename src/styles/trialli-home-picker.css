@@ -180,10 +180,16 @@
     color 0.2s ease;
 }
 
-.pf-history-toggle:hover,
 .pf-history-toggle.is-open {
   background: #00205c;
   color: #ffffff;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pf-history-toggle:hover {
+    background: #00205c;
+    color: #ffffff;
+  }
 }
 
 .pf-icon-button svg,
@@ -297,9 +303,14 @@
     color 0.2s ease;
 }
 
-.pf-control.is-open .pf-field,
-.pf-field:hover:not([aria-disabled="true"]) {
+.pf-control.is-open .pf-field {
   border-color: #55585e;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pf-field:hover:not([aria-disabled="true"]) {
+    border-color: #55585e;
+  }
 }
 
 .pf-field[aria-disabled="true"] {
@@ -375,9 +386,14 @@
   cursor: pointer;
 }
 
-.pf-field:hover .pf-clear,
 .pf-control:focus-within .pf-clear {
   display: inline-flex;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pf-field:hover .pf-clear {
+    display: inline-flex;
+  }
 }
 
 .pf-count {
@@ -488,10 +504,16 @@
   fill: currentColor;
 }
 
-.pf-option:hover,
 .pf-option.is-highlighted {
   background: #f7f7f8;
   color: #3a8dde;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pf-option:hover {
+    background: #f7f7f8;
+    color: #3a8dde;
+  }
 }
 
 .pf-option.is-selected {
@@ -534,8 +556,10 @@
     border-color 0.2s ease;
 }
 
-.pf-option:hover .pf-checkbox::before {
-  border-color: #3a8dde;
+@media (hover: hover) and (pointer: fine) {
+  .pf-option:hover .pf-checkbox::before {
+    border-color: #3a8dde;
+  }
 }
 
 .pf-option input:checked + .pf-checkbox::before {
@@ -702,8 +726,10 @@ body.pf-mobile-lock {
     color 0.2s ease;
 }
 
-.pf-submit:hover {
-  background: #063274;
+@media (hover: hover) and (pointer: fine) {
+  .pf-submit:hover {
+    background: #063274;
+  }
 }
 
 .pf-submit[disabled] {
@@ -822,8 +848,10 @@ body.pf-mobile-lock {
   line-height: 1.6rem;
 }
 
-.pf-history__row:not(.pf-history__row--head):hover {
-  background: #f7f7f8;
+@media (hover: hover) and (pointer: fine) {
+  .pf-history__row:not(.pf-history__row--head):hover {
+    background: #f7f7f8;
+  }
 }
 
 .pf-history__cell {
@@ -854,8 +882,10 @@ body.pf-mobile-lock {
   transition: color 0.2s ease;
 }
 
-.pf-text-button:hover:not(:disabled) {
-  color: #3a8dde;
+@media (hover: hover) and (pointer: fine) {
+  .pf-text-button:hover:not(:disabled) {
+    color: #3a8dde;
+  }
 }
 
 .pf-text-button:disabled {
@@ -874,8 +904,10 @@ body.pf-mobile-lock {
   transition: color 0.2s ease;
 }
 
-.pf-icon-button:hover {
-  color: #00205c;
+@media (hover: hover) and (pointer: fine) {
+  .pf-icon-button:hover {
+    color: #00205c;
+  }
 }
 
 .visually-hidden {
@@ -960,19 +992,24 @@ body.pf-mobile-lock {
   color: #afb2b7;
 }
 
-.pf-vin-search__input:hover,
 .pf-vin-search__input:focus,
-.pf-request-input input:hover,
 .pf-request-input input:focus,
-.pf-request-input textarea:hover,
 .pf-request-input textarea:focus,
-.pf-modal-field input:hover,
 .pf-modal-field input:focus,
-.pf-modal-field select:hover,
 .pf-modal-field select:focus,
-.pf-modal-field textarea:hover,
 .pf-modal-field textarea:focus {
   border-color: #55585e;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pf-vin-search__input:hover,
+  .pf-request-input input:hover,
+  .pf-request-input textarea:hover,
+  .pf-modal-field input:hover,
+  .pf-modal-field select:hover,
+  .pf-modal-field textarea:hover {
+    border-color: #55585e;
+  }
 }
 
 .pf-vin-found {
@@ -1039,10 +1076,16 @@ button.pf-vin-request__car-icon {
     color 0.2s ease;
 }
 
-button.pf-vin-request__car-icon:hover,
 button.pf-vin-request__car-icon.is-open {
   background: #00205c;
   color: #ffffff;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.pf-vin-request__car-icon:hover {
+    background: #00205c;
+    color: #ffffff;
+  }
 }
 
 .pf-vin-icon {
@@ -1101,8 +1144,10 @@ button.pf-vin-request__car-icon.is-open {
   transition: color 0.2s ease;
 }
 
-.parts-finder .pf-vin-found__reject:hover {
-  color: #3a8dde;
+@media (hover: hover) and (pointer: fine) {
+  .parts-finder .pf-vin-found__reject:hover {
+    color: #3a8dde;
+  }
 }
 
 .pf-vin-found__disclaimer {
@@ -1287,8 +1332,10 @@ button.pf-vin-request__car-icon.is-open {
   transition: color 0.2s ease;
 }
 
-.pf-agreement a:hover {
-  color: #3a8dde;
+@media (hover: hover) and (pointer: fine) {
+  .pf-agreement a:hover {
+    color: rgba(190, 214, 0, 0.7);
+  }
 }
 
 .pf-submit--with-icon {
@@ -1510,10 +1557,16 @@ button.pf-vin-request__car-icon.is-open {
   cursor: pointer;
 }
 
-.pf-modal-history__toggle:hover,
 .pf-modal-history__toggle.is-open {
   background: #00205c;
   color: #ffffff;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pf-modal-history__toggle:hover {
+    background: #00205c;
+    color: #ffffff;
+  }
 }
 
 .pf-modal-history__badge {
@@ -1564,8 +1617,10 @@ button.pf-vin-request__car-icon.is-open {
   border-bottom: 0;
 }
 
-.pf-modal-history__item:hover {
-  background: #ecf4fc;
+@media (hover: hover) and (pointer: fine) {
+  .pf-modal-history__item:hover {
+    background: #ecf4fc;
+  }
 }
 
 .pf-modal-history__item small {
@@ -2647,9 +2702,11 @@ button.pf-vin-request__car-icon.is-open {
     font-weight: 400;
   }
 
-  .pf-history-toggle:hover {
-    background: rgb(13 32 38 / 20%);
-    color: #0d2026;
+  @media (hover: hover) and (pointer: fine) {
+    .pf-history-toggle:hover {
+      background: rgb(13 32 38 / 20%);
+      color: #0d2026;
+    }
   }
 
   .pf-history-toggle.is-open {
@@ -2701,8 +2758,10 @@ button.pf-vin-request__car-icon.is-open {
     line-height: 16px;
   }
 
-  .pf-field:hover:not([aria-disabled="true"]) {
-    border-color: rgb(190 214 0 / 55%) !important;
+  @media (hover: hover) and (pointer: fine) {
+    .pf-field:hover:not([aria-disabled="true"]) {
+      border-color: #bed600 !important;
+    }
   }
 
   .pf-control.is-open .pf-field {
@@ -2743,9 +2802,14 @@ button.pf-vin-request__car-icon.is-open {
   }
 
   .pf-control.is-open .pf-arrow,
-  .pf-field.has-value:hover .pf-arrow,
   .pf-control:focus-within .pf-field.has-value .pf-arrow {
     display: block;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .pf-field.has-value:hover .pf-arrow {
+      display: block;
+    }
   }
 
   .pf-control.is-open .pf-arrow {
@@ -2764,9 +2828,14 @@ button.pf-vin-request__car-icon.is-open {
     height: 16px;
   }
 
-  .tri-home .pf-field:hover .pf-clear,
   .tri-home .pf-control:focus-within .pf-clear {
     display: inline-flex;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .tri-home .pf-field:hover .pf-clear {
+      display: inline-flex;
+    }
   }
 
   .pf-count {
@@ -2817,11 +2886,17 @@ button.pf-vin-request__car-icon.is-open {
     text-align: left;
   }
 
-  .tri-home .pf-option:hover,
   .tri-home .pf-option:focus-visible,
   .tri-home .pf-option.is-selected {
     background: #162d35;
     color: #fff;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .tri-home .pf-option:hover {
+      background: #162d35;
+      color: #fff;
+    }
   }
 
   .pf-option--all {
@@ -2880,10 +2955,12 @@ button.pf-vin-request__car-icon.is-open {
       color 0.2s ease;
   }
 
-  .parts-finder .pf-more-tags:hover,
-  .parts-finder .pf-reset-tags:hover {
-    background: rgb(22 45 53 / 55%);
-    color: #fff;
+  @media (hover: hover) and (pointer: fine) {
+    .parts-finder .pf-more-tags:hover,
+    .parts-finder .pf-reset-tags:hover {
+      background: rgb(22 45 53 / 55%);
+      color: #fff;
+    }
   }
 
   .parts-finder .pf-more-tags:focus-visible,
@@ -2903,8 +2980,10 @@ button.pf-vin-request__car-icon.is-open {
     line-height: 16px;
   }
 
-  .tri-home .pf-submit:hover:not(:disabled) {
-    background: #d6e36b;
+  @media (hover: hover) and (pointer: fine) {
+    .tri-home .pf-submit:hover:not(:disabled) {
+      background: #d6e36b;
+    }
   }
 
   .tri-home .pf-submit:active:not(:disabled) {
@@ -2958,16 +3037,20 @@ button.pf-vin-request__car-icon.is-open {
     line-height: 16px;
   }
 
-  .pf-history__row:not(.pf-history__row--head):hover {
-    background: #162d35;
+  @media (hover: hover) and (pointer: fine) {
+    .pf-history__row:not(.pf-history__row--head):hover {
+      background: #162d35;
+    }
   }
 
   .tri-home .pf-text-button {
     color: #bed600;
   }
 
-  .tri-home .pf-text-button:hover:not(:disabled) {
-    color: rgb(190 214 0 / 70%);
+  @media (hover: hover) and (pointer: fine) {
+    .tri-home .pf-text-button:hover:not(:disabled) {
+      color: rgb(190 214 0 / 70%);
+    }
   }
 
   .tri-home .pf-text-button:disabled {
@@ -2979,8 +3062,10 @@ button.pf-vin-request__car-icon.is-open {
     color: #8a9998;
   }
 
-  .tri-home .pf-icon-button:hover {
-    color: #bed600;
+  @media (hover: hover) and (pointer: fine) {
+    .tri-home .pf-icon-button:hover {
+      color: #bed600;
+    }
   }
 
   .pf-history--empty {
@@ -3028,10 +3113,12 @@ button.pf-vin-request__car-icon.is-open {
     color: #8a9998;
   }
 
-  .pf-vin-search__input:hover:not(:disabled),
-  .pf-request-input input:hover:not(:disabled),
-  .pf-request-input textarea:hover:not(:disabled) {
-    border-color: rgb(190 214 0 / 55%) !important;
+  @media (hover: hover) and (pointer: fine) {
+    .pf-vin-search__input:hover:not(:disabled),
+    .pf-request-input input:hover:not(:disabled),
+    .pf-request-input textarea:hover:not(:disabled) {
+      border-color: rgb(190 214 0 / 55%) !important;
+    }
   }
 
   .pf-vin-search__input:focus:not(:disabled),
@@ -3141,8 +3228,10 @@ button.pf-vin-request__car-icon.is-open {
     font-size: 14px;
   }
 
-  .parts-finder .pf-vin-found__reject:hover {
-    color: #bed600;
+  @media (hover: hover) and (pointer: fine) {
+    .parts-finder .pf-vin-found__reject:hover {
+      color: #bed600;
+    }
   }
 
   @media (max-width: 1199px) {
@@ -3209,10 +3298,16 @@ button.pf-vin-request__car-icon.is-open {
     color: #bed600;
   }
 
-  button.pf-vin-request__car-icon:hover,
   button.pf-vin-request__car-icon.is-open {
     background: #bed600;
     color: #0d2026;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    button.pf-vin-request__car-icon:hover {
+      background: #bed600;
+      color: #0d2026;
+    }
   }
 
   .pf-request-input input {
@@ -3234,8 +3329,10 @@ button.pf-vin-request__car-icon.is-open {
     color: #bed600;
   }
 
-  .pf-agreement a:hover {
-    color: #d4ed0e;
+  @media (hover: hover) and (pointer: fine) {
+    .pf-agreement a:hover {
+      color: rgba(190, 214, 0, 0.7);
+    }
   }
 
   .pf-history--vin-request {
@@ -3479,6 +3576,10 @@ button.pf-vin-request__car-icon.is-open {
     font-family: "TTHover", "TT Hoves", Arial, sans-serif;
   }
 
+  .pf-modal__mobile-options.tri-home {
+    padding-bottom: 0;
+  }
+
   .pf-mobile-content {
     min-height: 100%;
     gap: 16px;
@@ -3630,8 +3731,10 @@ button.pf-vin-request__car-icon.is-open {
     opacity: 1;
   }
 
-  .tri-home .pf-mobile-vin .pf-vin-search__input:hover:not(:disabled) {
-    border-color: rgb(190 214 0 / 55%) !important;
+  @media (hover: hover) and (pointer: fine) {
+    .tri-home .pf-mobile-vin .pf-vin-search__input:hover:not(:disabled) {
+      border-color: rgb(190 214 0 / 55%) !important;
+    }
   }
 
   .tri-home .pf-mobile-vin .pf-vin-search__input:focus:not(:disabled) {
@@ -3667,8 +3770,10 @@ button.pf-vin-request__car-icon.is-open {
     opacity: 1;
   }
 
-  .tri-home .pf-mobile-vin .pf-submit:hover:not(:disabled) {
-    background: #d4ed0e;
+  @media (hover: hover) and (pointer: fine) {
+    .tri-home .pf-mobile-vin .pf-submit:hover:not(:disabled) {
+      background: #d4ed0e;
+    }
   }
 
   .tri-home .pf-mobile-vin .pf-submit:disabled {
@@ -3689,7 +3794,7 @@ button.pf-vin-request__car-icon.is-open {
 
   .pf-mobile-controls {
     gap: 8px;
-    padding-bottom: 16px;
+    padding-bottom: max(104px, calc(88px + env(safe-area-inset-bottom)));
   }
 
   .pf-mobile-control {
@@ -3749,15 +3854,17 @@ button.pf-vin-request__car-icon.is-open {
 
   .pf-mobile-submitbar,
   .pf-mobile-expanded__actions {
-    position: sticky;
+    position: fixed;
     z-index: 4;
+    right: 0;
     bottom: 0;
+    left: 0;
     display: grid;
     gap: 8px;
-    margin: auto -16px 0;
+    margin: 0;
     border-top: 1px solid #36474d !important;
     border-radius: 20px 20px 0 0;
-    padding: 16px 16px 32px;
+    padding: 16px 16px max(32px, calc(16px + env(safe-area-inset-bottom)));
     background: linear-gradient(0deg, #08151a, rgb(22 45 53 / 50%));
     box-shadow: none;
     backdrop-filter: blur(4px);
@@ -3799,8 +3906,10 @@ button.pf-vin-request__car-icon.is-open {
   }
 
   .pf-mobile-content--expanded {
+    flex: 0 0 auto;
     min-height: 100dvh;
-    overflow: hidden;
+    padding-bottom: max(160px, calc(144px + env(safe-area-inset-bottom)));
+    overflow: visible;
   }
 
   .pf-mobile-expanded__header {
@@ -3833,12 +3942,12 @@ button.pf-vin-request__car-icon.is-open {
 
   .pf-mobile-expanded__panel {
     display: flex;
-    flex: 0 1 auto;
+    flex: 0 0 auto;
     min-height: 0;
-    max-height: calc(100dvh - 80px);
+    max-height: none;
     flex-direction: column;
     gap: 24px;
-    overflow: hidden;
+    overflow: visible;
     border-radius: 24px;
     padding: 16px;
     background: rgb(18 42 48 / 90%);
@@ -3899,30 +4008,12 @@ button.pf-vin-request__car-icon.is-open {
 
   .pf-mobile-expanded__list {
     display: flex;
-    flex: 1 1 auto;
+    flex: 0 0 auto;
     min-height: 0;
     flex-direction: column;
-    overflow: hidden auto;
+    overflow: visible;
     border-radius: 0;
     padding: 0;
-    background: transparent;
-  }
-
-  .pf-mobile-expanded__list::-webkit-scrollbar {
-    width: 2px;
-  }
-
-  .pf-mobile-expanded__list::-webkit-scrollbar-track {
-    background: rgb(255 255 255 / 10%);
-  }
-
-  .pf-mobile-expanded__list::-webkit-scrollbar-thumb {
-    min-height: 80px;
-    border-radius: 10px;
-    background: rgb(255 255 255 / 30%);
-  }
-
-  .pf-mobile-expanded__list::-webkit-scrollbar-corner {
     background: transparent;
   }
 
@@ -4102,6 +4193,8 @@ html.pf-modal-open {
 }
 
 .pf-modal {
+  --pf-modal-field-height: 48px;
+
   z-index: 500;
   padding: 24px;
   color: #fff;
@@ -4224,7 +4317,7 @@ html.pf-modal-open {
 
 .pf-modal .pf-field,
 .pf-modal-field input {
-  height: 48px;
+  height: var(--pf-modal-field-height);
   border: 1px solid transparent !important;
   border-radius: 24px;
   padding: 12px 20px;
@@ -4245,11 +4338,9 @@ html.pf-modal-open {
 
 .pf-modal .pf-control--modal {
   display: flex;
-  min-height: 66px;
 }
 
 .pf-modal-field__error {
-  min-height: 14px;
   padding: 0 20px;
   color: #ff4433;
   font-family: "Lato", Arial, sans-serif;
@@ -4265,13 +4356,18 @@ html.pf-modal-open {
 .pf-modal-field.is-invalid input,
 .pf-modal-field.is-invalid textarea,
 .pf-modal .pf-control--modal.is-invalid > .pf-field,
-.pf-modal-field.is-invalid input:hover,
 .pf-modal-field.is-invalid input:focus,
-.pf-modal-field.is-invalid textarea:hover,
 .pf-modal-field.is-invalid textarea:focus,
-.pf-modal .pf-control--modal.is-invalid > .pf-field:hover,
 .pf-modal .pf-control--modal.is-invalid > .pf-field:focus-visible {
   border-color: #ff4433 !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pf-modal-field.is-invalid input:hover,
+  .pf-modal-field.is-invalid textarea:hover,
+  .pf-modal .pf-control--modal.is-invalid > .pf-field:hover {
+    border-color: #ff4433 !important;
+  }
 }
 
 .pf-modal .pf-field {
@@ -4279,15 +4375,22 @@ html.pf-modal-open {
   padding-right: 12px;
 }
 
-.pf-modal-field input:hover,
 .pf-modal-field input:focus,
-.pf-modal-field textarea:hover,
 .pf-modal-field textarea:focus {
   border-color: #bed600 !important;
 }
 
-.pf-modal .pf-field:hover:not([aria-disabled="true"]) {
-  border-color: rgb(190 214 0 / 55%) !important;
+@media (hover: hover) and (pointer: fine) {
+  .pf-modal-field input:hover,
+  .pf-modal-field textarea:hover {
+    border-color: #bed600 !important;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pf-modal .pf-field:hover:not([aria-disabled="true"]) {
+    border-color: rgb(190 214 0 / 55%) !important;
+  }
 }
 
 .pf-modal .pf-control.is-open .pf-field {
@@ -4335,9 +4438,14 @@ html.pf-modal-open {
 }
 
 .pf-modal .pf-control.is-open .pf-arrow,
-.pf-modal .pf-field.has-value:hover .pf-arrow,
 .pf-modal .pf-control:focus-within .pf-field.has-value .pf-arrow {
   display: block;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pf-modal .pf-field.has-value:hover .pf-arrow {
+    display: block;
+  }
 }
 
 .pf-modal .pf-clear {
@@ -4375,10 +4483,16 @@ html.pf-modal-open {
   color: #bed600;
 }
 
-.pf-modal-history__toggle:hover,
 .pf-modal-history__toggle.is-open {
   background: #bed600;
   color: #0d2026;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pf-modal-history__toggle:hover {
+    background: #bed600;
+    color: #0d2026;
+  }
 }
 
 .pf-modal .pf-history-icon {
@@ -4415,7 +4529,7 @@ html.pf-modal-open {
 }
 
 .pf-modal .pf-dropdown {
-  top: calc(100% + 4px);
+  top: calc(var(--pf-modal-field-height) + 8px);
   max-height: 360px;
   padding: 16px 0;
   border: 0 !important;
@@ -4467,16 +4581,28 @@ html.pf-modal-open {
   color: #fff;
 }
 
-.pf-modal .pf-option:hover,
 .pf-modal .pf-option:focus-visible {
   background: #162d35;
   color: #bed600;
 }
 
-.pf-modal-history__item:hover,
+@media (hover: hover) and (pointer: fine) {
+  .pf-modal .pf-option:hover {
+    background: #162d35;
+    color: #bed600;
+  }
+}
+
 .pf-modal-history__item:focus-visible {
   background: #203840;
   color: #bed600;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pf-modal-history__item:hover {
+    background: #203840;
+    color: #bed600;
+  }
 }
 
 .pf-modal-history__item small {
@@ -4498,6 +4624,12 @@ html.pf-modal-open {
 
 .pf-modal .pf-agreement a {
   color: #bed600;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pf-modal .pf-agreement a:hover {
+    color: rgba(190, 214, 0, 0.7);
+  }
 }
 
 .pf-modal .pf-agreement input:checked + .pf-checkbox::before {
@@ -4532,8 +4664,10 @@ html.pf-modal-open {
   color: #162d35;
 }
 
-.pf-modal__submit:hover:not(:disabled) {
-  background: #d4ed0e;
+@media (hover: hover) and (pointer: fine) {
+  .pf-modal__submit:hover:not(:disabled) {
+    background: #d4ed0e;
+  }
 }
 
 .pf-modal__submit:disabled {
@@ -4561,8 +4695,18 @@ html.pf-modal-open {
   color: #222626;
 }
 
-.pf-modal__close:hover {
-  background: #d4ed0e;
+.pf-modal__close:focus-visible {
+  background: #d6e36b;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pf-modal__close:hover {
+    background: #d6e36b;
+  }
+}
+
+.pf-modal__close:active {
+  background: rgb(190 214 0 / 70%);
 }
 
 .pf-modal__close .pf-cross-icon {
@@ -4659,9 +4803,20 @@ html.pf-modal-open {
     color: #a1b0b2;
   }
 
-  .pf-modal__close:hover {
+  .pf-modal__close:focus-visible {
     background: transparent;
     color: #bed600;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .pf-modal__close:hover {
+      background: transparent;
+      color: #bed600;
+    }
+  }
+
+  .pf-modal__close:active {
+    background: transparent;
   }
 
   .pf-modal__close .pf-cross-icon {
@@ -4711,7 +4866,7 @@ html.pf-modal-open {
 
   .pf-modal .pf-dropdown {
     position: absolute;
-    top: calc(100% + 4px);
+    top: calc(var(--pf-modal-field-height) + 4px);
     left: 0;
     z-index: 50;
     width: 100%;
@@ -4744,7 +4899,7 @@ html.pf-modal-open {
 
   .pf-modal .pf-field,
   .pf-modal-field input {
-    height: 48px;
+    height: var(--pf-modal-field-height);
   }
 
   .pf-modal-field textarea {
@@ -4757,10 +4912,16 @@ html.pf-modal-open {
     color: #fff;
   }
 
-  .pf-modal-history__toggle:hover,
   .pf-modal-history__toggle.is-open {
     background: #203840;
     color: #fff;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .pf-modal-history__toggle:hover {
+      background: #203840;
+      color: #fff;
+    }
   }
 
   .pf-modal .pf-agreement {
@@ -4809,9 +4970,11 @@ html.pf-modal-open {
   line-height: 16px;
 }
 
-.tri-home .pf-field:hover:not([aria-disabled="true"]),
-.pf-modal .pf-field:hover:not([aria-disabled="true"]) {
-  border-color: rgb(190 214 0 / 55%) !important;
+@media (hover: hover) and (pointer: fine) {
+  .tri-home .pf-field:hover:not([aria-disabled="true"]),
+  .pf-modal .pf-field:hover:not([aria-disabled="true"]) {
+    border-color: #bed600 !important;
+  }
 }
 
 .tri-home .pf-control.is-open .pf-field,
@@ -4867,12 +5030,17 @@ html.pf-modal-open {
 }
 
 .tri-home .pf-control.is-open .pf-arrow,
-.tri-home .pf-field.has-value:hover .pf-arrow,
 .tri-home .pf-control:focus-within .pf-field.has-value .pf-arrow,
 .pf-modal .pf-control.is-open .pf-arrow,
-.pf-modal .pf-field.has-value:hover .pf-arrow,
 .pf-modal .pf-control:focus-within .pf-field.has-value .pf-arrow {
   display: block;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-home .pf-field.has-value:hover .pf-arrow,
+  .pf-modal .pf-field.has-value:hover .pf-arrow {
+    display: block;
+  }
 }
 
 .tri-home .pf-clear,
@@ -4913,10 +5081,16 @@ html.pf-modal-open {
   color: #fff;
 }
 
-.tri-home .pf-option:hover,
 .tri-home .pf-option:focus-visible,
-.pf-modal .pf-option:hover,
 .pf-modal .pf-option:focus-visible {
   background: #162d35;
   color: #bed600;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-home .pf-option:hover,
+  .pf-modal .pf-option:hover {
+    background: #162d35;
+    color: #bed600;
+  }
 }

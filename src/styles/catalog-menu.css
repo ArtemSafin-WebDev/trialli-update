@@ -105,8 +105,10 @@
   background-clip: content-box;
 }
 
-.tri-catalog-menu__tree:hover::-webkit-scrollbar-thumb {
-  background: rgb(194 202 204 / 42%);
+@media (hover: hover) and (pointer: fine) {
+  .tri-catalog-menu__tree:hover::-webkit-scrollbar-thumb {
+    background: rgb(194 202 204 / 42%);
+  }
 }
 
 .tri-catalog-menu__rail-content {
@@ -206,9 +208,14 @@
   font-weight: 500;
 }
 
-.tri-catalog-menu__category:hover,
 .tri-catalog-menu__category:focus-visible {
   color: var(--tri-catalog-accent) !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-catalog-menu__category:hover {
+    color: var(--tri-catalog-accent) !important;
+  }
 }
 
 .tri-catalog-menu__category.is-active {
@@ -318,9 +325,14 @@
   opacity: 0.7;
 }
 
-.tri-catalog-menu__all:hover,
 .tri-catalog-menu__all:focus-visible {
   color: #fff !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-catalog-menu__all:hover {
+    color: #fff !important;
+  }
 }
 
 .tri-catalog-menu__items {
@@ -354,10 +366,16 @@
     color 140ms ease;
 }
 
-.tri-catalog-menu__item:hover,
 .tri-catalog-menu__item:focus-visible {
   background: var(--tri-catalog-bg);
   color: var(--tri-catalog-accent) !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-catalog-menu__item:hover {
+    background: var(--tri-catalog-bg);
+    color: var(--tri-catalog-accent) !important;
+  }
 }
 
 .tri-catalog-menu__item.is-active {

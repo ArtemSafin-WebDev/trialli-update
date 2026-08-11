@@ -16,7 +16,7 @@
   overflow: clip;
   background: var(--tri-bg);
   color: var(--tri-text);
-  font-family: "TTHover", "TT Hoves", Arial, sans-serif;
+  font-family: "TTHover", "TT Hoves", "Roboto", "Segoe UI", "Helvetica Neue", "Arial Unicode MS", Arial, sans-serif;
   font-size: 14px;
   line-height: 1.2;
 }
@@ -218,11 +218,18 @@
   -webkit-mask: url("/assets/trialli-home/top-banner-arrow.svg") center / contain no-repeat;
 }
 
-.tri-home-top-banner:hover .tri-home-top-banner__button,
 .tri-home-top-banner:focus-visible .tri-home-top-banner__button {
   background: var(--tri-bg);
   box-shadow: inset 0 0 0 1px var(--tri-bg);
   color: var(--tri-accent);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-home-top-banner:hover .tri-home-top-banner__button {
+    background: var(--tri-bg);
+    box-shadow: inset 0 0 0 1px var(--tri-bg);
+    color: var(--tri-accent);
+  }
 }
 
 .tri-home-top-banner:focus-visible {
@@ -262,9 +269,14 @@
   letter-spacing: -0.21px;
 }
 
-.tri-home-header__utility-nav a:hover,
 .tri-home-header__utility-nav a:focus-visible {
   color: var(--tri-accent);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-home-header__utility-nav a:hover {
+    color: var(--tri-accent);
+  }
 }
 
 .tri-home-header__social {
@@ -333,8 +345,10 @@
   transition: background-color 0.2s ease;
 }
 
-.tri-home-header__catalog:hover {
-  background: #d6e36b;
+@media (hover: hover) and (pointer: fine) {
+  .tri-home-header__catalog:hover {
+    background: #d6e36b;
+  }
 }
 
 .tri-home-header__catalog:active {
@@ -409,9 +423,14 @@
   transition: filter 160ms ease;
 }
 
-.tri-home-header__search-clear:hover img,
 .tri-home-header__search-clear:focus-visible img {
   filter: brightness(0) invert(1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-home-header__search-clear:hover img {
+    filter: brightness(0) invert(1);
+  }
 }
 
 .tri-home-header__search-clear:focus-visible,
@@ -440,8 +459,10 @@
   background: var(--tri-bg);
 }
 
-.tri-home-header__cart:hover {
-  background: #203840;
+@media (hover: hover) and (pointer: fine) {
+  .tri-home-header__cart:hover {
+    background: #203840;
+  }
 }
 
 .tri-home-header__cart-count {
@@ -703,9 +724,14 @@
   color: var(--tri-bg);
 }
 
-.tri-home-picker__history:hover,
 .tri-home-picker__history[aria-expanded="true"] {
   background: rgb(255 255 255 / 60%);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-home-picker__history:hover {
+    background: rgb(255 255 255 / 60%);
+  }
 }
 
 .tri-home-picker__panel {
@@ -819,9 +845,14 @@
   text-align: left;
 }
 
-.tri-home-picker__dropdown button:hover,
 .tri-home-picker__dropdown button:focus-visible {
   background: #edf2d0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-home-picker__dropdown button:hover {
+    background: #edf2d0;
+  }
 }
 
 .tri-home-picker__submit {
@@ -914,8 +945,10 @@
   line-height: 1;
 }
 
-.tri-home-slider-controls button:hover {
-  border-color: var(--tri-accent) !important;
+@media (hover: hover) and (pointer: fine) {
+  .tri-home-slider-controls button:hover {
+    border-color: var(--tri-accent) !important;
+  }
 }
 
 .tri-home-pagination {
@@ -969,10 +1002,16 @@
   fill: currentColor;
 }
 
-.tri-home-categories__controls button:not(.swiper-button-disabled):hover,
 .tri-home-categories__controls button:not(.swiper-button-disabled):focus-visible {
   background: var(--tri-accent);
   color: var(--tri-bg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-home-categories__controls button:not(.swiper-button-disabled):hover {
+    background: var(--tri-accent);
+    color: var(--tri-bg);
+  }
 }
 
 .tri-home-categories__controls .swiper-button-disabled {
@@ -1038,11 +1077,18 @@
     color 0.25s ease;
 }
 
-.tri-home-category-card:hover,
 .tri-home-category-card:focus-visible {
   background: var(--tri-accent);
   color: var(--tri-bg);
   outline: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-home-category-card:hover {
+    background: var(--tri-accent);
+    color: var(--tri-bg);
+    outline: none;
+  }
 }
 
 .tri-home-category-card__name {
@@ -1078,14 +1124,24 @@
   transition: transform 0.3s ease;
 }
 
-.tri-home-category-card:hover .tri-home-category-card__shadow,
 .tri-home-category-card:focus-visible .tri-home-category-card__shadow {
   opacity: 0;
 }
 
-.tri-home-category-card:hover .tri-home-category-card__art,
+@media (hover: hover) and (pointer: fine) {
+  .tri-home-category-card:hover .tri-home-category-card__shadow {
+    opacity: 0;
+  }
+}
+
 .tri-home-category-card:focus-visible .tri-home-category-card__art {
   transform: scale(1.015);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-home-category-card:hover .tri-home-category-card__art {
+    transform: scale(1.015);
+  }
 }
 
 .tri-home-category-card__count {
@@ -1113,10 +1169,16 @@
     color 0.25s ease;
 }
 
-.tri-home-category-card:hover .tri-home-category-card__count,
 .tri-home-category-card:focus-visible .tri-home-category-card__count {
   background: var(--tri-surface-light);
   color: #fff;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-home-category-card:hover .tri-home-category-card__count {
+    background: var(--tri-surface-light);
+    color: #fff;
+  }
 }
 
 .tri-home-categories .tri-home-pagination {
@@ -1256,8 +1318,10 @@
   fill: currentColor;
 }
 
-.tri-home-china__button:hover {
-  filter: brightness(1.05);
+@media (hover: hover) and (pointer: fine) {
+  .tri-home-china__button:hover {
+    filter: brightness(1.05);
+  }
 }
 
 .tri-home-china__button:focus-visible {
@@ -1416,10 +1480,16 @@
   fill: currentColor;
 }
 
-.tri-home-weekly__controls button:not(.swiper-button-disabled):hover,
 .tri-home-weekly__controls button:not(.swiper-button-disabled):focus-visible {
   background: var(--tri-accent);
   color: var(--tri-bg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-home-weekly__controls button:not(.swiper-button-disabled):hover {
+    background: var(--tri-accent);
+    color: var(--tri-bg);
+  }
 }
 
 .tri-home-weekly__controls .swiper-button-disabled {
@@ -1810,6 +1880,13 @@
   font-size: 16px;
   font-weight: 500;
   line-height: 1.15;
+  transition: color 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-product-card:hover .tri-product-card__title {
+    color: #bed600;
+  }
 }
 
 .tri-product-card__code {
@@ -1823,9 +1900,14 @@
   line-height: 1.2;
 }
 
-.tri-product-card__code:hover,
 .tri-product-card__code:focus-visible {
   color: #fff;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-product-card__code:hover {
+    color: #fff;
+  }
 }
 
 .tri-product-card__copy,
@@ -1901,9 +1983,14 @@
   transition: background-color 0.2s ease;
 }
 
-.tri-product-card__add:hover,
 .tri-product-card__add:focus-visible {
   background-color: #d6e36b !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-product-card__add:hover {
+    background-color: #d6e36b !important;
+  }
 }
 
 .tri-product-card__add svg {
@@ -1918,7 +2005,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 4px;
-  border-radius: 31px;
+  border-radius: 40px;
   background: var(--tri-accent);
   color: var(--tri-bg);
 }
@@ -1934,12 +2021,19 @@
   height: 32px;
   flex: 0 0 32px;
   place-items: center;
-  border-radius: 50%;
-  background: rgb(13 32 38 / 10%);
+  border-radius: 30px;
+  background: transparent;
+  transition: background-color 0.2s ease;
 }
 
-.tri-product-card__counter button:hover {
-  background: rgb(13 32 38 / 20%);
+.tri-product-card__counter button:focus-visible {
+  background: rgb(255 255 255 / 50%);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-product-card__counter button:hover {
+    background: rgb(255 255 255 / 50%);
+  }
 }
 
 .tri-product-card__counter svg {
@@ -1947,7 +2041,7 @@
   height: 16px;
 }
 
-.tri-product-card__quantity {
+.tri-home .tri-product-card__quantity {
   width: 28px;
   min-width: 0;
   padding: 0;
@@ -1956,12 +2050,13 @@
   background: transparent;
   color: inherit;
   text-align: center;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
+  line-height: 1.2;
 }
 
-.tri-product-card__quantity::-webkit-inner-spin-button,
-.tri-product-card__quantity::-webkit-outer-spin-button {
+.tri-home .tri-product-card__quantity::-webkit-inner-spin-button,
+.tri-home .tri-product-card__quantity::-webkit-outer-spin-button {
   margin: 0;
   appearance: none;
 }
@@ -1986,9 +2081,11 @@
   fill: currentColor;
 }
 
-.tri-home .tri-products-more:hover {
-  border-color: var(--tri-accent) !important;
-  color: var(--tri-accent);
+@media (hover: hover) and (pointer: fine) {
+  .tri-home .tri-products-more:hover {
+    border-color: var(--tri-accent) !important;
+    color: var(--tri-accent);
+  }
 }
 
 .tri-home-request-banner {
@@ -2059,8 +2156,10 @@
   white-space: nowrap;
 }
 
-.tri-home-request-banner__content > button:hover {
-  background: #203840;
+@media (hover: hover) and (pointer: fine) {
+  .tri-home-request-banner__content > button:hover {
+    background: #203840;
+  }
 }
 
 .tri-home-request-banner__content > button:active {
@@ -2107,8 +2206,10 @@
   line-height: 16px;
 }
 
-.tri-home-footer__nav a:hover {
-  color: var(--tri-accent);
+@media (hover: hover) and (pointer: fine) {
+  .tri-home-footer__nav a:hover {
+    color: var(--tri-accent);
+  }
 }
 
 .tri-home-footer__nav a {
@@ -2429,9 +2530,14 @@
     fill: currentColor;
   }
 
-  .tri-home .tri-home-picker-teaser__button:hover,
   .tri-home .tri-home-picker-teaser__button:focus-visible {
     background: #d4ed0e;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .tri-home .tri-home-picker-teaser__button:hover {
+      background: #d4ed0e;
+    }
   }
 
   .tri-home {
@@ -2489,6 +2595,7 @@
     border-bottom: 1px solid #36474d !important;
     border-radius: 0 0 20px 20px;
     background: linear-gradient(to top, rgb(22 45 53 / 50%), #08151a);
+    -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
     transition:
       border-color 180ms ease,
@@ -2515,6 +2622,19 @@
 
   .tri-home-header__logo {
     margin: 0 16px 0 0;
+    overflow: hidden;
+    opacity: 1;
+    transition:
+      width 180ms ease,
+      margin-right 180ms ease,
+      opacity 120ms ease;
+  }
+
+  .tri-home-header.is-mobile-scrolled .tri-home-header__logo {
+    width: 0;
+    margin-right: -8px;
+    opacity: 0;
+    pointer-events: none;
   }
 
   .tri-home-header__catalog,
@@ -2528,6 +2648,10 @@
 
   .tri-home-header__search input {
     padding: 0 12px;
+  }
+
+  .tri-home-header.is-mobile-scrolled .tri-home-header__search input {
+    padding-left: 16px;
   }
 
   .tri-home .tri-home-header__burger {
@@ -2623,9 +2747,14 @@
     border-bottom: 0 !important;
   }
 
-  .tri-home-header__mobile-menu a:hover,
   .tri-home-header__mobile-menu a:focus-visible {
     color: var(--tri-accent);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .tri-home-header__mobile-menu a:hover {
+      color: var(--tri-accent);
+    }
   }
 
   .tri-home-picker-section {
@@ -3181,6 +3310,13 @@
     border-radius: 20px 20px 0 0;
     background: linear-gradient(to bottom, rgb(22 45 53 / 75%), #08151a 75%);
     backdrop-filter: blur(4px);
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+
+  .tri-home-bottom-nav.is-scroll-hidden {
+    pointer-events: none;
+    transform: translateY(100%);
   }
 
   .tri-home-bottom-nav a,
@@ -3235,6 +3371,12 @@
     border-radius: 100px;
     background: #000;
     transform: translateX(-50%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tri-home-bottom-nav {
+      transition-duration: 0.01ms;
+    }
   }
 
   .tri-home-modal__dialog {

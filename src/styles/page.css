@@ -48,6 +48,8 @@
   text-underline-offset: 6px;
 }
 
-.tpl-shell__link:hover {
-  color: #d71920;
+@media (hover: hover) and (pointer: fine) {
+  .tpl-shell__link:hover {
+    color: #d71920;
+  }
 }
