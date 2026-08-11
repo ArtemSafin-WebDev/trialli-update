@@ -16,7 +16,9 @@
   overflow: clip;
   background: var(--tri-bg);
   color: var(--tri-text);
-  font-family: "TTHover", "TT Hoves", "Roboto", "Segoe UI", "Helvetica Neue", "Arial Unicode MS", Arial, sans-serif;
+  font-family:
+    "TTHover", "TT Hoves", "Roboto", "Segoe UI", "Helvetica Neue",
+    "Arial Unicode MS", Arial, sans-serif;
   font-size: 14px;
   line-height: 1.2;
 }
@@ -214,8 +216,10 @@
   flex: 0 0 auto;
   background: currentColor;
   content: "";
-  mask: url("/assets/trialli-home/top-banner-arrow.svg") center / contain no-repeat;
-  -webkit-mask: url("/assets/trialli-home/top-banner-arrow.svg") center / contain no-repeat;
+  mask: url("/assets/trialli-home/top-banner-arrow.svg") center / contain
+    no-repeat;
+  -webkit-mask: url("/assets/trialli-home/top-banner-arrow.svg") center /
+    contain no-repeat;
 }
 
 .tri-home-top-banner:focus-visible .tri-home-top-banner__button {
@@ -363,8 +367,13 @@
   align-items: center;
   outline: 1px solid transparent;
   border-radius: 40px;
-  background:
-    radial-gradient(circle at left, #0f2329 0, #12272c 50%, #1e3431 75%, #304939 100%);
+  background: radial-gradient(
+    circle at left,
+    #0f2329 0,
+    #12272c 50%,
+    #1e3431 75%,
+    #304939 100%
+  );
   transition: outline-color 160ms ease;
 }
 
@@ -584,8 +593,10 @@
 
 .tri-home-icon--menu {
   background: currentColor;
-  mask: url("/assets/trialli-home/header-catalog.svg") center / contain no-repeat;
-  -webkit-mask: url("/assets/trialli-home/header-catalog.svg") center / contain no-repeat;
+  mask: url("/assets/trialli-home/header-catalog.svg") center / contain
+    no-repeat;
+  -webkit-mask: url("/assets/trialli-home/header-catalog.svg") center / contain
+    no-repeat;
 }
 
 .tri-home-header__catalog .tri-home-icon--menu {
@@ -598,14 +609,16 @@
   background: currentColor;
   color: var(--tri-accent);
   mask: url("/assets/trialli-home/header-search.svg") center / contain no-repeat;
-  -webkit-mask: url("/assets/trialli-home/header-search.svg") center / contain no-repeat;
+  -webkit-mask: url("/assets/trialli-home/header-search.svg") center / contain
+    no-repeat;
 }
 
 .tri-home-icon--cart {
   background: currentColor;
   color: #fff;
   mask: url("/assets/trialli-home/header-cart.svg") center / contain no-repeat;
-  -webkit-mask: url("/assets/trialli-home/header-cart.svg") center / contain no-repeat;
+  -webkit-mask: url("/assets/trialli-home/header-cart.svg") center / contain
+    no-repeat;
 }
 
 .tri-home-icon--car::before {
@@ -655,7 +668,8 @@
   z-index: -2;
   inset: 0;
   border-radius: 40px;
-  background: url("/assets/trialli-home/picker-background-desktop.webp") center / 100% 100% no-repeat;
+  background: url("/assets/trialli-home/picker-background-desktop.webp")
+    center / 100% 100% no-repeat;
   content: "";
 }
 
@@ -972,7 +986,9 @@
 /* Catalog categories */
 
 .tri-home-categories {
-  height: 536px;
+  --category-card-size: 187px;
+  --category-row-gap: 16px;
+
   padding-block: 32px;
 }
 
@@ -1002,7 +1018,8 @@
   fill: currentColor;
 }
 
-.tri-home-categories__controls button:not(.swiper-button-disabled):focus-visible {
+.tri-home-categories__controls
+  button:not(.swiper-button-disabled):focus-visible {
   background: var(--tri-accent);
   color: var(--tri-bg);
 }
@@ -1053,18 +1070,21 @@
 
 .tri-home-categories__viewport {
   width: 100%;
-  height: 390px;
+  height: calc(
+    var(--category-card-size) + var(--category-card-size) +
+      var(--category-row-gap)
+  );
 }
 
 .tri-home-categories__track {
   width: 100%;
-  height: 390px;
+  height: 100%;
 }
 
 .tri-home-category-card {
   position: relative;
   display: block;
-  width: 187px !important;
+  width: var(--category-card-size) !important;
   height: auto;
   aspect-ratio: 1;
   overflow: hidden;
@@ -1207,15 +1227,11 @@
     background-color 0.25s ease;
 }
 
-.tri-home-categories
-  .tri-home-pagination
-  .swiper-pagination-bullet.is-visible {
+.tri-home-categories .tri-home-pagination .swiper-pagination-bullet.is-visible {
   display: block;
 }
 
-.tri-home-categories
-  .tri-home-pagination
-  .swiper-pagination-bullet-active {
+.tri-home-categories .tri-home-pagination .swiper-pagination-bullet-active {
   width: 24px;
   background: var(--tri-accent);
 }
@@ -1382,12 +1398,8 @@
   background-position:
     center,
     left top;
-  background-repeat:
-    no-repeat,
-    repeat;
-  background-size:
-    cover,
-    auto;
+  background-repeat: no-repeat, repeat;
+  background-size: cover, auto;
   background-clip: text;
   color: transparent;
   font-size: 33px;
@@ -2171,7 +2183,11 @@
 .tri-home-footer {
   height: 237px;
   border-radius: 40px 40px 0 0;
-  background: linear-gradient(to bottom, var(--tri-surface), rgb(22 45 53 / 0%));
+  background: linear-gradient(
+    to bottom,
+    var(--tri-surface),
+    rgb(22 45 53 / 0%)
+  );
 }
 
 .tri-home-footer__inner {
@@ -2737,8 +2753,10 @@
     flex: 0 0 16px;
     background: currentColor;
     content: "";
-    mask: url("/assets/trialli-home/header-arrow.svg") center / contain no-repeat;
-    -webkit-mask: url("/assets/trialli-home/header-arrow.svg") center / contain no-repeat;
+    mask: url("/assets/trialli-home/header-arrow.svg") center / contain
+      no-repeat;
+    -webkit-mask: url("/assets/trialli-home/header-arrow.svg") center / contain
+      no-repeat;
   }
 
   .tri-home-header__mobile-menu a:last-child {
@@ -2800,8 +2818,28 @@
   }
 
   .tri-home-categories {
+    position: relative;
+    isolation: isolate;
     height: 422px;
     padding: 16px 0;
+  }
+
+  .tri-home-categories::before {
+    position: absolute;
+    z-index: 0;
+    top: -94px;
+    right: 0;
+    width: 390px;
+    height: 730px;
+    background: url("/assets/trialli-home/categories-blur-mobile.svg") center /
+      100% 100% no-repeat;
+    content: "";
+    pointer-events: none;
+  }
+
+  .tri-home-categories > .tri-home-container {
+    position: relative;
+    z-index: 1;
   }
 
   .tri-home-section-heading {
@@ -2817,6 +2855,11 @@
     margin-bottom: 16px;
   }
 
+  .tri-home-categories {
+    --category-card-size: 160px;
+    --category-row-gap: 8px;
+  }
+
   .tri-home-slider-controls {
     display: none;
   }
@@ -2824,19 +2867,6 @@
   .tri-home-categories__slider-shell::before,
   .tri-home-categories__slider-shell::after {
     display: none;
-  }
-
-  .tri-home-categories__viewport {
-    width: 100%;
-    height: 328px;
-  }
-
-  .tri-home-categories__track {
-    height: 328px;
-  }
-
-  .tri-home-category-card {
-    width: 160px !important;
   }
 
   .tri-home-category-card__name {
@@ -3002,7 +3032,13 @@
   .tri-home-shop__content .tri-home-shop__title--mobile {
     display: block;
     margin-bottom: 15px;
-    background-image: linear-gradient(180deg, #a8be00 0%, #668d05 29%, var(--tri-bg) 40%, var(--tri-bg) 100%);
+    background-image: linear-gradient(
+      180deg,
+      #a8be00 0%,
+      #668d05 29%,
+      var(--tri-bg) 40%,
+      var(--tri-bg) 100%
+    );
   }
 
   .tri-home-shop__cta {
@@ -3504,5 +3540,4 @@
     width: 46px;
     height: 46px;
   }
-
 }
