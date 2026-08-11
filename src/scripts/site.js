@@ -266,8 +266,14 @@ if (root) {
   stickyHeaderMedia.addEventListener("change", measureStickyHeader);
   measureStickyHeader();
 
-  root.querySelector('[data-site-nav="home"]')?.classList.toggle(
-    "is-active",
-    window.location.pathname === "/" || window.location.pathname.endsWith("/index.html"),
+  const homeNavigationItem = root.querySelector('[data-site-nav="home"]');
+  const homeIsCurrent =
+    window.location.pathname === "/" ||
+    window.location.pathname.endsWith("/index.html");
+  homeNavigationItem?.classList.toggle(
+    "tri-home-bottom-nav__item--active",
+    homeIsCurrent,
   );
+  if (homeIsCurrent) homeNavigationItem?.setAttribute("aria-current", "page");
+  else homeNavigationItem?.removeAttribute("aria-current");
 }

@@ -49,32 +49,12 @@
                 <button type="button" class="tri-results-search__clear" aria-label="Очистить поиск" data-search-clear hidden><img src="/assets/vin-results/search-clear.svg" alt="" /></button>
                 <button class="tri-results-search__submit" type="submit" aria-label="Найти"><span class="tri-home-icon tri-home-icon--search" aria-hidden="true"></span></button>
               </form>
-              <div class="tri-results-sort" data-sort>
-                <button class="tri-results-sort__toggle" type="button" aria-haspopup="listbox" aria-expanded="false" data-sort-toggle>
-                  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M14.4717 5.52832L13.5283 6.47168L12 4.94238V13.333H10.667V4.94238L9.1377 6.47168L8.19531 5.52832L10.8623 2.8623H11.8047L14.4717 5.52832ZM5.33301 11.0576L6.8623 9.52832L7.80469 10.4717L5.1377 13.1377H4.19531L1.52832 10.4717L2.47168 9.52832L4 11.0576V2.66699H5.33301V11.0576Z" /></svg>
-                  <span data-sort-label>По популярности</span>
-                </button>
-                <div class="tri-results-sort__popover" data-sort-popover>
-                  <button class="tri-results-modal-backdrop" type="button" aria-label="Закрыть сортировку" data-sort-close></button>
-                  <div class="tri-results-sort__menu" role="dialog" aria-modal="true" aria-labelledby="category-sort-title">
-                    <header><h2 id="category-sort-title">Сортировать</h2><button type="button" aria-label="Закрыть" data-sort-close>×</button></header>
-                    <div role="listbox">
-                      <button class="is-active" type="button" role="option" aria-selected="true" data-sort-value="popular"><i></i>По популярности</button>
-                      <button type="button" role="option" aria-selected="false" data-sort-value="price-asc"><i></i>Сначала дешевле</button>
-                      <button type="button" role="option" aria-selected="false" data-sort-value="price-desc"><i></i>Сначала дороже</button>
-                      <button type="button" role="option" aria-selected="false" data-sort-value="new"><i></i>По новизне</button>
-                      <button type="button" role="option" aria-selected="false" data-sort-value="discount"><i></i>По величине скидки</button>
-                    </div>
-                    <button class="tri-results-sort__apply" type="button" data-sort-apply>Выбрать</button>
-                  </div>
-                </div>
-              </div>
             </header>
 
             <span class="tri-results-mobile-tools-sentinel" aria-hidden="true" data-mobile-tools-sentinel></span>
             <div class="tri-results-mobile-tools tri-category-mobile-tools" data-mobile-tools>
               <div class="tri-results-mobile-tools__track" data-mobile-tools-track>
-                <div data-mobile-sort-host></div>
+                <div data-mobile-sort-host><!-- @include /src/partials/catalog-sort.html --></div>
                 <button class="tri-results-filter-open" type="button" aria-label="Открыть фильтры" aria-controls="catalog-filters" aria-expanded="false" data-filter-open>
                   <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.667 10a2 2 0 0 1 1.887 1.333h.779a.667.667 0 0 1 0 1.334h-.78a2 2 0 0 1-3.773 0H2.667a.667.667 0 0 1 0-1.334H8.78A2 2 0 0 1 10.667 10ZM5.333 6A2 2 0 0 1 7.22 7.333h6.113a.667.667 0 0 1 0 1.334H7.22a2 2 0 0 1-3.773 0h-.78a.667.667 0 0 1 0-1.334h.78A2 2 0 0 1 5.333 6Zm5.334-4a2 2 0 0 1 1.887 1.333h.779a.667.667 0 0 1 0 1.334h-.78a2 2 0 0 1-3.773 0H2.667a.667.667 0 0 1 0-1.334H8.78A2 2 0 0 1 10.667 2Z" /></svg>
                   <span data-filter-count hidden>0</span>

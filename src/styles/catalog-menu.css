@@ -591,13 +591,21 @@
   }
 
   .tri-home .tri-catalog-mobile__back {
+    appearance: none;
     display: grid;
     width: 24px;
     height: 24px;
     flex: 0 0 24px;
+    margin: 0;
+    padding: 0;
     place-items: center;
+    border: 0;
     border-radius: 6px;
+    background: transparent;
     color: #fff;
+    cursor: pointer;
+    font: inherit;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .tri-catalog-mobile__back svg {

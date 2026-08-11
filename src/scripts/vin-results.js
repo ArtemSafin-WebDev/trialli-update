@@ -72,6 +72,7 @@ if (root) {
 
   const productsHost = root.querySelector("[data-products]");
   const sort = root.querySelector("[data-sort]");
+  const sortPopover = sort?.querySelector("[data-sort-popover]");
   const filters = root.querySelector(".tri-results-filters");
   const search = root.querySelector("[data-catalog-search]");
   const scrollHeader = root.querySelector("[data-results-scroll-header]");
@@ -80,8 +81,6 @@ if (root) {
   const siteSearchClear = siteSearch?.querySelector(
     "[data-results-site-search-clear]",
   );
-  const desktopSortParent = sort?.parentElement;
-  const mobileSortHost = root.querySelector("[data-mobile-sort-host]");
   const mobileTools = root.querySelector("[data-mobile-tools]");
   const mobileToolsTrack = root.querySelector("[data-mobile-tools-track]");
   const mobileToolsSentinel = root.querySelector("[data-mobile-tools-sentinel]");
@@ -102,6 +101,7 @@ if (root) {
   let filterPreviewVersion = 0;
   let filterPreviewAnchor = null;
   let filterPreviewController = null;
+  let pageScrollLocked = false;
 
   const icons = {
     close: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.47 3.53 3.53 3.53 3.53-3.53.94.94L8.94 8l3.53 3.53-.94.94L8 8.94l-3.53 3.53-.94-.94L7.06 8 3.53 4.47z"/></svg>',
@@ -545,20 +545,47 @@ if (root) {
     document.dispatchEvent(new CustomEvent("catalog-filters:reset"));
   }
 
+  function syncPageScrollLock() {
+    const shouldLock = mobileMedia.matches && (state.sortOpen || state.filterOpen);
+    if (shouldLock === pageScrollLocked) return;
+
+    pageScrollLocked = shouldLock;
+    if (shouldLock) {
+      document.documentElement.classList.add("tri-results-modal-open");
+      document.body.classList.add("tri-results-modal-open");
+      return;
+    }
+
+    document.documentElement.classList.remove("tri-results-modal-open");
+    document.body.classList.remove("tri-results-modal-open");
+  }
+
   function setSortOpen(open) {
     state.sortOpen = open;
     root.classList.toggle("is-sort-open", open);
     sort.classList.toggle("is-open", open);
-    sort.querySelector("[data-sort-toggle]").setAttribute("aria-expanded", String(open));
-    document.body.classList.toggle("tri-results-modal-open", open || state.filterOpen);
+    root.querySelectorAll("[data-sort-toggle]").forEach((toggle) => {
+      toggle.setAttribute("aria-expanded", String(open));
+    });
+
+    if (open && !sortPopover.open) {
+      if (mobileMedia.matches) sortPopover.showModal();
+      else sortPopover.show();
+    } else if (!open && sortPopover.open) {
+      sortPopover.close();
+    }
+
+    syncPageScrollLock();
   }
 
   function applySort() {
     state.sort = state.sortDraft;
-    const active = sort.querySelector(`[data-sort-value="${state.sort}"]`);
-    sort.querySelector("[data-sort-label]").textContent = active?.textContent.trim() || "По популярности";
-    sort.querySelectorAll("[data-sort-value]").forEach((option) => {
-      const selected = option === active;
+    const active = root.querySelector(`[data-sort-value="${state.sort}"]`);
+    root.querySelectorAll("[data-sort-label]").forEach((label) => {
+      label.textContent = active?.textContent.trim() || "По популярности";
+    });
+    root.querySelectorAll("[data-sort-value]").forEach((option) => {
+      const selected = option.dataset.sortValue === state.sort;
       option.classList.toggle("is-active", selected);
       option.setAttribute("aria-selected", String(selected));
     });
@@ -571,7 +598,7 @@ if (root) {
     root.classList.toggle("is-filter-open", open);
     filters.classList.toggle("is-detail-open", Boolean(open && state.mobileDetailFilter));
     root.querySelector("[data-filter-open]").setAttribute("aria-expanded", String(open));
-    document.body.classList.toggle("tri-results-modal-open", open || state.sortOpen);
+    syncPageScrollLock();
     syncMobileFilterDetail();
   }
 
@@ -846,13 +873,11 @@ if (root) {
   }
 
   function moveSortForViewport() {
-    if (!sort || !desktopSortParent || !mobileSortHost || !activeFilters || !mobileToolsTrack) return;
+    if (!activeFilters || !mobileToolsTrack) return;
     if (mobileMedia.matches) {
       hideFilterPreview();
-      mobileSortHost.append(sort);
       mobileToolsTrack.append(activeFilters);
     } else {
-      desktopSortParent.append(sort);
       if (desktopActiveFiltersParent) {
         desktopActiveFiltersParent.insertBefore(activeFilters, desktopActiveFiltersNextSibling);
       }
@@ -882,7 +907,11 @@ if (root) {
     if (button.matches("[data-sort-close]")) setSortOpen(false);
     if (button.matches("[data-sort-value]")) {
       state.sortDraft = button.dataset.sortValue;
-      sort.querySelectorAll("[data-sort-value]").forEach((option) => option.classList.toggle("is-active", option === button));
+      root.querySelectorAll("[data-sort-value]").forEach((option) => {
+        const selected = option.dataset.sortValue === state.sortDraft;
+        option.classList.toggle("is-active", selected);
+        option.setAttribute("aria-selected", String(selected));
+      });
       if (!mobileMedia.matches) applySort();
     }
     if (button.matches("[data-sort-apply]")) applySort();

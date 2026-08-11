@@ -608,7 +608,11 @@ catalogRoots.forEach((root, rootIndex) => {
     toggles.forEach((toggle) => toggle.setAttribute("aria-expanded", String(open)));
 
     if (open) {
-      mobileNavActive = [...(bottomNav?.querySelectorAll(".is-active") ?? [])];
+      mobileNavActive = [
+        ...(bottomNav?.querySelectorAll(
+          ".tri-home-bottom-nav__item--active",
+        ) ?? []),
+      ];
       bottomNav?.querySelectorAll(".tri-home-bottom-nav__item--active").forEach((item) => item.classList.remove("tri-home-bottom-nav__item--active"));
       bottomCatalogToggle?.classList.add("tri-home-bottom-nav__item--active");
       bottomNav?.classList.remove("is-scroll-hidden");

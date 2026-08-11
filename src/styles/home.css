@@ -3417,7 +3417,7 @@
     transform: translateY(100%);
   }
 
-  .tri-home-bottom-nav__item {
+  .tri-home .tri-home-bottom-nav__item {
     position: relative;
     display: flex;
     min-width: 0;
@@ -3457,7 +3457,7 @@
     white-space: nowrap;
   }
 
-  .tri-home-bottom-nav__item--active {
+  .tri-home .tri-home-bottom-nav__item--active {
     padding-top: 12px;
     border-top: 1px solid var(--tri-accent) !important;
     background: linear-gradient(to bottom, rgb(190 214 0 / 10%), transparent);

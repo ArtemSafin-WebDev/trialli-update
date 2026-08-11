@@ -1,0 +1,25 @@
+<div class="tri-results-sort" data-sort>
+  <button class="tri-results-sort__toggle" type="button" aria-haspopup="listbox" aria-expanded="false" data-sort-toggle>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M14.4717 5.52832L13.5283 6.47168L12 4.94238V13.333H10.667V4.94238L9.1377 6.47168L8.19531 5.52832L10.8623 2.8623H11.8047L14.4717 5.52832ZM5.33301 11.0576L6.8623 9.52832L7.80469 10.4717L5.1377 13.1377H4.19531L1.52832 10.4717L2.47168 9.52832L4 11.0576V2.66699H5.33301V11.0576Z" /></svg>
+    <span data-sort-label>По популярности</span>
+  </button>
+  <dialog class="tri-results-sort__popover" aria-labelledby="catalog-sort-title" data-sort-popover>
+    <button class="tri-results-modal-backdrop" type="button" aria-label="Закрыть сортировку" data-sort-close></button>
+    <div class="tri-results-sort__menu">
+      <header>
+        <h2 id="catalog-sort-title">Сортировать</h2>
+        <button class="tri-results-sort__close" type="button" aria-label="Закрыть" data-sort-close>
+          <img src="/assets/trialli-home/request-modal-close-mobile.svg" alt="" />
+        </button>
+      </header>
+      <div role="listbox" aria-label="Порядок сортировки">
+        <button class="is-active" type="button" role="option" aria-selected="true" data-sort-value="popular"><i></i>По популярности</button>
+        <button type="button" role="option" aria-selected="false" data-sort-value="price-asc"><i></i>Сначала дешевле</button>
+        <button type="button" role="option" aria-selected="false" data-sort-value="price-desc"><i></i>Сначала дороже</button>
+        <button type="button" role="option" aria-selected="false" data-sort-value="new"><i></i>По новизне</button>
+        <button type="button" role="option" aria-selected="false" data-sort-value="discount"><i></i>По величине скидки</button>
+      </div>
+      <button class="tri-results-sort__apply" type="button" data-sort-apply>Выбрать</button>
+    </div>
+  </dialog>
+</div>
