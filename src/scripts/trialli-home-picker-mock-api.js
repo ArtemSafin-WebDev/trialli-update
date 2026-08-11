@@ -392,6 +392,11 @@
       );
     }
 
+    async submitVinRequest() {
+      await wait(360);
+      return { ok: true };
+    }
+
     async deleteHistory(id) {
       this.history = this.history.filter((item) => item.id !== id);
       await wait(90);

@@ -1,4 +1,9 @@
 import "./phone-mask.js";
+import {
+  formStatusModal,
+  setFormPending,
+  submitFormRequest,
+} from "./form-status-modal.js";
 
 (function () {
   const DEFAULT_ENDPOINTS = {
@@ -70,6 +75,23 @@ import "./phone-mask.js";
       const url = new URL(this.endpoints.vinRequestOptions, window.location.origin);
       appendVinRequestParams(url, params.vinRequest);
       return this.request(url, { method: "GET" });
+    }
+
+    async submitVinRequest({ endpoint, formData }) {
+      const url = new URL(endpoint || this.endpoints.vinRequest, window.location.origin);
+      const response = await fetch(
+        url,
+        mergeFetchOptions(this.fetchOptions, {
+          method: "POST",
+          body: formData,
+        }),
+      );
+
+      if (!response.ok) {
+        throw new Error(`Parts finder request failed: ${response.status}`);
+      }
+
+      return response;
     }
 
     async deleteHistory(id) {
@@ -225,6 +247,12 @@ import "./phone-mask.js";
         if (!event.target.matches("[data-vin-request-field]")) return;
         this.updateVinRequestField(event.target);
         this.updateVinRequestSubmitState();
+      });
+
+      this.root.addEventListener("submit", (event) => {
+        const form = event.target.closest(".pf-vin-request__form");
+        if (!form) return;
+        this.handleVinRequestSubmit(event, form);
       });
 
       document.addEventListener("click", (event) => {
@@ -1885,6 +1913,32 @@ import "./phone-mask.js";
         field.type === "checkbox" ? field.checked : field.value;
     }
 
+    async handleVinRequestSubmit(event, form) {
+      event.preventDefault();
+      if (!this.isVinRequestComplete()) return;
+
+      const submit = event.submitter;
+      setFormPending(form, true);
+
+      try {
+        const endpoint = form.action || this.endpoints.vinRequest;
+        const formData = new FormData(form);
+        if (typeof this.api.submitVinRequest === "function") {
+          await this.api.submitVinRequest({ endpoint, formData });
+        } else {
+          await submitFormRequest(form, { formData });
+        }
+
+        this.vinRequest = { ...EMPTY_VIN_REQUEST };
+        await this.refresh();
+        formStatusModal.success();
+      } catch (error) {
+        console.error(error);
+        setFormPending(form, false);
+        formStatusModal.error({ returnFocusTo: submit || form });
+      }
+    }
+
     updateVinSearchValue(value) {
       this.vinSearch.value = value;
       this.vinSearch.result = "";
@@ -1912,6 +1966,13 @@ import "./phone-mask.js";
         controls: this.getVinRequestControls(),
         loadOptions: (values) =>
           this.api.getVinRequestOptions({ vinRequest: values }),
+        submitRequest: ({ endpoint, form, formData }) =>
+          typeof this.api.submitVinRequest === "function"
+            ? this.api.submitVinRequest({ endpoint, formData })
+            : submitFormRequest(form, {
+                action: endpoint,
+                formData,
+              }),
         vehicle,
         values: {
           ...this.vinRequest,

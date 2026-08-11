@@ -1,0 +1,594 @@
+.tri-no-products-heading,
+.tri-no-products-request-section,
+.tri-no-products-recommendations {
+  position: relative;
+  z-index: 3;
+}
+
+.tri-no-products-request-section {
+  z-index: 4;
+}
+
+.tri-no-products-heading {
+  min-height: 130px;
+  padding: 48px 0 32px;
+}
+
+.tri-no-products-heading p {
+  margin: 0 0 6px;
+  color: var(--results-muted);
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.tri-no-products-heading h1 {
+  margin: 0;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 28px;
+}
+
+.tri-no-products-request-card {
+  min-height: 430px;
+  overflow: visible;
+  border-radius: 40px;
+  padding: 16px 16px 40px;
+  background: rgb(255 255 255 / 2%);
+}
+
+.tri-no-products-request-card__intro {
+  display: grid;
+  min-height: 78px;
+  place-content: center;
+  gap: 8px;
+  padding: 16px;
+  text-align: center;
+}
+
+.tri-no-products-request-card__intro h2,
+.tri-no-products-request-card__intro p {
+  margin: 0;
+}
+
+.tri-no-products-request-card__intro h2 {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 22px;
+}
+
+.tri-no-products-request-card__intro p {
+  color: rgb(255 255 255 / 70%);
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.tri-no-products-form {
+  --no-products-field-height: 48px;
+  display: grid;
+  width: min(794px, 100%);
+  margin: 16px auto 0;
+  gap: 16px;
+  color: #fff;
+}
+
+.tri-no-products-form__fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.tri-no-products-form__fields > .pf-modal-field--textarea {
+  grid-column: auto;
+}
+
+.tri-no-products-form__main {
+  display: grid;
+  grid-template-rows: repeat(4, var(--no-products-field-height));
+  gap: 8px;
+  min-width: 0;
+}
+
+.tri-no-products-form__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  min-width: 0;
+}
+
+.tri-no-products-form .pf-control--modal,
+.tri-no-products-form .pf-modal-field {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+}
+
+.tri-no-products-form .pf-control--modal {
+  width: 100%;
+}
+
+.tri-no-products-form .pf-field,
+.tri-no-products-form .pf-modal-field input,
+.tri-no-products-form .pf-modal-field textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid transparent !important;
+  border-radius: 24px;
+  background: #203840;
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  outline: 0;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+.tri-no-products-form .pf-field,
+.tri-no-products-form .pf-modal-field input {
+  height: var(--no-products-field-height);
+  padding: 12px 20px;
+}
+
+.tri-no-products-form .pf-field {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-right: 12px;
+  cursor: pointer;
+}
+
+.tri-no-products-form .pf-field[aria-disabled="true"] {
+  background: rgb(32 56 64 / 50%);
+  color: rgb(255 255 255 / 20%);
+  cursor: not-allowed;
+}
+
+.tri-no-products-form .pf-field__text {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tri-no-products-form .pf-field__input {
+  width: 100%;
+  min-width: 0;
+  flex: 1 1 auto;
+  border: 0;
+  padding: 0;
+  outline: 0;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+}
+
+.tri-no-products-form .pf-field__input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.tri-no-products-form .pf-arrow {
+  display: block;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  background: #8a9998;
+  -webkit-mask: url("/assets/trialli-home/request-modal-arrow.svg") center / 10.667px 6px no-repeat;
+  mask: url("/assets/trialli-home/request-modal-arrow.svg") center / 10.667px 6px no-repeat;
+  transition: transform 160ms ease;
+}
+
+.tri-no-products-form .pf-control.is-open .pf-arrow {
+  transform: rotate(180deg);
+}
+
+.tri-no-products-form .pf-field[aria-disabled="true"] .pf-arrow {
+  background: rgb(255 255 255 / 10%);
+}
+
+.tri-no-products-form .pf-clear {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  padding: 4px;
+  background: transparent;
+  color: #8a9998;
+}
+
+.tri-no-products-form .pf-clear svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.tri-no-products-form .pf-modal-field textarea {
+  height: 100%;
+  min-height: 216px;
+  padding: 16px 20px;
+  resize: none;
+}
+
+.tri-no-products-form .pf-field:not(.has-value),
+.tri-no-products-form .pf-modal-field input::placeholder,
+.tri-no-products-form .pf-modal-field textarea::placeholder,
+.tri-no-products-form .pf-field__input::placeholder {
+  color: #8a9998;
+}
+
+.tri-no-products-form .pf-control.is-open > .pf-field,
+.tri-no-products-form .pf-field:focus-visible,
+.tri-no-products-form .pf-modal-field input:focus,
+.tri-no-products-form .pf-modal-field textarea:focus {
+  border-color: #bed600 !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-no-products-form .pf-field:hover:not([aria-disabled="true"]),
+  .tri-no-products-form .pf-modal-field input:hover,
+  .tri-no-products-form .pf-modal-field textarea:hover {
+    border-color: rgb(190 214 0 / 55%) !important;
+  }
+}
+
+.tri-no-products-form .pf-modal-field__error {
+  position: absolute;
+  z-index: 2;
+  top: calc(100% + 1px);
+  left: 0;
+  padding: 0 20px;
+  color: #ff4433;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 13px;
+}
+
+.tri-no-products-form .pf-modal-field__error[hidden] {
+  display: none;
+}
+
+.tri-no-products-form .pf-modal-field.is-invalid input,
+.tri-no-products-form .pf-modal-field.is-invalid textarea,
+.tri-no-products-form .pf-control--modal.is-invalid > .pf-field {
+  border-color: #ff4433 !important;
+}
+
+.tri-no-products-form .pf-dropdown {
+  position: absolute;
+  z-index: 60;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  max-height: 360px;
+  overflow: hidden auto;
+  border: 0 !important;
+  border-right: 8px solid #203840 !important;
+  border-radius: 20px;
+  padding: 16px 0;
+  background: #203840;
+  box-shadow: 0 8px 20px rgb(22 45 53 / 25%);
+}
+
+.tri-no-products-form .pf-dropdown::-webkit-scrollbar {
+  width: 2px;
+}
+
+.tri-no-products-form .pf-dropdown::-webkit-scrollbar-track {
+  margin-block: 16px;
+  border-radius: 10px;
+  background: rgb(255 255 255 / 10%);
+}
+
+.tri-no-products-form .pf-dropdown::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgb(255 255 255 / 30%);
+}
+
+.tri-no-products-form .pf-options {
+  display: grid;
+  padding: 0;
+}
+
+.tri-no-products-form .pf-option {
+  display: flex;
+  width: 100%;
+  min-height: 32px;
+  align-items: flex-start;
+  border: 0 !important;
+  padding: 8px 16px;
+  background: #203840;
+  color: #c2cacc;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: left;
+}
+
+.tri-no-products-form .pf-option.is-selected,
+.tri-no-products-form .pf-option:focus-visible {
+  background: #162d35;
+  color: #bed600;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-no-products-form .pf-option:hover {
+    background: #162d35;
+    color: #bed600;
+  }
+}
+
+.tri-no-products-form .pf-empty {
+  padding: 16px;
+  color: #a1b0b2;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.tri-no-products-form__actions {
+  display: grid;
+  min-height: 48px;
+  grid-template-columns: minmax(0, 1fr) 192px;
+  align-items: center;
+  gap: 16px;
+}
+
+.tri-no-products-form .pf-agreement {
+  align-items: center;
+  gap: 8px;
+  color: #a1b0b2;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.tri-no-products-form .pf-agreement a {
+  color: #bed600;
+  font-weight: 400;
+  transition: color 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-no-products-form .pf-agreement a:hover {
+    color: rgb(190 214 0 / 70%);
+  }
+}
+
+.tri-no-products-form .pf-agreement input:checked + .pf-checkbox::before {
+  border-color: #bed600 !important;
+  background: #bed600;
+}
+
+.tri-no-products-form .pf-agreement .pf-checkbox {
+  position: relative;
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  align-items: center;
+  justify-content: center;
+  color: #162d35;
+  line-height: 0;
+}
+
+.tri-no-products-form .pf-agreement .pf-checkbox::before {
+  position: absolute;
+  inset: 1px;
+  border: 1px solid #a1b0b2 !important;
+  border-radius: 4px;
+  background: transparent;
+  content: "";
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+.tri-no-products-form .pf-agreement .pf-checkbox svg {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 12px;
+  height: 12px;
+  fill: currentColor;
+  opacity: 0;
+}
+
+.tri-no-products-form .pf-agreement input:checked + .pf-checkbox svg {
+  opacity: 1;
+}
+
+.tri-no-products-form .pf-agreement input:focus-visible + .pf-checkbox::before {
+  border-color: #bed600 !important;
+  box-shadow: 0 0 0 2px rgb(190 214 0 / 24%);
+}
+
+.tri-no-products-form .pf-agreement.is-invalid .pf-checkbox::before {
+  border-color: #ff4433 !important;
+}
+
+.tri-no-products-form__submit {
+  width: 192px;
+  height: 48px;
+  gap: 8px;
+  border-radius: 31px;
+  padding: 16px 24px;
+  background: #bed600;
+  color: #162d35;
+}
+
+.tri-no-products-form__submit svg {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  fill: currentColor;
+}
+
+.tri-no-products-form__submit:disabled {
+  background: rgb(32 56 64 / 50%);
+  color: #4c5759;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tri-no-products-form__submit:hover:not(:disabled) {
+    background: #d4ed0e;
+  }
+}
+
+.tri-no-products-recommendations {
+  padding: 40px 0 80px;
+}
+
+.tri-no-products .tri-no-products-recommendations__title {
+  margin: 0 0 32px;
+  color: var(--results-heading);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 28px;
+}
+
+.tri-no-products-recommendations .tri-results-products {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.tri-no-products-recommendations .tri-results-products .tri-product-card {
+  display: flex;
+}
+
+.tri-no-products-recommendations .tri-results-products:not(.is-expanded) .tri-product-card {
+  display: flex;
+}
+
+.tri-no-products-recommendations .tri-products-more {
+  margin: 32px auto 0;
+}
+
+.tri-no-products-recommendations .tri-home-request-banner {
+  margin-top: 32px;
+}
+
+@media (max-width: 1199px) {
+  .tri-no-products-recommendations .tri-results-products {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .tri-no-products-recommendations .tri-results-products:not(.is-expanded) .tri-product-card:nth-child(n + 10) {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .tri-no-products-heading {
+    min-height: auto;
+    padding: 24px 0;
+  }
+
+  .tri-no-products-heading p {
+    margin-bottom: 4px;
+  }
+
+  .tri-no-products-heading h1 {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .tri-no-products-request-card {
+    min-height: 0;
+    border-radius: 24px;
+    padding: 16px;
+  }
+
+  .tri-no-products-request-card__intro {
+    min-height: 0;
+    place-content: start;
+    padding: 0 0 16px;
+    text-align: left;
+  }
+
+  .tri-no-products-request-card__intro h2 {
+    font-size: 18px;
+  }
+
+  .tri-no-products-form {
+    width: 100%;
+    margin-top: 0;
+    gap: 24px;
+  }
+
+  .tri-no-products-form__fields,
+  .tri-no-products-form__main {
+    grid-template-columns: 1fr;
+  }
+
+  .tri-no-products-form__main {
+    grid-template-rows: none;
+    gap: 16px;
+  }
+
+  .tri-no-products-form__row {
+    display: contents;
+  }
+
+  .tri-no-products-form__fields {
+    gap: 16px;
+  }
+
+  .tri-no-products-form .pf-control--modal,
+  .tri-no-products-form .pf-modal-field {
+    min-height: 48px;
+  }
+
+  .tri-no-products-form .pf-modal-field textarea {
+    min-height: 160px;
+  }
+
+  .tri-no-products-form .pf-dropdown {
+    top: calc(100% + 4px);
+  }
+
+  .tri-no-products-form__actions {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .tri-no-products-form .pf-agreement {
+    align-items: flex-start;
+  }
+
+  .tri-no-products-form__submit {
+    width: 100%;
+    height: 40px;
+    padding: 12px 20px;
+  }
+
+  .tri-no-products-recommendations {
+    padding: 32px 0 48px;
+  }
+
+  .tri-no-products .tri-no-products-recommendations__title {
+    margin-bottom: 24px;
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .tri-no-products-recommendations .tri-results-products {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 8px;
+  }
+
+  .tri-no-products-recommendations .tri-results-products:not(.is-expanded) .tri-product-card:nth-child(n + 7) {
+    display: none;
+  }
+
+  .tri-no-products-recommendations .tri-home-request-banner {
+    margin-top: 24px;
+  }
+}
+
+@media (max-width: 374px) {
+  .tri-no-products-recommendations .tri-results-products {
+    gap: 12px 6px;
+  }
+}

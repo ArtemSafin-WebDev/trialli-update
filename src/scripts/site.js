@@ -1,3 +1,9 @@
+import {
+  formStatusModal,
+  setFormPending,
+  submitFormRequest,
+} from "./form-status-modal.js";
+
 const root = document.querySelector("[data-site-shell]");
 
 export function showToast(message) {
@@ -216,16 +222,32 @@ if (root) {
     }
   });
 
-  root.addEventListener("submit", (event) => {
+  root.addEventListener("submit", async (event) => {
     if (!event.target.matches("[data-request-form]")) return;
     event.preventDefault();
     if (!event.target.checkValidity()) {
       event.target.reportValidity();
       return;
     }
-    event.target.reset();
-    setModal(requestModal, false);
-    showToast("Заявка отправлена");
+
+    const form = event.target;
+    const submit = event.submitter;
+    setFormPending(form, true);
+
+    try {
+      await submitFormRequest(form);
+      form.reset();
+      setFormPending(form, false);
+      setModal(requestModal, false);
+      formStatusModal.success();
+    } catch (error) {
+      console.error(error);
+      setFormPending(form, false);
+      formStatusModal.error({
+        returnFocusTo: submit || form,
+        onSecondary: () => setModal(requestModal, false),
+      });
+    }
   });
 
   document.addEventListener("keydown", (event) => {

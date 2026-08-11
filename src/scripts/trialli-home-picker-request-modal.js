@@ -1,4 +1,9 @@
 import "./phone-mask.js";
+import {
+  formStatusModal,
+  setFormPending,
+  submitFormRequest,
+} from "./form-status-modal.js";
 
 (function () {
   const FIELD_MESSAGES = {
@@ -49,6 +54,7 @@ import "./phone-mask.js";
         optionsEndpoint:
           options.optionsEndpoint || "/api/parts-finder/vin-request/options",
         loadOptions: options.loadOptions || null,
+        submitRequest: options.submitRequest || null,
         fetchOptions: options.fetchOptions || {},
         values: {
           ...EMPTY_VALUES,
@@ -892,7 +898,7 @@ import "./phone-mask.js";
       this.updateFieldError(key);
     }
 
-    handleSubmit(event) {
+    async handleSubmit(event) {
       const fields = ["brand", "model", "plate", "name", "phone", "email", "parts"];
       this.state.validationStarted = true;
       fields.forEach((key) => this.state.touched.add(key));
@@ -900,9 +906,40 @@ import "./phone-mask.js";
       this.updateAgreementError();
 
       const firstInvalid = fields.find((key) => this.getFieldError(key));
-      if (!firstInvalid && this.state.values.agreement) return;
-
       event.preventDefault();
+      if (!firstInvalid && this.state.values.agreement) {
+        const form = event.target;
+        const submit = event.submitter;
+        setFormPending(form, true);
+
+        try {
+          const formData = new FormData(form);
+          if (this.state.submitRequest) {
+            await this.state.submitRequest({
+              endpoint: this.state.endpoint,
+              form,
+              formData,
+            });
+          } else {
+            await submitFormRequest(form, {
+              fetchOptions: this.state.fetchOptions,
+              formData,
+            });
+          }
+
+          this.close({ immediate: true });
+          formStatusModal.success();
+        } catch (error) {
+          console.error(error);
+          setFormPending(form, false);
+          formStatusModal.error({
+            returnFocusTo: submit || form,
+            onSecondary: () => this.close(),
+          });
+        }
+        return;
+      }
+
       const target = firstInvalid
         ? document.querySelector(
             `[data-modal-field="${selectorEscape(firstInvalid)}"], [data-modal-control="${selectorEscape(firstInvalid)}"] .pf-field`,

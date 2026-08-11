@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>Автомобиль найден, товары не найдены — TRIALLI</title>
+    <!-- @include /src/partials/site-head.html -->
+    <link rel="stylesheet" href="/src/styles/vin-results.css" />
+    <link rel="stylesheet" href="/src/styles/no-products.css" />
+  </head>
+  <body id="top" class="tri-home-body">
+    <div class="tri-home tri-results tri-no-products" data-tri-home data-site-shell>
+      <a class="tri-home__skip" href="#no-products-main">Перейти к результатам</a>
+
+      <!-- @include /src/partials/site-header.html -->
+
+      <main id="no-products-main">
+        <script>
+          window.PartsFinderConfig = {
+            initialMode: "vin",
+            initialVin: "Y6DTF69Y080144158",
+            initialVinResult: "found",
+          };
+          window.NoProductsConfig = {
+            vin: "Y6DTF69Y080144158",
+            endpoints: {
+              request: "/api/parts-finder/vin-request",
+              options: "/api/parts-finder/vin-request/options",
+            },
+          };
+        </script>
+        <!-- @include /src/partials/parts-finder.html -->
+
+        <section class="tri-results-mobile-car" aria-label="Найденный автомобиль">
+          <div class="tri-results-mobile-heading">
+            <a href="/" aria-label="Вернуться назад">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.595 18.479a1 1 0 0 1-.707-.293L3.23 12.528a1 1 0 0 1 0-1.414l5.658-5.657a1 1 0 0 1 1.414 1.415l-3.95 3.95h14.071a1 1 0 0 1 0 2H6.352l3.95 3.95a1 1 0 0 1-.707 1.707Z" /></svg>
+            </a>
+            <span>Найдено 0 товаров</span>
+            <span aria-hidden="true"></span>
+          </div>
+          <div class="tri-results-mobile-car__card">
+            <span class="tri-results-mobile-car__visual">
+              <span class="tri-results-mobile-car__artwork"><img src="/assets/vin-results/found-car-mobile.webp" alt="" /></span>
+            </span>
+            <strong>Audi A4 B8 (08-), 2015, 2.0 бензиновый, A4 2.0 TFSI quattro 190 л.с.</strong>
+          </div>
+          <button class="tri-results-mobile-car__reject" type="button" data-open-request>
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.586 9.919c.177 0 .347.07.472.195l.942.944.942-.944a.667.667 0 0 1 .943.943L12.942 12l.943.942a.667.667 0 1 1-.943.943L12 12.942l-.942.943a.667.667 0 1 1-.943-.943l.943-.942-.943-.943a.667.667 0 0 1 .471-1.138ZM10.946 2c.479 0 .921.256 1.158.672l2.475 4.331a.667.667 0 0 1-1.158.661l-2.475-4.331H5.054L2.667 7.51v2.999L3.412 12h1.255v-.667c0-.368.298-.666.666-.666H8a.667.667 0 1 1 0 1.333H6a1.333 1.333 0 0 1-1.333 1.333H3.412a1.333 1.333 0 0 1-1.192-.736l-.746-1.492a1.333 1.333 0 0 1-.141-.596V7.51c0-.232.061-.46.176-.662l2.386-4.176C4.133 2.256 4.575 2 5.054 2h5.892Zm-.084 4.862a.667.667 0 0 1 .943.943c-.241.24-.685.443-1.255.59-.604.156-1.439.272-2.55.272-1.111 0-1.946-.116-2.55-.272-.498-.128-.901-.3-1.155-.502l-.1-.088a.667.667 0 0 1 .943-.943l.021.012c.06.035.243.132.624.23.475.123 1.195.229 2.217.229 1.022 0 1.742-.106 2.217-.229.508-.13.664-.26.645-.242Z" /></svg>
+            <span>Не моё авто</span>
+          </button>
+        </section>
+
+        <section class="tri-no-products-heading" aria-labelledby="no-products-title">
+          <div class="tri-home-container">
+            <p>Результаты подбора по VIN</p>
+            <h1 id="no-products-title">Y6DTF69Y080144158</h1>
+          </div>
+        </section>
+
+        <section class="tri-no-products-request-section" aria-labelledby="no-products-request-title">
+          <div class="tri-home-container">
+            <div class="tri-no-products-request-card">
+              <header class="tri-no-products-request-card__intro">
+                <h2 id="no-products-request-title">Ничего не найдено</h2>
+                <p>Оставьте заявку на персональный подбор, менеджер с вами свяжется</p>
+              </header>
+
+              <form class="tri-no-products-form" action="/api/parts-finder/vin-request" method="post" novalidate data-no-products-form>
+                <input type="hidden" name="mode" value="vin-request" />
+                <div class="tri-no-products-form__fields">
+                  <div class="tri-no-products-form__main">
+                    <div class="tri-no-products-form__row" data-no-products-vehicle></div>
+                    <div class="tri-no-products-form__row">
+                      <label class="pf-modal-field pf-modal-field--vin">
+                        <span class="visually-hidden">VIN</span>
+                        <input type="text" name="vin" value="Y6DTF69Y080144158" placeholder="VIN" maxlength="17" autocomplete="off" autocapitalize="characters" spellcheck="false" data-no-products-field="vin" />
+                        <span class="pf-modal-field__error" data-no-products-error="vin" hidden></span>
+                      </label>
+                      <label class="pf-modal-field pf-modal-field--plate">
+                        <span class="visually-hidden">Госномер</span>
+                        <input type="text" name="plate" placeholder="Госномер*" maxlength="16" autocomplete="off" autocapitalize="characters" spellcheck="false" required data-no-products-field="plate" />
+                        <span class="pf-modal-field__error" data-no-products-error="plate" hidden></span>
+                      </label>
+                    </div>
+                    <label class="pf-modal-field pf-modal-field--name">
+                      <span class="visually-hidden">ФИО</span>
+                      <input type="text" name="name" placeholder="ФИО*" maxlength="120" autocomplete="name" required data-no-products-field="name" />
+                      <span class="pf-modal-field__error" data-no-products-error="name" hidden></span>
+                    </label>
+                    <div class="tri-no-products-form__row">
+                      <label class="pf-modal-field pf-modal-field--phone">
+                        <span class="visually-hidden">Телефон</span>
+                        <input type="tel" name="phone" placeholder="Телефон*" autocomplete="tel" required data-phone-mask="ru" data-no-products-field="phone" />
+                        <span class="pf-modal-field__error" data-no-products-error="phone" hidden></span>
+                      </label>
+                      <label class="pf-modal-field pf-modal-field--email">
+                        <span class="visually-hidden">Email</span>
+                        <input type="email" name="email" placeholder="Email" maxlength="254" autocomplete="email" inputmode="email" data-no-products-field="email" />
+                        <span class="pf-modal-field__error" data-no-products-error="email" hidden></span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <label class="pf-modal-field pf-modal-field--textarea">
+                    <span class="visually-hidden">Интересующие запчасти</span>
+                    <textarea name="parts" placeholder="Интересующие запчасти*" required data-no-products-field="parts"></textarea>
+                    <span class="pf-modal-field__error" data-no-products-error="parts" hidden></span>
+                  </label>
+                </div>
+
+                <div class="tri-no-products-form__actions">
+                  <label class="pf-agreement pf-agreement--modal">
+                    <input type="checkbox" name="agreement" value="1" data-no-products-field="agreement" />
+                    <span class="pf-checkbox" aria-hidden="true">
+                      <svg viewBox="0 0 16 16"><path d="M14.472 4.276 6.472 12.276h-.944l-4-4 .944-.943L6 10.862l7.528-7.529.944.943Z" /></svg>
+                    </span>
+                    <span class="pf-agreement__text">Я принимаю <a href="#">Пользовательское соглашение</a> и <a href="#">Политику обработки персональных данных</a></span>
+                  </label>
+                  <button class="pf-submit pf-submit--with-icon tri-no-products-form__submit" type="submit" disabled>
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m13.962 2.889-4 11.333-1.207.109-2.577-4.51-4.509-2.576.109-1.207 11.333-4 .851.851ZM7.498 9.444l1.69 2.959 2.538-7.187-4.228 4.228ZM3.596 6.811l2.96 1.691 4.227-4.229-7.187 2.538Z" /></svg>
+                    <span>Отправить запрос</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section class="tri-no-products-recommendations" aria-labelledby="recommendations-title">
+          <div class="tri-home-container">
+            <h2 class="tri-no-products-recommendations__title" id="recommendations-title">Вам может быть интересно</h2>
+            <div class="tri-results-products" data-recommendation-products></div>
+            <!-- @include /src/partials/products-more-button.html -->
+            <!-- @include /src/partials/request-banner.html -->
+          </div>
+        </section>
+      </main>
+
+      <!-- @include /src/partials/site-footer.html -->
+      <!-- @include /src/partials/site-bottom-nav.html -->
+      <a id="back-to-top" href="#top" aria-label="Наверх"></a>
+    </div>
+
+    <!-- @include /src/partials/site-scripts.html -->
+    <script type="module" src="/src/scripts/no-products.js"></script>
+  </body>
+</html>
