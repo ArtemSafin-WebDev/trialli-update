@@ -11,6 +11,8 @@ if (root) {
   const PRICE_MIN = 459;
   const PRICE_MAX = 9999999;
   const PRICE_STEP = 100;
+  const MOBILE_SCROLL_HEADER_THRESHOLD = 80;
+  const MOBILE_STICKY_TOOLS_TOP = 68;
 
   const productSeed = [
     ["lrac-1980", "LRAC 1980", 2710, 3710, true],
@@ -59,14 +61,26 @@ if (root) {
   const sort = root.querySelector("[data-sort]");
   const filters = root.querySelector(".tri-results-filters");
   const search = root.querySelector("[data-catalog-search]");
+  const scrollHeader = root.querySelector("[data-results-scroll-header]");
+  const siteSearch = root.querySelector("[data-results-site-search]");
+  const siteSearchInput = siteSearch?.querySelector("input");
+  const siteSearchClear = siteSearch?.querySelector(
+    "[data-results-site-search-clear]",
+  );
   const desktopSortParent = sort?.parentElement;
   const mobileSortHost = root.querySelector("[data-mobile-sort-host]");
-  const categoryChip = root.querySelector("[data-category-chip]");
+  const mobileTools = root.querySelector("[data-mobile-tools]");
+  const mobileToolsTrack = root.querySelector("[data-mobile-tools-track]");
+  const mobileToolsSentinel = root.querySelector("[data-mobile-tools-sentinel]");
+  const activeFilters = root.querySelector("[data-active-filters]");
+  const desktopActiveFiltersParent = activeFilters?.parentElement;
+  const desktopActiveFiltersNextSibling = activeFilters?.nextElementSibling;
   const carToast = root.querySelector("[data-car-toast]");
   const filterDetail = root.querySelector("[data-filter-detail]");
   const mobileMedia = window.matchMedia("(max-width: 767px)");
   const desktopExtraOptions = new WeakSet(filters.querySelectorAll(".tri-results-filter__options .is-extra"));
   let mobileMoreLayoutFrame = 0;
+  let scrollHeaderFrame = 0;
 
   const icons = {
     close: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.47 3.53 3.53 3.53 3.53-3.53.94.94L8.94 8l3.53 3.53-.94.94L8 8.94l-3.53 3.53-.94-.94L7.06 8 3.53 4.47z"/></svg>',
@@ -75,6 +89,29 @@ if (root) {
 
   const formatPrice = (price) => new Intl.NumberFormat("ru-RU").format(price);
   const parsePrice = (price) => Number(String(price).replace(/\D/g, ""));
+
+  function updateScrollHeader() {
+    scrollHeaderFrame = 0;
+    const visible =
+      mobileMedia.matches && window.scrollY >= MOBILE_SCROLL_HEADER_THRESHOLD;
+    const toolsStuck =
+      mobileMedia.matches &&
+      mobileToolsSentinel?.getBoundingClientRect().top <= MOBILE_STICKY_TOOLS_TOP;
+    scrollHeader?.classList.toggle("is-visible", visible);
+    scrollHeader?.setAttribute("aria-hidden", String(!visible));
+    if (scrollHeader) scrollHeader.inert = !visible;
+    mobileTools?.classList.toggle("is-stuck", Boolean(toolsStuck));
+  }
+
+  function requestScrollHeaderUpdate() {
+    if (scrollHeaderFrame) return;
+    scrollHeaderFrame = window.requestAnimationFrame(updateScrollHeader);
+  }
+
+  function updateSiteSearchClear() {
+    if (!siteSearchInput || !siteSearchClear) return;
+    siteSearchClear.hidden = !siteSearchInput.value;
+  }
 
   function hasActivePriceFilter() {
     return state.price.currentMin !== state.price.min || state.price.currentMax !== state.price.max;
@@ -199,7 +236,6 @@ if (root) {
     const active = root.querySelector("[data-active-filters]");
     const tags = root.querySelector("[data-active-tags]");
     const values = Array.from(state.selected.entries());
-    const categories = values.filter(([key]) => key.startsWith("groups:"));
     active.hidden = values.length === 0;
     const filterTags = values
       .map(([key, label]) => `<button type="button" data-clear-filter="${key}"><span>${label}</span>${icons.close}</button>`)
@@ -215,12 +251,6 @@ if (root) {
     root.querySelectorAll("[data-reset-filters]").forEach((button) => {
       button.disabled = values.length === 0;
     });
-    if (categoryChip) {
-      const label = categoryChip.querySelector("[data-category-chip-label]");
-      const suffix = categories.length > 1 ? ` +${categories.length - 1}` : "";
-      label.textContent = categories.length ? `${categories[0][1]}${suffix}` : "Категория";
-      categoryChip.classList.toggle("is-selected", categories.length > 0);
-    }
     syncTotals();
   }
 
@@ -529,11 +559,19 @@ if (root) {
   }
 
   function moveSortForViewport() {
-    if (!sort || !desktopSortParent || !mobileSortHost) return;
-    if (mobileMedia.matches) mobileSortHost.append(sort);
-    else desktopSortParent.append(sort);
+    if (!sort || !desktopSortParent || !mobileSortHost || !activeFilters || !mobileToolsTrack) return;
+    if (mobileMedia.matches) {
+      mobileSortHost.append(sort);
+      mobileToolsTrack.append(activeFilters);
+    } else {
+      desktopSortParent.append(sort);
+      if (desktopActiveFiltersParent) {
+        desktopActiveFiltersParent.insertBefore(activeFilters, desktopActiveFiltersNextSibling);
+      }
+    }
     setFilterOpen(false);
     setSortOpen(false);
+    updateScrollHeader();
     syncMobileMoreLabels();
     renderProducts();
   }
@@ -551,7 +589,6 @@ if (root) {
     }
     if (button.matches("[data-sort-apply]")) applySort();
     if (button.matches("[data-filter-open]")) setFilterOpen(true);
-    if (button.matches("[data-category-chip]")) setFilterOpen(true);
     if (button.matches("[data-filter-close], [data-filter-apply]")) setFilterOpen(false);
     if (button.matches("[data-filter-detail-close]")) closeMobileFilterDetail();
     if (button.matches("[data-filter-detail-save]")) setFilterOpen(false);
@@ -574,6 +611,15 @@ if (root) {
     if (button.matches("[data-mobile-search-focus]")) {
       search.scrollIntoView({ behavior: "smooth", block: "center" });
       window.setTimeout(() => search.querySelector("input")?.focus(), 220);
+    }
+    if (button.matches("[data-results-scroll-back]")) {
+      if (window.history.length > 1) window.history.back();
+      else window.location.assign("/");
+    }
+    if (button.matches("[data-results-site-search-clear]")) {
+      siteSearchInput.value = "";
+      updateSiteSearchClear();
+      siteSearchInput.focus();
     }
     if (button.matches("[data-car-toast-close]")) {
       carToast?.classList.remove("is-visible");
@@ -733,6 +779,8 @@ if (root) {
     search.querySelector("input").focus();
   });
 
+  siteSearchInput?.addEventListener("input", updateSiteSearchClear);
+
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
     if (state.mobileDetailFilter) {
@@ -744,6 +792,8 @@ if (root) {
   });
 
   mobileMedia.addEventListener("change", moveSortForViewport);
+  mobileMedia.addEventListener("change", requestScrollHeaderUpdate);
+  window.addEventListener("scroll", requestScrollHeaderUpdate, { passive: true });
   window.addEventListener("resize", queueMobileMoreLayout);
   document.fonts?.ready.then(queueMobileMoreLayout);
   bindProductCardInteractions(root);
@@ -757,4 +807,6 @@ if (root) {
   updatePriceControls();
   collectFilters();
   moveSortForViewport();
+  updateSiteSearchClear();
+  updateScrollHeader();
 }

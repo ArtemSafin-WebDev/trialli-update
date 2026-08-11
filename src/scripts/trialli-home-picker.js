@@ -106,7 +106,10 @@ import "./phone-mask.js";
       this.openControl = null;
       this.historyOpen = null;
       this.expandedTags = false;
-      this.mobileFinderOpen = false;
+      this.mobileFinderOpen = Boolean(
+        options.initialMobileOpen &&
+          window.matchMedia("(max-width: 767.98px)").matches,
+      );
       this.mobileExpandedControl = null;
       this.mobileHistoryOpen = false;
       this.vinSearch = {
@@ -362,8 +365,9 @@ import "./phone-mask.js";
     }
 
     updateSearchClearButton(controlId) {
+      const scope = this.mobileFinderOpen ? ".pf-mobile-screen " : "";
       const field = this.root.querySelector(
-        `[data-control="${selectorEscape(controlId)}"] .pf-field`,
+        `${scope}[data-control="${selectorEscape(controlId)}"] .pf-field`,
       );
       if (!field) return;
       const clear = field.querySelector(".pf-clear--search");
@@ -378,10 +382,11 @@ import "./phone-mask.js";
     }
 
     focusOpenControlSearch() {
-      if (!this.openControl || this.mobileFinderOpen) return;
+      if (!this.openControl) return;
       requestAnimationFrame(() => {
+        const scope = this.mobileFinderOpen ? ".pf-mobile-screen " : "";
         const input = this.root.querySelector(
-          `[data-search="${selectorEscape(this.openControl)}"]`,
+          `${scope}[data-search="${selectorEscape(this.openControl)}"]`,
         );
         if (!input) return;
         input.focus();
@@ -398,8 +403,9 @@ import "./phone-mask.js";
       const control = controlId.startsWith("vinRequest:")
         ? this.getVinRequestControls().find((item) => item.id === id)
         : this.response.controls.find((item) => item.id === id);
+      const scope = this.mobileFinderOpen ? ".pf-mobile-screen " : "";
       const dropdown = this.root.querySelector(
-        `[data-control="${selectorEscape(controlId)}"] .pf-options`,
+        `${scope}[data-control="${selectorEscape(controlId)}"] .pf-options`,
       );
       if (!control || !dropdown) return;
       const query = (this.search[controlId] || this.search[id] || "")
@@ -430,6 +436,11 @@ import "./phone-mask.js";
       const openHistory = this.historyOpen;
       this.openControl = null;
       this.historyOpen = null;
+      if (this.mobileFinderOpen && (openControl || openHistory)) {
+        const mobileScrollTop = this.getMobileScreenScrollTop();
+        this.render({ mobileScrollTop, skipAutofocus: true });
+        return;
+      }
       if (openControl) {
         const selector = `[data-control="${selectorEscape(openControl)}"]`;
         const control =
@@ -539,9 +550,7 @@ import "./phone-mask.js";
 
     mobileFinderTemplate() {
       if (!this.mobileFinderOpen) return "";
-      const expandedControl = this.mobileExpandedControl
-        ? this.response.controls.find((control) => control.id === this.mobileExpandedControl)
-        : null;
+      const expandedControl = this.getMobileExpandedControl();
 
       return `
         <div class="pf-mobile-screen" aria-labelledby="pf-mobile-title">
@@ -549,7 +558,10 @@ import "./phone-mask.js";
             this.mobileHistoryOpen
               ? this.mobileHistoryTemplate()
               : expandedControl
-              ? this.mobileExpandedTemplate(expandedControl)
+              ? this.mobileExpandedTemplate(
+                  expandedControl,
+                  this.mobileExpandedControl,
+                )
               : this.mobileMainTemplate()
           }
         </div>
@@ -748,10 +760,11 @@ import "./phone-mask.js";
       `;
     }
 
-    mobileExpandedTemplate(control) {
-      const query = (this.search[control.id] || "").trim().toLowerCase();
-      const searchValue = this.search[control.id] || "";
-      const searchId = `pf-mobile-search-${control.id}`;
+    mobileExpandedTemplate(control, controlKey = control.id) {
+      const isRequestControl = controlKey.startsWith("vinRequest:");
+      const query = (this.search[controlKey] || "").trim().toLowerCase();
+      const searchValue = this.search[controlKey] || "";
+      const searchId = `pf-mobile-search-${controlKey.replace(":", "-")}`;
       const options = (control.options || []).filter((option) =>
         option.label.toLowerCase().includes(query),
       );
@@ -769,40 +782,45 @@ import "./phone-mask.js";
             </button>
             ${
               hasSelection
-                ? `<button class="pf-mobile-expanded__reset" type="button" data-action="clear-control" data-id="${escapeAttr(control.id)}">
+                ? `<button class="pf-mobile-expanded__reset" type="button" data-action="${isRequestControl ? "clear-request-control" : "clear-control"}" data-id="${escapeAttr(control.id)}">
                     ${iconReset()}<span>Сбросить</span>
                   </button>`
                 : ""
             }
           </div>
           <div class="pf-mobile-expanded__panel">
-            <div class="pf-mobile-search ${searchValue ? "is-filled" : ""}" data-mobile-search-field="${escapeAttr(control.id)}">
+            <div class="pf-mobile-search ${searchValue ? "is-filled" : ""}" data-mobile-search-field="${escapeAttr(controlKey)}">
               <label class="visually-hidden" for="${escapeAttr(searchId)}">Поиск: ${escapeHtml(control.label)}</label>
-              <input id="${escapeAttr(searchId)}" type="search" value="${escapeAttr(searchValue)}" placeholder="Начните ввод..." data-mobile-search="${escapeAttr(control.id)}" data-autofocus autocomplete="off">
-              <button class="pf-mobile-search__clear" type="button" aria-label="Очистить ${escapeAttr(control.label)}" data-action="clear-mobile-search" data-id="${escapeAttr(control.id)}" ${searchValue ? "" : "hidden"}>
+              <input id="${escapeAttr(searchId)}" type="search" value="${escapeAttr(searchValue)}" placeholder="Начните ввод..." data-mobile-search="${escapeAttr(controlKey)}" data-autofocus autocomplete="off">
+              <button class="pf-mobile-search__clear" type="button" aria-label="Очистить ${escapeAttr(control.label)}" data-action="clear-mobile-search" data-id="${escapeAttr(controlKey)}" ${searchValue ? "" : "hidden"}>
                 ${iconCross()}
               </button>
               <span class="pf-mobile-search__submit" aria-hidden="true">${iconSearch()}</span>
             </div>
             <div class="pf-mobile-expanded__list">
               <div class="pf-mobile-expanded__hint">Популярные</div>
-              <div class="pf-mobile-expanded__options" data-mobile-expanded-options="${escapeAttr(control.id)}">
-                ${options.length ? options.map((option) => this.mobileExpandedOptionTemplate(option, control)).join("") : emptyTemplate()}
+              <div class="pf-mobile-expanded__options" data-mobile-expanded-options="${escapeAttr(controlKey)}">
+                ${options.length ? options.map((option) => this.mobileExpandedOptionTemplate(option, control, controlKey)).join("") : emptyTemplate()}
               </div>
             </div>
           </div>
-          ${control.type === "multi" && hasSelection ? this.mobileExpandedSubmitFormTemplate() : ""}
-          ${hasSelection ? this.mobileExpandedActionsTemplate(control) : ""}
+          ${!isRequestControl && control.type === "multi" && hasSelection ? this.mobileExpandedSubmitFormTemplate() : ""}
+          ${hasSelection ? this.mobileExpandedActionsTemplate(control, controlKey) : ""}
         </div>
       `;
     }
 
-    mobileExpandedOptionTemplate(option, control) {
+    mobileExpandedOptionTemplate(option, control, controlKey = control.id) {
+      const isRequestControl = controlKey.startsWith("vinRequest:");
       const selected =
         control.type === "multi"
           ? (control.value || []).some((item) => item.id === option.id)
           : control.value?.id === option.id;
-      const action = control.type === "multi" ? "toggle-option" : "select-option";
+      const action = isRequestControl
+        ? "select-request-option"
+        : control.type === "multi"
+          ? "toggle-option"
+          : "select-option";
       const idAttr = control.type === "multi" ? "" : `data-id="${escapeAttr(control.id)}"`;
 
       return `
@@ -840,8 +858,15 @@ import "./phone-mask.js";
       `;
     }
 
-    mobileExpandedActionsTemplate(control) {
-      const next = this.getNextEnabledControl(control.id);
+    mobileExpandedActionsTemplate(control, controlKey = control.id) {
+      const isRequestControl = controlKey.startsWith("vinRequest:");
+      const next = isRequestControl
+        ? control.id === "brand"
+          ? this.getVinRequestControls().find(
+              (item) => item.id === "model" && !item.disabled && item.options?.length,
+            )
+          : null
+        : this.getNextEnabledControl(control.id);
       if (control.type === "multi") {
         return `
           <div class="pf-mobile-expanded__actions pf-mobile-expanded__actions--submit">
@@ -927,7 +952,8 @@ import "./phone-mask.js";
       const disabled =
         !String(value).trim() ||
         search.submit?.disabled ||
-        (search.state || this.vinSearch.result) === "not-found";
+        (isMobile &&
+          (search.state || this.vinSearch.result) === "not-found");
 
       return `
         <form class="pf-vin-search" action="${escapeAttr(action)}" method="post">
@@ -1005,8 +1031,11 @@ import "./phone-mask.js";
       return `
         <section class="pf-vin-request" aria-label="Заявка на подбор деталей">
           <div class="pf-vin-request__intro">
-            <h2>Авто не найдено. Отправьте запрос на подбор запчастей для вашего авто</h2>
-            <p>Возможно, данные в реестре ещё не обновились</p>
+            <div class="pf-vin-request__not-found-icon" aria-hidden="true">${iconVinNotFound()}</div>
+            <div class="pf-vin-request__intro-copy">
+              <h2>Авто не найдено.<br class="pf-vin-request__mobile-break"> Отправьте запрос на подбор запчастей для вашего авто</h2>
+              <p>Возможно, данные в реестре<br class="pf-vin-request__mobile-break"> ещё не обновились</p>
+            </div>
           </div>
           <form class="pf-vin-request__form" action="${escapeAttr(action)}" method="post">
             <input type="hidden" name="mode" value="vin-request">
@@ -1016,7 +1045,7 @@ import "./phone-mask.js";
                   ${this.vinRequestHistoryToggleTemplate()}
                   ${controls.map((control) => this.requestControlTemplate(control)).join("")}
                   ${this.requestInputTemplate("vin", "VIN", false)}
-                  ${this.requestInputTemplate("plate", "Госномер", false)}
+                  ${this.requestInputTemplate("plate", "Госномер*", true)}
                 </div>
                 <div class="pf-vin-request__contact-row">
                   ${this.requestInputTemplate("name", "ФИО*", true)}
@@ -1028,7 +1057,7 @@ import "./phone-mask.js";
             </div>
             ${this.agreementTemplate("inline")}
             <button class="pf-submit pf-submit--with-icon" type="submit" ${disabled ? "disabled" : ""}>
-              ${iconCar()}
+              ${iconSent()}
               <span>${escapeHtml(request.submit?.label || "Отправить запрос")}</span>
             </button>
           </form>
@@ -1053,7 +1082,7 @@ import "./phone-mask.js";
       }
 
       return `
-        <label class="pf-request-input ${id === "parts" ? "pf-request-input--parts" : ""}">
+        <label class="pf-request-input pf-request-input--${escapeAttr(id)} ${id === "parts" ? "pf-request-input--parts" : ""}">
           <span class="visually-hidden">${escapeHtml(placeholder)}</span>
           <input
             type="${escapeAttr(type)}"
@@ -1086,10 +1115,16 @@ import "./phone-mask.js";
       const isOpen = this.openControl === key;
       const hasValue = Boolean(control.value);
       const style = `--pf-control-width:${VIN_REQUEST_WIDTHS[control.id] || "16rem"}`;
-      const label = control.value?.label || control.placeholder;
+      const basePlaceholder = control.placeholder || control.label;
+      const placeholder = ["brand", "model"].includes(control.id)
+        ? basePlaceholder.endsWith("*")
+          ? basePlaceholder
+          : `${basePlaceholder}*`
+        : basePlaceholder;
+      const label = control.value?.label || placeholder;
       const searchValue = this.search[key] || "";
       const fieldBody = isOpen
-        ? `<input class="pf-field__input" type="search" value="${escapeAttr(searchValue)}" placeholder="Начните ввод" data-search="${escapeAttr(key)}" data-autofocus autocomplete="off">`
+        ? `<input class="pf-field__input" type="search" value="${escapeAttr(searchValue)}" placeholder="${escapeAttr(placeholder)}" data-search="${escapeAttr(key)}" data-autofocus autocomplete="off">`
         : `<span class="pf-field__text">${escapeHtml(label)}</span>`;
       const clearButton =
         searchValue && isOpen
@@ -1150,7 +1185,6 @@ import "./phone-mask.js";
       return `
         <button class="pf-option ${selected ? "is-selected" : ""}" type="button" role="option" aria-selected="${selected}" data-action="select-request-option" data-id="${control.id}" data-value="${escapeAttr(option.id)}">
           <span class="pf-option__label">${escapeHtml(option.label)}</span>
-          ${selected ? `<span class="pf-option__check" aria-hidden="true">${iconCheck()}</span>` : ""}
         </button>
       `;
     }
@@ -1368,6 +1402,7 @@ import "./phone-mask.js";
       const history = this.response.history;
       if (!this.hasHistoryFeature()) return "";
       const isOpen = this.historyOpen === "vinRequest";
+      const historyCount = history.items?.length || 0;
 
       return `
         <div class="pf-vin-request__history-anchor">
@@ -1379,7 +1414,10 @@ import "./phone-mask.js";
             aria-expanded="${isOpen}"
             data-action="toggle-history"
             data-placement="vinRequest"
-          >${iconCar()}</button>
+          >
+            ${iconCar()}
+            ${historyCount ? `<span class="pf-vin-request__history-badge">${historyCount}</span>` : ""}
+          </button>
         </div>
       `;
     }
@@ -1534,6 +1572,15 @@ import "./phone-mask.js";
       const control = this.getVinRequestControls().find((item) => item.id === id);
       if (!control || control.disabled) return;
       const key = `vinRequest:${id}`;
+      if (this.mobileFinderOpen) {
+        this.mobileExpandedControl = key;
+        this.mobileHistoryOpen = false;
+        this.historyOpen = null;
+        this.openControl = null;
+        this.search[key] = "";
+        this.render();
+        return;
+      }
       const previousControl = this.openControl;
       const previousHistory = this.historyOpen;
       this.historyOpen = null;
@@ -1563,19 +1610,33 @@ import "./phone-mask.js";
       const control = this.getVinRequestControls().find((item) => item.id === id);
       const option = control?.options.find((item) => item.id === optionId);
       if (!option) return;
+      const mobileScrollTop = this.mobileFinderOpen
+        ? this.getMobileScreenScrollTop()
+        : undefined;
       this.vinRequest[id] = option;
       if (id === "brand") this.vinRequest.model = null;
       this.openControl = null;
       await this.refreshVinRequestOptions();
+      if (this.mobileFinderOpen) {
+        this.render({ mobileScrollTop });
+        return;
+      }
       this.updateVinRequestControlsView();
       this.updateVinRequestSubmitState();
     }
 
     async clearRequestControl(id) {
+      const mobileScrollTop = this.mobileFinderOpen
+        ? this.getMobileScreenScrollTop()
+        : undefined;
       this.vinRequest[id] = null;
       if (id === "brand") this.vinRequest.model = null;
       this.openControl = null;
       await this.refreshVinRequestOptions();
+      if (this.mobileFinderOpen) {
+        this.render({ mobileScrollTop });
+        return;
+      }
       this.updateVinRequestControlsView();
       this.updateVinRequestSubmitState();
     }
@@ -1682,6 +1743,12 @@ import "./phone-mask.js";
         : this.response.controls.find((item) => item.id === id);
       if (!control || this.openControl !== id) return;
       this.search[id] = "";
+      if (this.mobileFinderOpen && isRequestControl) {
+        const mobileScrollTop = this.getMobileScreenScrollTop();
+        this.render({ mobileScrollTop });
+        this.focusOpenControlSearch();
+        return;
+      }
       this.replaceNode(
         `[data-control="${selectorEscape(id)}"]`,
         isRequestControl
@@ -1705,6 +1772,13 @@ import "./phone-mask.js";
       if (!this.hasHistoryFeature()) return;
       if (this.mobileFinderOpen && placement === "tabs") {
         this.openMobileHistory();
+        return;
+      }
+      if (this.mobileFinderOpen && placement === "vinRequest") {
+        const mobileScrollTop = this.getMobileScreenScrollTop();
+        this.historyOpen = this.historyOpen === placement ? null : placement;
+        this.openControl = null;
+        this.render({ mobileScrollTop, skipAutofocus: true });
         return;
       }
       const previousControl = this.openControl;
@@ -2051,6 +2125,19 @@ import "./phone-mask.js";
     }
 
     chooseMobileNext() {
+      if (this.mobileExpandedControl?.startsWith("vinRequest:")) {
+        const model = this.getVinRequestControls().find(
+          (control) =>
+            control.id === "model" &&
+            !control.disabled &&
+            control.options?.length,
+        );
+        if (!model) return;
+        this.mobileExpandedControl = "vinRequest:model";
+        this.search[this.mobileExpandedControl] = "";
+        this.render();
+        return;
+      }
       const next = this.getNextEnabledControl(this.mobileExpandedControl);
       if (!next) return;
       this.mobileExpandedControl = next.id;
@@ -2072,7 +2159,13 @@ import "./phone-mask.js";
     }
 
     updateMobileExpandedOptions(controlId) {
-      const control = this.response.controls.find((item) => item.id === controlId);
+      const isRequestControl = controlId.startsWith("vinRequest:");
+      const id = isRequestControl
+        ? controlId.slice("vinRequest:".length)
+        : controlId;
+      const control = isRequestControl
+        ? this.getVinRequestControls().find((item) => item.id === id)
+        : this.response.controls.find((item) => item.id === id);
       const node = this.root.querySelector(
         `[data-mobile-expanded-options="${selectorEscape(controlId)}"]`,
       );
@@ -2083,9 +2176,22 @@ import "./phone-mask.js";
       );
       node.innerHTML = options.length
         ? options
-            .map((option) => this.mobileExpandedOptionTemplate(option, control))
+            .map((option) =>
+              this.mobileExpandedOptionTemplate(option, control, controlId),
+            )
             .join("")
         : emptyTemplate();
+    }
+
+    getMobileExpandedControl() {
+      if (!this.mobileExpandedControl) return null;
+      if (this.mobileExpandedControl.startsWith("vinRequest:")) {
+        const id = this.mobileExpandedControl.slice("vinRequest:".length);
+        return this.getVinRequestControls().find((control) => control.id === id);
+      }
+      return this.response.controls.find(
+        (control) => control.id === this.mobileExpandedControl,
+      );
     }
 
     updateMobileSearchState(controlId) {
@@ -2365,6 +2471,12 @@ import "./phone-mask.js";
     return `<svg class="pf-vin-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M10.5859 9.91895C10.7627 9.91893 10.9326 9.9893 11.0576 10.1143L12 11.0576L12.9424 10.1143C13.068 9.99296 13.2365 9.92634 13.4111 9.92773C13.5859 9.92925 13.7533 9.99944 13.877 10.123C14.0006 10.2467 14.0707 10.4141 14.0723 10.5889C14.0737 10.7635 14.007 10.932 13.8857 11.0576L12.9424 12L13.8857 12.9424C13.9494 13.0039 14.0002 13.0779 14.0352 13.1592C14.07 13.2403 14.088 13.3277 14.0889 13.416C14.0896 13.5045 14.0726 13.5929 14.0391 13.6748C14.0055 13.7567 13.9561 13.831 13.8936 13.8936C13.831 13.9561 13.7567 14.0055 13.6748 14.0391C13.5929 14.0726 13.5045 14.0896 13.416 14.0889C13.3277 14.088 13.2403 14.07 13.1592 14.0352C13.0779 14.0002 13.0039 13.9494 12.9424 13.8857L12 12.9424L11.0576 13.8857C10.9961 13.9494 10.9221 14.0002 10.8408 14.0352C10.7597 14.07 10.6723 14.088 10.584 14.0889C10.4955 14.0896 10.4071 14.0726 10.3252 14.0391C10.2433 14.0055 10.169 13.9561 10.1064 13.8936C10.0439 13.831 9.99446 13.7567 9.96094 13.6748C9.92742 13.5929 9.91036 13.5045 9.91113 13.416C9.91195 13.3277 9.93002 13.2403 9.96484 13.1592C9.99977 13.0779 10.0506 13.0039 10.1143 12.9424L11.0576 12L10.1143 11.0576C9.98921 10.9326 9.91902 10.7627 9.91895 10.5859C9.91888 10.4091 9.98925 10.2394 10.1143 10.1143C10.2393 9.98917 10.4091 9.91901 10.5859 9.91895ZM10.9463 2C11.4247 2.00006 11.8671 2.25649 12.1045 2.67188L14.5791 7.00293L14.6094 7.06348C14.7465 7.37223 14.6306 7.74077 14.3311 7.91211C14.0314 8.08335 13.6545 7.99655 13.458 7.72168L13.4209 7.66406L10.9463 3.33301H5.05371L2.66699 7.51074V10.5088L3.41211 12H4.66699V11.333C4.66717 10.9651 4.96508 10.6672 5.33301 10.667H8C8.36808 10.667 8.66682 10.965 8.66699 11.333C8.66699 11.7012 8.36819 12 8 12H6C6 12.7363 5.40322 13.3328 4.66699 13.333H3.41211C2.90724 13.333 2.44566 13.0481 2.21973 12.5967L1.47363 11.1055C1.38115 10.9204 1.33301 10.7157 1.33301 10.5088V7.51074C1.33301 7.27872 1.39368 7.05009 1.50879 6.84863L3.89551 2.67188C4.13287 2.25649 4.5753 2.00006 5.05371 2H10.9463ZM10.8623 6.8623C11.1227 6.60196 11.5443 6.60196 11.8047 6.8623C12.0649 7.12267 12.065 7.54439 11.8047 7.80469C11.5639 8.04546 11.1196 8.2486 10.5498 8.39551C9.94637 8.551 9.11099 8.66699 8 8.66699C6.88901 8.66699 6.05363 8.551 5.4502 8.39551C4.9517 8.26699 4.54901 8.09567 4.29492 7.89355L4.19531 7.80469L4.14941 7.75391C3.93603 7.49212 3.95144 7.10634 4.19531 6.8623C4.43933 6.61829 4.82507 6.60301 5.08691 6.81641L5.1377 6.8623L5.15918 6.87402C5.21895 6.90893 5.40236 7.00634 5.7832 7.10449C6.25753 7.22672 6.97794 7.33301 8 7.33301C9.02206 7.33301 9.74247 7.22672 10.2168 7.10449C10.7246 6.97363 10.8809 6.8437 10.8623 6.8623Z"/></svg>`;
   }
 
+  function iconVinNotFound() {
+    return `<svg class="pf-vin-not-found-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M15.8789 14.8779C16.144 14.8779 16.3984 14.9835 16.5859 15.1709L18 16.5859L19.4141 15.1719C19.6026 14.9898 19.8551 14.8894 20.1172 14.8916C20.3794 14.8939 20.63 14.9992 20.8154 15.1846C21.0008 15.37 21.1061 15.6206 21.1084 15.8828C21.1106 16.1449 21.0102 16.3974 20.8281 16.5859L19.4141 18L20.8281 19.4141C20.9235 19.5062 20.9994 19.6165 21.0518 19.7383C21.1042 19.8603 21.1317 19.9922 21.1328 20.125C21.1339 20.2576 21.1088 20.389 21.0586 20.5117C21.0083 20.6346 20.9347 20.7469 20.8408 20.8408C20.7469 20.9347 20.6346 21.0083 20.5117 21.0586C20.389 21.1088 20.2576 21.1339 20.125 21.1328C19.9922 21.1317 19.8603 21.1042 19.7383 21.0518C19.6165 20.9994 19.5062 20.9235 19.4141 20.8281L18 19.4141L16.5859 20.8281C16.4938 20.9235 16.3835 20.9994 16.2617 21.0518C16.1397 21.1042 16.0078 21.1317 15.875 21.1328C15.7424 21.1339 15.611 21.1088 15.4883 21.0586C15.3654 21.0083 15.2531 20.9347 15.1592 20.8408C15.0653 20.7469 14.9917 20.6346 14.9414 20.5117C14.8912 20.389 14.8661 20.2576 14.8672 20.125C14.8683 19.9922 14.8958 19.8603 14.9482 19.7383C15.0006 19.6165 15.0765 19.5062 15.1719 19.4141L16.5859 18L15.1719 16.5859C14.9843 16.3985 14.879 16.1441 14.8789 15.8789C14.8788 15.6136 14.9844 15.3595 15.1719 15.1719C15.3594 14.9842 15.6136 14.878 15.8789 14.8779ZM16.4199 3C17.1375 3.00009 17.8002 3.38473 18.1562 4.00781L21.8682 10.5039L21.9141 10.5947C22.1202 11.0581 21.9458 11.6112 21.4961 11.8682C21.0464 12.1251 20.4811 11.9948 20.1865 11.582L20.1318 11.4961L16.4199 5H7.58008L4 11.2656V15.7637L5.11816 18H7V17C7 16.4477 7.44772 16 8 16H12C12.5523 16 13 16.4477 13 17C13 17.5523 12.5523 18 12 18H9C9 19.1046 8.10457 20 7 20H5.11816C4.36064 20 3.6679 19.5721 3.3291 18.8945L2.21094 16.6582C2.07215 16.3805 2 16.0741 2 15.7637V11.2656C2 10.9176 2.09101 10.5756 2.26367 10.2734L5.84375 4.00781C6.1998 3.38473 6.86246 3.00009 7.58008 3H16.4199ZM16.293 10.293C16.6835 9.90244 17.3165 9.90244 17.707 10.293C18.0976 10.6835 18.0976 11.3165 17.707 11.707C17.3458 12.0683 16.6792 12.3734 15.8242 12.5938C14.9191 12.827 13.6665 13 12 13C10.3335 13 9.08093 12.827 8.17578 12.5938C7.42761 12.4009 6.8236 12.1432 6.44238 11.8398L6.29297 11.707L6.22461 11.6309C5.90426 11.2381 5.92685 10.6591 6.29297 10.293C6.65908 9.92685 7.23809 9.90426 7.63086 10.2246L7.70703 10.293L7.73926 10.3105C7.82891 10.3629 8.10354 10.509 8.6748 10.6562C9.38629 10.8396 10.4668 11 12 11C13.5332 11 14.6137 10.8396 15.3252 10.6562C16.0868 10.46 16.3209 10.2651 16.293 10.293Z" />
+    </svg>`;
+  }
+
   function iconDisclaimer() {
     return `<svg class="pf-disclaimer-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
       <path d="M8 12C8.36819 12 8.66699 12.2988 8.66699 12.667C8.66682 13.035 8.36808 13.333 8 13.333C7.63192 13.333 7.33318 13.035 7.33301 12.667C7.33301 12.2988 7.63181 12 8 12ZM8 2C8.36819 2 8.66699 2.2988 8.66699 2.66699V10C8.66699 10.3682 8.36819 10.667 8 10.667C7.63181 10.667 7.33301 10.3682 7.33301 10V2.66699C7.33301 2.2988 7.63181 2 8 2Z" />
@@ -2407,6 +2519,7 @@ import "./phone-mask.js";
       submitEndpoint: endpoints.submit,
       ...initialState,
       initialVinRequest: config.initialVinRequest,
+      initialMobileOpen: config.initialMobileOpen,
     });
     const publicApi = {
       openMobileFinder: () => partsFinder.openMobileFinder(),
@@ -2422,6 +2535,12 @@ import "./phone-mask.js";
     };
 
     document.addEventListener("parts-finder:open-mobile", (event) => {
+      event.preventDefault();
+      partsFinder.openMobileFinder();
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!event.target.closest("[data-open-parts-finder]")) return;
       event.preventDefault();
       partsFinder.openMobileFinder();
     });

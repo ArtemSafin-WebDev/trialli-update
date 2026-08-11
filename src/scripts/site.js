@@ -35,6 +35,7 @@ if (root) {
   const requestModal = root.querySelector("[data-request-modal]");
   const siteHeader = root.querySelector("[data-tri-home-header]");
   const bottomNav = root.querySelector(".tri-home-bottom-nav");
+  const siteFooter = root.querySelector(".tri-home-footer");
   const stickyHeaderSlot = root.querySelector("[data-tri-home-header-slot]");
   const stickyHeader = root.querySelector("[data-tri-home-header-sticky]");
   const headerMenu = root.querySelector("[data-header-menu]");
@@ -48,6 +49,7 @@ if (root) {
   const stickyHeaderMedia = window.matchMedia("(min-width: 1024px)");
   const bottomNavHideThreshold = 12;
   const bottomNavShowThreshold = 6;
+  const bottomNavPageEndThreshold = 2;
   let stickyHeaderStart = 0;
   let stickyHeaderFrame = 0;
   let bottomNavLastScrollY = Math.max(window.scrollY, 0);
@@ -62,8 +64,21 @@ if (root) {
       0,
     );
     const currentScrollY = Math.min(Math.max(window.scrollY, 0), maxScrollY);
+    const pageEndReached =
+      currentScrollY >= maxScrollY - bottomNavPageEndThreshold;
+    const footerRect = siteFooter?.getBoundingClientRect();
+    const footerInView = Boolean(
+      footerRect &&
+        footerRect.top <= window.innerHeight &&
+        footerRect.bottom > 0,
+    );
 
-    if (!mobileHeaderMedia.matches || currentScrollY === 0) {
+    if (
+      !mobileHeaderMedia.matches ||
+      currentScrollY === 0 ||
+      pageEndReached ||
+      footerInView
+    ) {
       bottomNav.classList.remove("is-scroll-hidden");
       bottomNavLastScrollY = currentScrollY;
       bottomNavScrollDistance = 0;

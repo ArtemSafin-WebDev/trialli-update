@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>Автомобиль не найден — TRIALLI</title>
+    <!-- @include /src/partials/site-head.html -->
+  </head>
+  <body id="top" class="tri-home-body">
+    <div class="tri-home tri-auto-not-found" data-tri-home data-site-shell>
+      <a class="tri-home__skip" href="#parts-finder">Перейти к подбору деталей</a>
+
+      <!-- @include /src/partials/site-header.html -->
+
+      <main>
+        <!-- @include /src/partials/mobile-parts-finder-teaser.html -->
+        <script>
+          window.PartsFinderConfig = {
+            initialMode: "vin",
+            initialVin: "Y6DTF69Y080144158",
+            initialVinResult: "not-found",
+            initialVinRequest: {
+              vin: "Y6DTF69Y080144158",
+              plate: "",
+            },
+          };
+        </script>
+        <!-- @include /src/partials/parts-finder.html -->
+      </main>
+
+      <a id="back-to-top" href="#top" aria-label="Наверх"></a>
+    </div>
+
+    <!-- @include /src/partials/site-scripts.html -->
+  </body>
+</html>

@@ -1187,6 +1187,17 @@ button.pf-vin-request__car-icon.is-open {
   gap: 0.4rem;
 }
 
+.pf-vin-request__intro-copy {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.pf-vin-request__not-found-icon,
+.pf-vin-request__history-badge,
+.pf-vin-request__mobile-break {
+  display: none;
+}
+
 .pf-vin-request__intro h2 {
   margin: 0;
   color: #303236;
@@ -3251,14 +3262,16 @@ button.pf-vin-request__car-icon.is-open {
 
   .pf-vin-request__intro h2 {
     color: #fff;
-    font-size: 14px;
-    line-height: 16px;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.2;
   }
 
   .pf-vin-request__intro p {
-    color: #52676d;
-    font-size: 12px;
-    line-height: 14px;
+    color: rgb(255 255 255 / 30%);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
   }
 
   .pf-vin-request__form {
@@ -3322,7 +3335,32 @@ button.pf-vin-request__car-icon.is-open {
   }
 
   .pf-agreement {
-    color: #52676d;
+    color: rgb(255 255 255 / 30%);
+    font-weight: 500;
+    line-height: 14px;
+  }
+
+  .pf-vin-request__form > .pf-agreement--inline {
+    min-height: 48px;
+    align-self: center;
+    align-items: center;
+  }
+
+  .tri-home .pf-vin-request .pf-agreement .pf-checkbox::before {
+    inset: 1px;
+    border: 1px solid rgb(255 255 255 / 30%) !important;
+    border-radius: 4px;
+    background: transparent;
+  }
+
+  .tri-home .pf-vin-request .pf-agreement input:checked + .pf-checkbox::before {
+    border-color: #bed600 !important;
+    background: #bed600;
+  }
+
+  .tri-home .pf-vin-request .pf-agreement input:focus-visible + .pf-checkbox::before {
+    border-color: #bed600 !important;
+    box-shadow: 0 0 0 2px rgb(190 214 0 / 24%);
   }
 
   .pf-agreement a {
@@ -3337,6 +3375,11 @@ button.pf-vin-request__car-icon.is-open {
 
   .pf-history--vin-request {
     top: var(--pf-history-top, calc(100% + 4px));
+  }
+
+  .tri-auto-not-found .parts-finder__background-layer::before,
+  .tri-auto-not-found .parts-finder__background-layer::after {
+    height: 100%;
   }
 
   .pf-vin-found__disclaimer {
@@ -3691,8 +3734,10 @@ button.pf-vin-request__car-icon.is-open {
   }
 
   .pf-mobile-vin .pf-vin-panel {
+    display: grid;
+    gap: 16px;
     overflow: visible;
-    background: rgb(18 42 48 / 90%);
+    background: transparent;
   }
 
   .pf-mobile-vin .pf-vin-search {
@@ -3784,6 +3829,212 @@ button.pf-vin-request__car-icon.is-open {
   .pf-mobile-vin .pf-submit:disabled .pf-cta-search-icon {
     opacity: 0.3;
     filter: brightness(0) invert(1);
+  }
+
+  .pf-mobile-vin .pf-vin-request {
+    display: grid;
+    gap: 24px;
+    border-radius: 24px;
+    padding: 16px;
+    background: rgb(18 42 48 / 90%);
+  }
+
+  .pf-mobile-vin .pf-vin-request__intro {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .pf-mobile-vin .pf-vin-request__not-found-icon {
+    display: flex;
+    min-height: 88px;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    border-top: 1px solid #ff4433 !important;
+    border-radius: 16px;
+    background: rgb(255 68 51 / 10%);
+    color: #ff4433;
+  }
+
+  .pf-mobile-vin .pf-vin-not-found-icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+  }
+
+  .pf-mobile-vin .pf-vin-request__intro-copy {
+    align-content: center;
+    gap: 4px;
+  }
+
+  .pf-mobile-vin .pf-vin-request__mobile-break {
+    display: block;
+  }
+
+  .pf-mobile-vin .pf-vin-request__intro h2 {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.15;
+  }
+
+  .pf-mobile-vin .pf-vin-request__intro p {
+    color: #a1b0b2;
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  .pf-mobile-vin .pf-vin-request__form,
+  .pf-mobile-vin .pf-vin-request__fields,
+  .pf-mobile-vin .pf-vin-request__main-fields,
+  .pf-mobile-vin .pf-vin-request__contact-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .pf-mobile-vin .pf-vin-request__form {
+    gap: 24px;
+  }
+
+  .pf-mobile-vin .pf-vin-request__fields {
+    grid-column: auto;
+  }
+
+  .pf-mobile-vin .pf-vin-request__vehicle-row,
+  .pf-mobile-vin .pf-vin-request__vehicle-row.has-history {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 16px 8px;
+  }
+
+  .pf-mobile-vin .pf-vin-request__vehicle-row.no-history {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pf-mobile-vin .pf-vin-request__history-anchor {
+    position: relative;
+    display: flex;
+    grid-column: 1;
+    grid-row: 1;
+    min-width: 0;
+    order: 0;
+  }
+
+  .pf-mobile-vin .pf-vin-request__car-icon {
+    position: relative;
+    display: inline-flex;
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    border-radius: 50%;
+    background: #203840;
+    color: #fff;
+  }
+
+  .pf-mobile-vin .pf-vin-request__history-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    display: grid;
+    min-width: 20px;
+    height: 20px;
+    place-items: center;
+    border-radius: 15px;
+    padding: 0 5px;
+    background: #bed600;
+    color: #222626;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  .pf-mobile-vin [data-control="vinRequest:brand"] {
+    grid-column: 2;
+    grid-row: 1;
+    order: 0;
+  }
+
+  .pf-mobile-vin [data-control="vinRequest:model"] {
+    grid-column: 1 / -1;
+    order: 1;
+  }
+
+  .pf-mobile-vin .pf-request-input--plate {
+    grid-column: 1 / -1;
+    order: 2;
+  }
+
+  .pf-mobile-vin .pf-request-input--vin {
+    grid-column: 1 / -1;
+    order: 3;
+  }
+
+  .pf-mobile-vin .pf-request-input input,
+  .pf-mobile-vin .pf-control--request .pf-field {
+    width: 100%;
+    height: 48px;
+    border: 1px solid transparent !important;
+    border-radius: 24px;
+    padding: 16px 20px;
+    background: #203840;
+    color: #8a9998;
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  .pf-mobile-vin .pf-control--request .pf-field {
+    padding-right: 12px;
+  }
+
+  .pf-mobile-vin .pf-control--request .pf-field.has-value {
+    color: #fff;
+  }
+
+  .pf-mobile-vin .pf-control--request .pf-field[aria-disabled="true"] {
+    background: #203840;
+    color: #8a9998;
+  }
+
+  .pf-mobile-vin .pf-control--request .pf-field[aria-disabled="true"] .pf-arrow {
+    color: #8a9998;
+  }
+
+  .pf-mobile-vin .pf-request-input textarea {
+    width: 100%;
+    height: 160px;
+    border: 1px solid transparent !important;
+    border-radius: 24px;
+    padding: 16px 20px;
+    background: #203840;
+    color: #fff;
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  .pf-mobile-vin .pf-agreement--inline {
+    grid-column: auto;
+    align-items: flex-start;
+    color: #a1b0b2;
+    font-size: 12px;
+    line-height: 1.2;
+  }
+
+  .pf-mobile-vin .pf-agreement a {
+    color: #bed600;
+  }
+
+  .pf-mobile-vin .pf-vin-request__form > .pf-submit {
+    width: 100%;
+  }
+
+  .pf-mobile-vin .pf-vin-request__form > .pf-submit svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
   }
 
   .pf-mobile-form {
@@ -5060,6 +5311,36 @@ html.pf-modal-open {
 .tri-home .pf-options,
 .pf-modal .pf-options {
   padding: 0;
+}
+
+.tri-home .pf-control--request .pf-dropdown,
+.pf-modal .pf-control--modal .pf-dropdown {
+  top: calc(100% + 8px);
+  max-height: 360px;
+  padding: 16px 0;
+  border: 0 !important;
+  border-right: 8px solid #203840 !important;
+  border-radius: 20px;
+  background: #203840;
+  box-shadow: 0 8px 20px rgb(22 45 53 / 25%);
+}
+
+.tri-home .pf-control--request .pf-dropdown::-webkit-scrollbar,
+.pf-modal .pf-control--modal .pf-dropdown::-webkit-scrollbar {
+  width: 2px;
+}
+
+.tri-home .pf-control--request .pf-dropdown::-webkit-scrollbar-track,
+.pf-modal .pf-control--modal .pf-dropdown::-webkit-scrollbar-track {
+  margin-block: 16px;
+  border-radius: 10px;
+  background: rgb(255 255 255 / 10%);
+}
+
+.tri-home .pf-control--request .pf-dropdown::-webkit-scrollbar-thumb,
+.pf-modal .pf-control--modal .pf-dropdown::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgb(255 255 255 / 30%);
 }
 
 .tri-home .pf-option,

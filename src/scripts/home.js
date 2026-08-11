@@ -232,13 +232,6 @@ if (root) {
     const target = event.target.closest("button, a");
     if (!target) return;
 
-    if (target.matches("[data-open-parts-finder]")) {
-      document.dispatchEvent(
-        new CustomEvent("parts-finder:open-mobile", { bubbles: true }),
-      );
-      return;
-    }
-
     const prev = target.dataset.sliderPrev;
     const next = target.dataset.sliderNext;
     const sliderName = prev || next;
