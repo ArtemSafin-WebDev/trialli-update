@@ -45,7 +45,7 @@ npm run sync:trialli
 - `src/scripts/home.js` — только слайдеры и карточки главной;
 - `src/styles/catalog-menu.css` / `src/scripts/catalog-menu.js` — четырёхуровневое
   меню каталога;
-- `src/styles/page.css` — стили новой верстки;
+- `src/styles/example.css` — временные стили только для `example.html`, не входят в стили остальных страниц;
 - `src/scripts/page.js` — скрипты новой верстки;
 - все HTML-страницы лежат в корне рядом с `index.html`; директория `pages/` не
   используется.
