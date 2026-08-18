@@ -352,7 +352,14 @@ function template() {
         <div class="tri-catalog-menu__preview" data-catalog-preview>
           <div class="tri-catalog-menu__glow" aria-hidden="true"></div>
           <div class="tri-catalog-menu__loader" data-catalog-loader>
-            <span class="tri-catalog-menu__spinner" aria-hidden="true"></span>
+            <img
+              class="tri-catalog-menu__spinner"
+              src="${assetRoot}/loading.svg"
+              width="64"
+              height="64"
+              alt=""
+              aria-hidden="true"
+            />
             <span>Загружается превью товара</span>
           </div>
           <model-viewer
@@ -370,7 +377,9 @@ function template() {
             loading="eager"
             reveal="auto"
             touch-action="none"
-          ></model-viewer>
+          >
+            <span slot="progress-bar" hidden aria-hidden="true"></span>
+          </model-viewer>
         </div>
       </div>
     </section>
@@ -762,11 +771,14 @@ catalogRoots.forEach((root, rootIndex) => {
 
     preview.classList.toggle("has-model", Boolean(config));
     if (!config) {
+      model.classList.remove("is-loaded");
+      model.hidden = true;
       model.removeAttribute("src");
       loader.hidden = true;
       return;
     }
 
+    model.hidden = false;
     loader.hidden = false;
     model.classList.remove("is-loaded");
     model.setAttribute("camera-orbit", config.orbit ?? "0deg 75deg auto");
@@ -800,7 +812,7 @@ catalogRoots.forEach((root, rootIndex) => {
   };
 
   model.addEventListener("progress", (event) => {
-    if (event.detail.totalProgress >= 1 && model.loaded) {
+    if (preview.classList.contains("has-model") && event.detail.totalProgress >= 1 && model.loaded) {
       loader.hidden = true;
       model.classList.add("is-loaded");
     }

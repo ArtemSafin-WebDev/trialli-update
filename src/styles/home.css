@@ -3061,8 +3061,6 @@
   }
 
   .tri-home-shop {
-    width: 358px;
-    max-width: calc(100% - 32px);
     aspect-ratio: auto;
     border-radius: 24px;
   }

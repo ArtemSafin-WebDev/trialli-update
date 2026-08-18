@@ -5359,6 +5359,10 @@ html.pf-modal-open {
   box-shadow: 0 8px 20px rgb(22 45 53 / 25%);
 }
 
+.pf-modal .pf-control--modal .pf-dropdown {
+  top: calc(100% + 4px);
+}
+
 .tri-home .pf-control--request .pf-dropdown::-webkit-scrollbar,
 .pf-modal .pf-control--modal .pf-dropdown::-webkit-scrollbar {
   width: 2px;

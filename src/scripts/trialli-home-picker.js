@@ -2135,7 +2135,19 @@ import {
       }
     }
 
-    openMobileFinder() {
+    openMobileFinder(options = {}) {
+      if (options.clearVinSearch) {
+        this.vinSearch = { value: "", result: "" };
+        if (this.response?.vinSearch) {
+          this.response.vinSearch = {
+            ...this.response.vinSearch,
+            value: "",
+            state: "",
+            vehicle: null,
+            foundVehicle: null,
+          };
+        }
+      }
       this.mobileFinderOpen = true;
       this.mobileExternalControl = false;
       this.mobileExpandedControl = null;
@@ -2646,7 +2658,7 @@ import {
       initialMobileOpen: config.initialMobileOpen,
     });
     const publicApi = {
-      openMobileFinder: () => partsFinder.openMobileFinder(),
+      openMobileFinder: (options) => partsFinder.openMobileFinder(options),
       openMobileControl: (id) => partsFinder.openMobileControl(id),
       openVinRequestModal: () => partsFinder.openVinRequestModal(),
       getSelection: () => partsFinder.getSelection(),
@@ -2668,9 +2680,12 @@ import {
     });
 
     document.addEventListener("click", (event) => {
-      if (!event.target.closest("[data-open-parts-finder]")) return;
+      const trigger = event.target.closest("[data-open-parts-finder]");
+      if (!trigger) return;
       event.preventDefault();
-      partsFinder.openMobileFinder();
+      partsFinder.openMobileFinder({
+        clearVinSearch: trigger.matches("[data-open-picker]"),
+      });
     });
 
     document.addEventListener("parts-finder:open-vin-request-modal", (event) => {
