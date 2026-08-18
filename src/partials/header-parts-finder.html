@@ -1,0 +1,26 @@
+<!-- Опциональное содержимое шапки: подключается только на страницах с подборщиком в header. -->
+<div hidden data-header-finder-source>
+  <button
+    class="tri-home-header__finder-toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="tri-header-parts-finder-panel"
+    data-header-finder-toggle
+  >
+    <span class="tri-home-icon tri-home-icon--finder" aria-hidden="true"></span>
+    <span class="tri-home-icon tri-home-icon--finder-close" aria-hidden="true"></span>
+    <span class="tri-home-header__finder-label tri-home-header__finder-label--closed">Подобрать детали</span>
+    <span class="tri-home-header__finder-label tri-home-header__finder-label--open">Закрыть подбор</span>
+  </button>
+  <div
+    class="tri-home-header__finder-dropdown"
+    id="tri-header-parts-finder-panel"
+    aria-hidden="true"
+    inert
+    data-header-finder-dropdown
+  >
+    <div class="tri-home-header__finder-dropdown-inner">
+      <div class="parts-finder-shell" data-parts-finder data-parts-finder-context="header"></div>
+    </div>
+  </div>
+</div>

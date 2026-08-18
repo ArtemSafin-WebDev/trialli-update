@@ -45,6 +45,25 @@ if (root) {
   const siteFooter = root.querySelector(".tri-home-footer");
   const stickyHeaderSlot = root.querySelector("[data-tri-home-header-slot]");
   const stickyHeader = root.querySelector("[data-tri-home-header-sticky]");
+  const headerFinderSource = root.querySelector("[data-header-finder-source]");
+  const headerMain = root.querySelector(".tri-home-header__main");
+  const headerCart = root.querySelector(".tri-home-header__cart");
+
+  if (headerFinderSource && headerMain && stickyHeader) {
+    const finderToggle = headerFinderSource.querySelector(
+      "[data-header-finder-toggle]",
+    );
+    const finderDropdown = headerFinderSource.querySelector(
+      "[data-header-finder-dropdown]",
+    );
+
+    if (finderToggle && finderDropdown) {
+      headerMain.insertBefore(finderToggle, headerCart);
+      stickyHeader.append(finderDropdown);
+      headerFinderSource.remove();
+    }
+  }
+
   const headerMenu = root.querySelector("[data-header-menu]");
   const headerMenuToggle = root.querySelector("[data-header-menu-toggle]");
   const headerMenuBackdrop = root.querySelector(

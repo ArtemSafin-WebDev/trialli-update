@@ -33,6 +33,8 @@ npm run sync:trialli
 - `public/assets/trialli-home/` — изображения и SVG новой главной из Figma;
 - `public/assets/trialli-catalog/` — изображения и SVG каталога и выдачи;
 - `src/partials/` — единственная разметка общих компонентов сайта;
+- `src/partials/header-parts-finder.html` — опциональная кнопка и dropdown-подборщик
+  для шапки страницы-примера;
 - `src/styles/site-components.css` — единая точка входа общих стилей;
 - `src/styles/breadcrumbs.css` — общий компонент хлебных крошек;
 - `src/scripts/site.js` — общая логика шапки, меню, модальных окон и подключение
@@ -78,6 +80,8 @@ Vite раскрывает директивы `@include` на этапе dev-се
 <body class="tri-home-body">
   <div class="tri-home" data-tri-home data-site-shell>
     <!-- @include /src/partials/site-header.html -->
+    <!-- Необязательно: подборщик в шапке, сейчас используется только в example.html. -->
+    <!-- @include /src/partials/header-parts-finder.html -->
     <main>
       <!-- Необязательно: полноразмерный подборщик внутри страницы. -->
       <!-- @include /src/partials/parts-finder.html -->
@@ -99,8 +103,9 @@ Vite раскрывает директивы `@include` на этапе dev-се
 
 ### Подборщик в шапке
 
-`src/partials/site-header.html` содержит desktop-кнопку «Подобрать детали» и
-выпадающий экземпляр того же подборщика, который используется на главной.
+Обычный `src/partials/site-header.html` не содержит подборщика. Только
+`example.html` дополнительно подключает `src/partials/header-parts-finder.html`
+с desktop-кнопкой «Подобрать детали» и выпадающим экземпляром подборщика.
 Dropdown доступен при ширине от `1024px`, работает и в закреплённой шапке,
 закрывается повторным кликом, кликом вне панели или клавишей `Escape`. Мобильный
 сценарий остаётся отдельным и использует существующие точки входа нижней
