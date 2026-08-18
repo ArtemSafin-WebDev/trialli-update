@@ -449,6 +449,14 @@
   border-right-color: transparent !important;
 }
 
+.tri-home-header__finder-toggle {
+  display: none;
+}
+
+.tri-home-header__finder-dropdown {
+  display: none;
+}
+
 .tri-home-header__cart,
 .tri-home-header__burger {
   position: relative;
@@ -574,6 +582,129 @@
     transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
+  .tri-home-header__finder-toggle {
+    display: inline-flex;
+    width: 176px;
+    height: 40px;
+    flex: 0 0 176px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 0;
+    padding: 12px 16px;
+    border: 0;
+    border-radius: 40px;
+    background: var(--tri-accent);
+    color: var(--tri-bg);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    white-space: nowrap;
+    transition:
+      background-color 160ms ease,
+      box-shadow 160ms ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .tri-home-header__finder-toggle:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .tri-home-header__finder-toggle:hover {
+      background: #d6e36b;
+    }
+  }
+
+  .tri-home-header__finder-toggle:active {
+    background: rgb(190 214 0 / 70%);
+  }
+
+  .tri-home-header__finder-toggle.is-open {
+    box-shadow: 0 0 0 1px rgb(13 32 38 / 12%);
+  }
+
+  .tri-home-header__finder-label--open,
+  .tri-home-header__finder-toggle .tri-home-icon--finder-close {
+    display: none;
+  }
+
+  .tri-home-header__finder-toggle.is-open .tri-home-header__finder-label--closed,
+  .tri-home-header__finder-toggle.is-open .tri-home-icon--finder {
+    display: none;
+  }
+
+  .tri-home-header__finder-toggle.is-open .tri-home-header__finder-label--open,
+  .tri-home-header__finder-toggle.is-open .tri-home-icon--finder-close {
+    display: inline-block;
+  }
+
+  .tri-home-icon--finder,
+  .tri-home-icon--finder-close {
+    background: currentColor;
+    color: var(--tri-bg);
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    -webkit-mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+  }
+
+  .tri-home-icon--finder {
+    mask-image: url("/assets/trialli-home/header-parts-finder.svg");
+    -webkit-mask-image: url("/assets/trialli-home/header-parts-finder.svg");
+  }
+
+  .tri-home-icon--finder-close {
+    mask-image: url("/assets/trialli-home/header-close.svg");
+    -webkit-mask-image: url("/assets/trialli-home/header-close.svg");
+  }
+
+  .tri-home-header__finder-dropdown {
+    --tri-header-finder-shift: 0px;
+
+    position: absolute;
+    z-index: 4;
+    top: 85px;
+    left: 0;
+    display: block;
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(calc(var(--tri-header-finder-shift) - 8px));
+    transition:
+      opacity 180ms ease,
+      transform 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 180ms;
+    visibility: hidden;
+  }
+
+  .tri-home-header__finder-dropdown.is-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(var(--tri-header-finder-shift));
+    visibility: visible;
+  }
+
+  .tri-home-header__finder-dropdown-inner {
+    width: min(var(--tri-container), calc(100% - 48px));
+    margin-inline: auto;
+    border-radius: 40px;
+    box-shadow: 0 28px 72px rgb(3 15 19 / 34%);
+  }
+
+  .tri-home-header__finder-dropdown .parts-finder-shell {
+    min-height: 274px;
+  }
+
+  .tri-home-header.is-stuck .tri-home-header__finder-dropdown {
+    --tri-header-finder-shift: 12px;
+  }
+
   .tri-home-header.is-stuck .tri-home-header__sticky::before {
     opacity: 1;
   }
@@ -588,7 +719,8 @@
 
   @media (prefers-reduced-motion: reduce) {
     .tri-home-header__sticky::before,
-    .tri-home-header__main {
+    .tri-home-header__main,
+    .tri-home-header__finder-dropdown {
       transition: none;
     }
   }

@@ -1,3 +1,4 @@
+import "./components/parts-finder.js";
 import {
   formStatusModal,
   setFormPending,
@@ -51,6 +52,10 @@ if (root) {
   );
   const headerSearchInput = root.querySelector(".tri-home-header__search input");
   const headerSearchClear = root.querySelector("[data-header-search-clear]");
+  const headerFinderToggle = root.querySelector("[data-header-finder-toggle]");
+  const headerFinderDropdown = root.querySelector(
+    "[data-header-finder-dropdown]",
+  );
   const mobileHeaderMedia = window.matchMedia("(max-width: 767px)");
   const stickyHeaderMedia = window.matchMedia("(min-width: 1024px)");
   const bottomNavHideThreshold = 12;
@@ -172,6 +177,30 @@ if (root) {
     updatePageScrollLock();
   };
 
+  const setHeaderFinder = (open) => {
+    if (!headerFinderToggle || !headerFinderDropdown) return;
+    const shouldOpen = Boolean(open && stickyHeaderMedia.matches);
+    headerFinderToggle.classList.toggle("is-open", shouldOpen);
+    headerFinderDropdown.classList.toggle("is-open", shouldOpen);
+    headerFinderToggle.setAttribute("aria-expanded", String(shouldOpen));
+    headerFinderToggle.setAttribute(
+      "aria-label",
+      shouldOpen ? "Закрыть подбор деталей" : "Открыть подбор деталей",
+    );
+    headerFinderDropdown.setAttribute("aria-hidden", String(!shouldOpen));
+    headerFinderDropdown.inert = !shouldOpen;
+    root.classList.toggle("is-header-finder-open", shouldOpen);
+
+    if (shouldOpen) {
+      setHeaderMenu(false);
+      requestAnimationFrame(() =>
+        headerFinderDropdown.querySelector(".pf-tab")?.focus(),
+      );
+    } else if (headerFinderDropdown.contains(document.activeElement)) {
+      headerFinderToggle.focus();
+    }
+  };
+
   const updateHeaderSearchClear = () => {
     if (!headerSearchInput || !headerSearchClear) return;
     headerSearchClear.hidden = !headerSearchInput.value;
@@ -185,8 +214,20 @@ if (root) {
     if (!target) return;
 
     if (target.matches("[data-header-menu-toggle]")) {
+      setHeaderFinder(false);
       setHeaderMenu(!headerMenu?.classList.contains("is-open"));
       return;
+    }
+
+    if (target.matches("[data-header-finder-toggle]")) {
+      setHeaderFinder(
+        !headerFinderDropdown?.classList.contains("is-open"),
+      );
+      return;
+    }
+
+    if (target.matches("[data-catalog-toggle]")) {
+      setHeaderFinder(false);
     }
 
     if (target.matches("[data-header-menu-backdrop]")) {
@@ -254,6 +295,18 @@ if (root) {
     if (event.key !== "Escape") return;
     setModal(requestModal, false);
     setHeaderMenu(false);
+    setHeaderFinder(false);
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!headerFinderDropdown?.classList.contains("is-open")) return;
+    if (
+      headerFinderDropdown.contains(event.target) ||
+      headerFinderToggle?.contains(event.target)
+    ) {
+      return;
+    }
+    setHeaderFinder(false);
   });
 
   mobileHeaderMedia.addEventListener("change", (event) => {
@@ -263,7 +316,10 @@ if (root) {
 
   window.addEventListener("scroll", requestStickyHeaderUpdate, { passive: true });
   window.addEventListener("resize", measureStickyHeader);
-  stickyHeaderMedia.addEventListener("change", measureStickyHeader);
+  stickyHeaderMedia.addEventListener("change", (event) => {
+    if (!event.matches) setHeaderFinder(false);
+    measureStickyHeader();
+  });
   measureStickyHeader();
 
   const homeNavigationItem = root.querySelector('[data-site-nav="home"]');

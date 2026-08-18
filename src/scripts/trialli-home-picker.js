@@ -47,6 +47,44 @@ import {
     agreement: false,
   };
 
+  class PartsFinderStore {
+    constructor(initialState = {}) {
+      this.state = normalizeSharedState(initialState);
+      this.listeners = new Map();
+      this.revision = 0;
+    }
+
+    getSnapshot() {
+      return cloneSharedState(this.state);
+    }
+
+    subscribe(instanceId, listener) {
+      this.listeners.set(instanceId, listener);
+      return () => this.listeners.delete(instanceId);
+    }
+
+    update(sourceId, state, meta = {}) {
+      this.state = normalizeSharedState({
+        ...this.state,
+        ...state,
+      });
+      this.revision += 1;
+      const snapshot = this.getSnapshot();
+      const updateMeta = {
+        ...meta,
+        revision: this.revision,
+        sourceId,
+      };
+
+      this.listeners.forEach((listener, instanceId) => {
+        if (instanceId === sourceId) return;
+        Promise.resolve(listener(snapshot, updateMeta)).catch((error) => {
+          console.error("Failed to synchronize parts finder state", error);
+        });
+      });
+    }
+  }
+
   class FetchPartsFinderApi {
     constructor(config = {}) {
       this.endpoints = normalizeEndpoints(config.endpoints);
@@ -122,8 +160,13 @@ import {
       this.api = api;
       this.submitEndpoint = options.submitEndpoint || DEFAULT_ENDPOINTS.submit;
       this.endpoints = normalizeEndpoints(options.endpoints);
+      this.context = options.context || "page";
+      this.instanceId = options.instanceId || this.context;
+      this.sharedStore = options.store || null;
+      this.sharedRevision = 0;
+      const sharedState = this.sharedStore?.getSnapshot();
       this.response = null;
-      this.mode = normalizeMode(options.initialMode);
+      this.mode = normalizeMode(sharedState?.mode || options.initialMode);
       this.search = {};
       this.openControl = null;
       this.historyOpen = null;
@@ -136,22 +179,22 @@ import {
       this.mobileExternalControl = false;
       this.mobileHistoryOpen = false;
       this.vinSearch = {
-        value: options.initialVin || "",
-        result: options.initialVinResult || "",
+        value: sharedState?.vinSearch?.value || options.initialVin || "",
+        result:
+          sharedState?.vinSearch?.result || options.initialVinResult || "",
       };
       this.vinRequest = {
         ...EMPTY_VIN_REQUEST,
         ...(options.initialVin ? { vin: options.initialVin } : {}),
         ...(options.initialVinRequest || {}),
       };
-      this.selected = {
-        brand: null,
-        model: null,
-        year: null,
-        engine: null,
-        modification: null,
-        productGroups: [],
-      };
+      this.selected = normalizeSelected(
+        sharedState?.selected || options.initialSelected || {},
+      );
+      this.unsubscribeSharedStore = this.sharedStore?.subscribe(
+        this.instanceId,
+        (snapshot, meta) => this.applySharedState(snapshot, meta),
+      );
       this.bindEvents();
     }
 
@@ -272,6 +315,73 @@ import {
       });
       this.syncResponseState();
       this.render(renderOptions);
+    }
+
+    publishSharedState(changedKeys, changedField = "") {
+      if (!this.sharedStore) return;
+      this.sharedStore.update(
+        this.instanceId,
+        {
+          mode: this.mode,
+          selected: this.selected,
+          vinSearch: this.vinSearch,
+        },
+        { changedKeys, changedField },
+      );
+    }
+
+    async applySharedState(snapshot, meta = {}) {
+      const revision = meta.revision || 0;
+      this.sharedRevision = Math.max(this.sharedRevision, revision);
+      const changedKeys = Array.isArray(meta.changedKeys)
+        ? meta.changedKeys
+        : ["mode", "selected", "vinSearch"];
+
+      this.mode = normalizeMode(snapshot.mode);
+      this.selected = normalizeSelected(snapshot.selected);
+      this.vinSearch = normalizeVinSearch(snapshot.vinSearch);
+      this.openControl = null;
+      this.historyOpen = null;
+      this.expandedTags = false;
+
+      if (
+        changedKeys.length === 1 &&
+        changedKeys[0] === "vinSearch" &&
+        this.response &&
+        this.getResponseMode() === this.mode
+      ) {
+        if (this.response.vinSearch) {
+          this.response.vinSearch = {
+            ...this.response.vinSearch,
+            value: this.vinSearch.value,
+            state: this.vinSearch.result,
+            vehicle: null,
+            foundVehicle: null,
+            submit: {
+              ...this.response.vinSearch.submit,
+              disabled: !this.vinSearch.value.trim(),
+            },
+          };
+        }
+        this.render({ skipAutofocus: true });
+        return;
+      }
+
+      const response = await this.api.getState({
+        selected: this.selected,
+        mode: this.mode,
+        vinSearch: this.vinSearch,
+        vinRequest: this.vinRequest,
+      });
+      if (revision < this.sharedRevision) return;
+      this.response = response;
+      this.syncResponseState();
+      this.render({ skipAutofocus: true });
+    }
+
+    getResponseMode() {
+      const activeTab = this.response?.tabs?.find((tab) => tab.active);
+      return normalizeMode(this.response?.mode || activeTab?.id);
     }
 
     render(options = {}) {
@@ -551,8 +661,9 @@ import {
     }
 
     template() {
+      const headingTag = this.context === "header" ? "h2" : "h1";
       return `
-        <article class="parts-finder ${this.mobileFinderOpen ? "is-mobile-open" : ""}" aria-labelledby="parts-finder-title">
+        <article class="parts-finder parts-finder--${escapeAttr(this.context)} ${this.mobileFinderOpen ? "is-mobile-open" : ""}" aria-labelledby="parts-finder-title-${escapeAttr(this.context)}">
           <div class="parts-finder__background-layer" aria-hidden="true">
             <img
               class="parts-finder__background"
@@ -563,7 +674,7 @@ import {
               decoding="async"
             />
           </div>
-          <h1 id="parts-finder-title" class="parts-finder__title">${formatDesktopTitle(this.response.title)}</h1>
+          <${headingTag} id="parts-finder-title-${escapeAttr(this.context)}" class="parts-finder__title">${formatDesktopTitle(this.response.title)}</${headingTag}>
           <div class="parts-finder__workspace">
             <div class="pf-picker-surface pf-picker-surface--${escapeAttr(this.mode)}">
               ${this.tabsTemplate()}
@@ -1595,6 +1706,7 @@ import {
       this.historyOpen = null;
       this.openControl = null;
       this.expandedTags = false;
+      this.publishSharedState(["mode"], "mode");
       await this.refresh();
     }
 
@@ -1704,6 +1816,7 @@ import {
       const payload = await this.api.getControls({ selected: this.selected });
       this.response.controls = payload.controls;
       this.response.submit = payload.submit;
+      this.publishSharedState(["selected"], "productGroups");
       if (this.mobileFinderOpen) {
         this.render({
           mobileScrollTop,
@@ -1730,6 +1843,7 @@ import {
       const payload = await this.api.getControls({ selected: this.selected });
       this.response.controls = payload.controls;
       this.response.submit = payload.submit;
+      this.publishSharedState(["selected"], "productGroups");
       if (this.mobileFinderOpen) {
         this.render({
           mobileScrollTop,
@@ -1866,16 +1980,7 @@ import {
       }
       if (this.mode === "vin") {
         const value = item.vin || item.plate || "";
-        this.vinSearch.value = value;
-        if (this.response.vinSearch) {
-          this.response.vinSearch = {
-            ...this.response.vinSearch,
-            value,
-            state: "",
-            vehicle: null,
-            foundVehicle: null,
-          };
-        }
+        this.updateVinSearchValue(value);
         this.historyOpen = null;
         this.openControl = null;
         this.mobileHistoryOpen = false;
@@ -1900,6 +2005,7 @@ import {
       const payload = await this.api.getControls({ selected: this.selected });
       this.response.controls = payload.controls;
       this.response.submit = payload.submit;
+      this.emitSelectionChange("history");
       if (this.mobileFinderOpen) {
         this.render();
       } else {
@@ -1934,6 +2040,7 @@ import {
 
         this.vinRequest = { ...EMPTY_VIN_REQUEST };
         await this.refresh();
+        this.publishSharedState(["history"], "history");
         formStatusModal.success();
       } catch (error) {
         console.error(error);
@@ -1945,6 +2052,7 @@ import {
     updateVinSearchValue(value) {
       this.vinSearch.value = value;
       this.vinSearch.result = "";
+      this.publishSharedState(["vinSearch"], "vinSearch");
       if (!this.response.vinSearch) return;
       this.response.vinSearch = {
         ...this.response.vinSearch,
@@ -1952,6 +2060,10 @@ import {
         state: "",
         vehicle: null,
         foundVehicle: null,
+        submit: {
+          ...this.response.vinSearch.submit,
+          disabled: !value.trim(),
+        },
       };
     }
 
@@ -2082,6 +2194,7 @@ import {
     async deleteHistory(id) {
       const history = await this.api.deleteHistory(id);
       this.response.history = history;
+      this.publishSharedState(["history"], "history");
       this.openControl = null;
       if (!this.hasHistoryFeature()) this.historyOpen = null;
       if (this.mobileFinderOpen) {
@@ -2113,6 +2226,7 @@ import {
       const payload = await this.api.getControls({ selected: this.selected });
       this.response.controls = payload.controls;
       this.response.submit = payload.submit;
+      this.publishSharedState(["selected"], "productGroups");
       if (this.mobileFinderOpen) {
         this.render();
       } else {
@@ -2128,6 +2242,7 @@ import {
       const payload = await this.api.getControls({ selected: this.selected });
       this.response.controls = payload.controls;
       this.response.submit = payload.submit;
+      this.publishSharedState(["selected"], "productGroups");
       if (this.mobileFinderOpen) {
         this.render();
       } else {
@@ -2137,16 +2252,7 @@ import {
 
     openMobileFinder(options = {}) {
       if (options.clearVinSearch) {
-        this.vinSearch = { value: "", result: "" };
-        if (this.response?.vinSearch) {
-          this.response.vinSearch = {
-            ...this.response.vinSearch,
-            value: "",
-            state: "",
-            vehicle: null,
-            foundVehicle: null,
-          };
-        }
+        this.updateVinSearchValue("");
       }
       this.mobileFinderOpen = true;
       this.mobileExternalControl = false;
@@ -2162,6 +2268,7 @@ import {
       if (!this.response) await this.refresh();
       if (this.mode !== "vehicle") {
         this.mode = "vehicle";
+        this.publishSharedState(["mode"], "mode");
         await this.refresh();
       }
       const control = this.response?.controls?.find((item) => item.id === id);
@@ -2196,6 +2303,7 @@ import {
     }
 
     emitSelectionChange(changedField) {
+      this.publishSharedState(["selected"], changedField);
       document.dispatchEvent(
         new CustomEvent("parts-finder:selection-change", {
           detail: {
@@ -2426,6 +2534,45 @@ import {
     };
   }
 
+  function normalizeVinSearch(vinSearch = {}) {
+    return {
+      value: vinSearch.value || "",
+      result: vinSearch.result || "",
+    };
+  }
+
+  function normalizeSharedState(state = {}) {
+    return {
+      mode: normalizeMode(state.mode),
+      selected: cloneSelected(state.selected),
+      vinSearch: normalizeVinSearch(state.vinSearch),
+    };
+  }
+
+  function cloneSelected(selected = {}) {
+    const normalized = normalizeSelected(selected);
+    return {
+      brand: cloneSelectionItem(normalized.brand),
+      model: cloneSelectionItem(normalized.model),
+      year: cloneSelectionItem(normalized.year),
+      engine: cloneSelectionItem(normalized.engine),
+      modification: cloneSelectionItem(normalized.modification),
+      productGroups: normalized.productGroups.map(cloneSelectionItem),
+    };
+  }
+
+  function cloneSelectionItem(item) {
+    return item ? { ...item } : null;
+  }
+
+  function cloneSharedState(state) {
+    return {
+      mode: normalizeMode(state.mode),
+      selected: cloneSelected(state.selected),
+      vinSearch: normalizeVinSearch(state.vinSearch),
+    };
+  }
+
   function normalizeMode(mode) {
     return MODES.includes(mode) ? mode : "vehicle";
   }
@@ -2645,18 +2792,39 @@ import {
     return `<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.9619 2.88867L9.96191 14.2217L8.75488 14.3311L6.17773 9.82129L1.66895 7.24512L1.77832 6.03809L13.1113 2.03809L13.9619 2.88867ZM7.49805 9.44434L9.18848 12.4033L11.7256 5.21582L7.49805 9.44434ZM3.5957 6.81055L6.55566 8.50195L10.7832 4.27344L3.5957 6.81055Z"/></svg>`;
   }
 
-  const root = document.getElementById("parts-finder");
-  if (root) {
+  const roots = Array.from(document.querySelectorAll("[data-parts-finder]"));
+  if (roots.length) {
     const config = window.PartsFinderConfig || {};
     const endpoints = normalizeEndpoints(config.endpoints);
     const initialState = getInitialState(config);
-    const partsFinder = new PartsFinder(root, createPartsFinderApi(config), {
-      endpoints,
-      submitEndpoint: endpoints.submit,
-      ...initialState,
-      initialVinRequest: config.initialVinRequest,
-      initialMobileOpen: config.initialMobileOpen,
+    const store = new PartsFinderStore({
+      mode: initialState.initialMode,
+      selected: config.initialSelected,
+      vinSearch: {
+        value: initialState.initialVin,
+        result: initialState.initialVinResult,
+      },
     });
+    const api = createPartsFinderApi(config);
+    const instances = roots.map((root, index) => ({
+      root,
+      controller: new PartsFinder(root, api, {
+        endpoints,
+        submitEndpoint: endpoints.submit,
+        ...initialState,
+        context: root.dataset.partsFinderContext || "page",
+        instanceId: `${root.dataset.partsFinderContext || "page"}-${index}`,
+        store,
+        initialVinRequest: config.initialVinRequest,
+        initialMobileOpen:
+          root.dataset.partsFinderContext === "header"
+            ? false
+            : config.initialMobileOpen,
+      }),
+    }));
+    const partsFinder =
+      instances.find(({ root }) => root.id === "parts-finder")?.controller ||
+      instances[0].controller;
     const publicApi = {
       openMobileFinder: (options) => partsFinder.openMobileFinder(options),
       openMobileControl: (id) => partsFinder.openMobileControl(id),
@@ -2693,6 +2861,6 @@ import {
       partsFinder.openVinRequestModal();
     });
 
-    partsFinder.init();
+    instances.forEach(({ controller }) => controller.init());
   }
 })();
