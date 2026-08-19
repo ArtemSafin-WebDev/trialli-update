@@ -1204,12 +1204,12 @@
 
 .tri-home-categories__slider-shell::before {
   left: calc(50% - 50vw);
-  background: linear-gradient(90deg, var(--tri-bg), rgb(13 32 38 / 0%));
+  background: linear-gradient(270deg, rgba(13, 32, 38, 0) 26.86%, #0D2026 100%);
 }
 
 .tri-home-categories__slider-shell::after {
   right: calc(50% - 50vw);
-  background: linear-gradient(90deg, rgb(13 32 38 / 0%), var(--tri-bg));
+  background: linear-gradient(270deg, #0D2026 26.86%, rgba(13, 32, 38, 0) 100%);
 }
 
 .tri-home-categories__slider-shell.is-at-start::before,
@@ -1873,6 +1873,10 @@
   font-size: 28px;
   font-weight: 600;
   line-height: 28px;
+}
+
+.tri-home-popular .tri-products-more svg {
+  display: none;
 }
 
 .tri-home-products {
