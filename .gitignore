@@ -1,8 +1,10 @@
 node_modules/
 dist/
 .DS_Store
+.idea/*
 
 # Local development and visual testing artifacts
 .playwright-cli/
 work/
 output/
+package-lock.json
