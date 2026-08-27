@@ -4,3 +4,7 @@
 @import "./catalog-menu.css";
 @import "./form-status-modal.css";
 @import "./breadcrumbs.css";
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}

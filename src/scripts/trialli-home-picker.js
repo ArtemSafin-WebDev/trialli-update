@@ -931,7 +931,7 @@ import {
           <div class="pf-mobile-expanded__panel">
             <div class="pf-mobile-search ${searchValue ? "is-filled" : ""}" data-mobile-search-field="${escapeAttr(controlKey)}">
               <label class="visually-hidden" for="${escapeAttr(searchId)}">Поиск: ${escapeHtml(control.label)}</label>
-              <input id="${escapeAttr(searchId)}" type="search" value="${escapeAttr(searchValue)}" placeholder="Начните ввод..." data-mobile-search="${escapeAttr(controlKey)}" data-autofocus autocomplete="off">
+              <input id="${escapeAttr(searchId)}" type="search" value="${escapeAttr(searchValue)}" placeholder="Начните ввод..." data-mobile-search="${escapeAttr(controlKey)}" data-autofocus autocomplete="off" autocorrect="off" spellcheck="false">
               <button class="pf-mobile-search__clear" type="button" aria-label="Очистить ${escapeAttr(control.label)}" data-action="clear-mobile-search" data-id="${escapeAttr(controlKey)}" ${searchValue ? "" : "hidden"}>
                 ${iconCross()}
               </button>

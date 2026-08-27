@@ -67,6 +67,8 @@ if (root) {
       max: PRICE_MAX,
       currentMin: PRICE_MIN,
       currentMax: PRICE_MAX,
+      minEntered: false,
+      maxEntered: false,
     },
   };
 
@@ -104,12 +106,15 @@ if (root) {
   let pageScrollLocked = false;
 
   const icons = {
-    close: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.47 3.53 3.53 3.53 3.53-3.53.94.94L8.94 8l3.53 3.53-.94.94L8 8.94l-3.53 3.53-.94-.94L7.06 8 3.53 4.47z"/></svg>',
+    close: '<img class="tri-results-filter-close-icon" src="/assets/vin-results/filter-tag-close.svg" alt="" aria-hidden="true" />',
     reset: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.27441 1.56147C7.6919 1.1817 9.19598 1.27919 10.5518 1.84076C11.3452 2.16945 12.0617 2.64755 12.667 3.24115V1.66693H14L13.999 5.00092L13.333 5.66693H10V4.33393H11.8711C11.3592 3.79349 10.7373 3.36162 10.041 3.07318C8.95656 2.62403 7.75394 2.54491 6.62012 2.84857C5.48612 3.15243 4.48326 3.82247 3.76855 4.75385C3.05393 5.68523 2.66701 6.82696 2.66699 8.00092C2.66706 9.17468 3.05411 10.3157 3.76855 11.247C4.48326 12.1784 5.4861 12.8484 6.62012 13.1523C7.75402 13.456 8.95649 13.3769 10.041 12.9277C11.1256 12.4784 12.0312 11.6836 12.6182 10.6669L13.7734 11.3339C13.0397 12.6047 11.9074 13.5985 10.5518 14.1601C9.19596 14.7217 7.69192 14.8202 6.27441 14.4404C4.85708 14.0605 3.60427 13.2236 2.71094 12.0595C1.81763 10.8953 1.33308 9.46835 1.33301 8.00092C1.33303 6.53347 1.81766 5.10656 2.71094 3.94232C3.60424 2.77821 4.85708 1.94133 6.27441 1.56147Z"/></svg>',
   };
 
   const formatPrice = (price) => new Intl.NumberFormat("ru-RU").format(price);
-  const parsePrice = (price) => Number(String(price).replace(/\D/g, ""));
+  const parsePrice = (price) => {
+    const digits = String(price).replace(/\D/g, "");
+    return digits ? Number(digits) : Number.NaN;
+  };
 
   function updateScrollHeader() {
     scrollHeaderFrame = 0;
@@ -155,8 +160,14 @@ if (root) {
     price.classList.toggle("is-changed", hasActivePriceFilter());
     price.style.setProperty("--range-min", `${minPercent}%`);
     price.style.setProperty("--range-max", `${maxPercent}%`);
-    minInput.value = formatPrice(state.price.currentMin);
-    maxInput.value = formatPrice(state.price.currentMax);
+    minInput.placeholder = formatPrice(state.price.min);
+    maxInput.placeholder = formatPrice(state.price.max);
+    minInput.value = !state.price.minEntered && state.price.currentMin === state.price.min
+      ? ""
+      : formatPrice(state.price.currentMin);
+    maxInput.value = !state.price.maxEntered && state.price.currentMax === state.price.max
+      ? ""
+      : formatPrice(state.price.currentMax);
     minRange.value = String(state.price.currentMin);
     maxRange.value = String(state.price.currentMax);
     minHandle.setAttribute("aria-valuenow", String(state.price.currentMin));
@@ -176,10 +187,24 @@ if (root) {
     else state.price.currentMax = Math.max(next, state.price.currentMin);
   }
 
+  function commitPrice(type, value) {
+    const enteredKey = type === "min" ? "minEntered" : "maxEntered";
+    if (String(value).trim()) {
+      state.price[enteredKey] = true;
+      clampPrice(type, value);
+      return;
+    }
+
+    state.price[enteredKey] = false;
+    if (type === "min") state.price.currentMin = state.price.min;
+    else state.price.currentMax = state.price.max;
+  }
+
   function setPriceFromPointer(type, clientX) {
     const slider = filters.querySelector(".tri-results-price__slider");
     if (!slider) return;
 
+    state.price[type === "min" ? "minEntered" : "maxEntered"] = false;
     const rect = slider.getBoundingClientRect();
     const percent = Math.min(Math.max((clientX - rect.left) / rect.width, 0), 1);
     const rawValue = state.price.min + percent * (state.price.max - state.price.min);
@@ -513,6 +538,8 @@ if (root) {
     if (key === "price") {
       state.price.currentMin = state.price.min;
       state.price.currentMax = state.price.max;
+      state.price.minEntered = false;
+      state.price.maxEntered = false;
       updatePriceControls();
     } else if (key === "sale") {
       const sale = filters.querySelector("[data-sale]");
@@ -539,6 +566,8 @@ if (root) {
     });
     state.price.currentMin = state.price.min;
     state.price.currentMax = state.price.max;
+    state.price.minEntered = false;
+    state.price.maxEntered = false;
     updatePriceControls();
     collectFilters();
     syncMobileFilterDetail();
@@ -1011,7 +1040,7 @@ if (root) {
     const priceRange = event.target.closest("[data-price-range]");
     if (priceInput || priceRange) {
       const control = priceInput || priceRange;
-      clampPrice(control.dataset.priceInput || control.dataset.priceRange, control.value);
+      commitPrice(control.dataset.priceInput || control.dataset.priceRange, control.value);
       updatePriceControls();
     }
     collectFilters();
@@ -1019,12 +1048,23 @@ if (root) {
   });
 
   filters.addEventListener("input", (event) => {
+    const priceInput = event.target.closest("[data-price-input]");
+    if (priceInput) {
+      const digits = priceInput.value.replace(/\D/g, "");
+      if (priceInput.value !== digits) priceInput.value = digits;
+      return;
+    }
     if (event.target.matches("[data-filter-detail-search]")) {
       syncMobileFilterDetail();
       return;
     }
     const input = event.target.closest("[data-filter-search]");
     if (input) updateFilterSearch(input.closest("[data-filter]"));
+  });
+
+  filters.addEventListener("beforeinput", (event) => {
+    if (!event.target.closest("[data-price-input]") || !event.data) return;
+    if (/\D/.test(event.data)) event.preventDefault();
   });
 
   filters.addEventListener("wheel", (event) => {
@@ -1078,6 +1118,7 @@ if (root) {
     const type = handle.dataset.priceHandle;
     const current = type === "min" ? state.price.currentMin : state.price.currentMax;
     const step = event.key === "PageUp" || event.key === "PageDown" ? PRICE_STEP * 10 : PRICE_STEP;
+    state.price[type === "min" ? "minEntered" : "maxEntered"] = false;
     clampPrice(type, current + direction * step);
     updatePriceControls();
     collectFilters();

@@ -2,7 +2,6 @@
   --container-width: 1200px;
 }
 
-
 /* Desktop picker geometry from Figma: 1152 × 126 surface, 209/313 tabs. */
 @media (min-width: 768px) {
   .pf-picker-surface {
@@ -1409,8 +1408,8 @@ button.pf-vin-request__car-icon.is-open {
   width: min(79.4rem, 100%);
   border-radius: 1.6rem;
   padding-right: 1.6rem;
-  background: #ccd7e5 url("/assets/trialli-home/picker-background-desktop.webp") center / cover
-    no-repeat;
+  background: #ccd7e5 url("/assets/trialli-home/picker-background-desktop.webp")
+    center / cover no-repeat;
   overflow: visible;
   transform: translateY(0) scale(1);
   transition: transform 0.24s ease;
@@ -2620,7 +2619,12 @@ button.pf-vin-request__car-icon.is-open {
     height: 284px;
     object-fit: cover;
     object-position: center bottom;
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%);
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      #000 0%,
+      #000 82%,
+      transparent 100%
+    );
     mask-image: linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%);
   }
 
@@ -2638,13 +2642,26 @@ button.pf-vin-request__car-icon.is-open {
   .parts-finder__background-layer::before {
     height: 412px;
     background-image:
-      linear-gradient(-9.458deg, #ffffff 1.298%, rgba(255, 255, 255, 0) 15.965%),
-      linear-gradient(97.66deg, #ffffff 11.444%, rgba(255, 255, 255, 0.612) 37.463%, rgba(255, 255, 255, 0) 53.991%);
+      linear-gradient(
+        -9.458deg,
+        #ffffff 1.298%,
+        rgba(255, 255, 255, 0) 15.965%
+      ),
+      linear-gradient(
+        97.66deg,
+        #ffffff 11.444%,
+        rgba(255, 255, 255, 0.612) 37.463%,
+        rgba(255, 255, 255, 0) 53.991%
+      );
   }
 
   .parts-finder__background-layer::after {
     height: 412px;
-    background-image: linear-gradient(3.3757deg, #b7b7b7 7.9107%, rgba(255, 255, 255, 0) 38.941%);
+    background-image: linear-gradient(
+      3.3757deg,
+      #b7b7b7 7.9107%,
+      rgba(255, 255, 255, 0) 38.941%
+    );
     opacity: 0.82;
   }
 
@@ -2652,7 +2669,8 @@ button.pf-vin-request__car-icon.is-open {
     z-index: 2;
     width: min(966px, 100%);
     padding: 0;
-    background: url("/assets/trialli-home/picker-title-gradient.webp") center / cover no-repeat;
+    background: url("/assets/trialli-home/picker-title-gradient.webp") center /
+      cover no-repeat;
     background-clip: text;
     color: transparent;
     font-family: inherit;
@@ -3297,13 +3315,11 @@ button.pf-vin-request__car-icon.is-open {
   }
 
   .pf-vin-request__vehicle-row {
-    grid-template-columns:
-      repeat(4, minmax(130px, 1fr));
+    grid-template-columns: repeat(4, minmax(130px, 1fr));
   }
 
   .pf-vin-request__vehicle-row.no-history {
-    grid-template-columns:
-      repeat(4, minmax(130px, 1fr));
+    grid-template-columns: repeat(4, minmax(130px, 1fr));
   }
 
   .pf-vin-request__history-anchor {
@@ -3365,7 +3381,11 @@ button.pf-vin-request__car-icon.is-open {
     background: #bed600;
   }
 
-  .tri-home .pf-vin-request .pf-agreement input:focus-visible + .pf-checkbox::before {
+  .tri-home
+    .pf-vin-request
+    .pf-agreement
+    input:focus-visible
+    + .pf-checkbox::before {
     border-color: #bed600 !important;
     box-shadow: 0 0 0 2px rgb(190 214 0 / 24%);
   }
@@ -3430,12 +3450,8 @@ button.pf-vin-request__car-icon.is-open {
       border: 1px solid #bed600 !important;
       border-radius: 0;
       background:
-        linear-gradient(
-            0.854773deg,
-            #0d2026 49.821%,
-            #bed600 258.8%
-          )
-          left top / 209px 46px no-repeat,
+        linear-gradient(0.854773deg, #0d2026 49.821%, #bed600 258.8%) left top /
+          209px 46px no-repeat,
         #0d2026;
       border-shape: shape(
         from 0 30px,
@@ -3446,9 +3462,11 @@ button.pf-vin-request__car-icon.is-open {
         hline to calc(100% - 30px),
         curve to 100% 76px with calc(100% - 13.431px) 46px / 100% 59.431px,
         vline to calc(100% - 30px),
-        curve to calc(100% - 30px) 100% with 100% calc(100% - 13.431px) / calc(100% - 13.431px) 100%,
+        curve to calc(100% - 30px) 100% with 100% calc(100% - 13.431px) /
+          calc(100% - 13.431px) 100%,
         hline to 30px,
-        curve to 0 calc(100% - 30px) with 13.431px 100% / 0 calc(100% - 13.431px),
+        curve to 0 calc(100% - 30px) with 13.431px 100% / 0
+          calc(100% - 13.431px),
         vline to 30px,
         close
       );
@@ -3462,12 +3480,8 @@ button.pf-vin-request__car-icon.is-open {
       border: 1px solid #bed600 !important;
       border-radius: 0;
       background:
-        linear-gradient(
-            0.559859deg,
-            #0d2026 49.821%,
-            #bed600 258.8%
-          )
-          209px top / 313px 46px no-repeat,
+        linear-gradient(0.559859deg, #0d2026 49.821%, #bed600 258.8%) 209px
+          top / 313px 46px no-repeat,
         #0d2026;
       border-shape: shape(
         from 30px 46px,
@@ -3480,9 +3494,11 @@ button.pf-vin-request__car-icon.is-open {
         hline to calc(100% - 30px),
         curve to 100% 76px with calc(100% - 13.431px) 46px / 100% 59.431px,
         vline to calc(100% - 30px),
-        curve to calc(100% - 30px) 100% with 100% calc(100% - 13.431px) / calc(100% - 13.431px) 100%,
+        curve to calc(100% - 30px) 100% with 100% calc(100% - 13.431px) /
+          calc(100% - 13.431px) 100%,
         hline to 30px,
-        curve to 0 calc(100% - 30px) with 13.431px 100% / 0 calc(100% - 13.431px),
+        curve to 0 calc(100% - 30px) with 13.431px 100% / 0
+          calc(100% - 13.431px),
         vline to 76px,
         curve to 30px 46px with 0 59.431px / 13.431px 46px,
         close
@@ -3700,7 +3716,11 @@ button.pf-vin-request__car-icon.is-open {
 
   .tri-home .pf-mobile-tab[aria-selected="true"] {
     border-top: 1px solid #bed600 !important;
-    background: linear-gradient(180deg, rgb(190 214 0 / 10%), rgb(190 214 0 / 0%));
+    background: linear-gradient(
+      180deg,
+      rgb(190 214 0 / 10%),
+      rgb(190 214 0 / 0%)
+    );
     color: #bed600;
   }
 
@@ -4010,7 +4030,10 @@ button.pf-vin-request__car-icon.is-open {
     color: #8a9998;
   }
 
-  .pf-mobile-vin .pf-control--request .pf-field[aria-disabled="true"] .pf-arrow {
+  .pf-mobile-vin
+    .pf-control--request
+    .pf-field[aria-disabled="true"]
+    .pf-arrow {
     color: #8a9998;
   }
 
@@ -4052,7 +4075,11 @@ button.pf-vin-request__car-icon.is-open {
     background: #bed600;
   }
 
-  .tri-home .pf-mobile-vin .pf-agreement input:focus-visible + .pf-checkbox::before {
+  .tri-home
+    .pf-mobile-vin
+    .pf-agreement
+    input:focus-visible
+    + .pf-checkbox::before {
     border-color: #bed600 !important;
     box-shadow: 0 0 0 2px rgb(190 214 0 / 24%);
   }
@@ -4245,7 +4272,13 @@ button.pf-vin-request__car-icon.is-open {
     border: 0.5px solid #bed600 !important;
     border-radius: 40px;
     padding-left: 16px;
-    background: radial-gradient(100% 785% at 0% 50%, #0f2329 0%, #12272c 50%, #1e3431 75%, #304939 100%);
+    background: radial-gradient(
+      100% 785% at 0% 50%,
+      #0f2329 0%,
+      #12272c 50%,
+      #1e3431 75%,
+      #304939 100%
+    );
     color: #fff;
   }
 
@@ -4350,7 +4383,9 @@ button.pf-vin-request__car-icon.is-open {
     line-height: 0;
   }
 
-  .tri-home .pf-mobile-expanded__option.is-multi.is-selected > .pf-mobile-expanded__box {
+  .tri-home
+    .pf-mobile-expanded__option.is-multi.is-selected
+    > .pf-mobile-expanded__box {
     border-color: #bed600 !important;
     background: #bed600;
   }
@@ -4501,7 +4536,9 @@ html.pf-modal-open {
   border: 1px solid transparent !important;
   border-radius: 40px;
   padding: 0 16px 0 0;
-  background: #060b0f url("/assets/trialli-home/request-modal-background-desktop.webp") center / cover no-repeat;
+  background: #060b0f
+    url("/assets/trialli-home/request-modal-background-desktop.webp") center /
+    cover no-repeat;
   overflow: visible;
 }
 
@@ -4511,13 +4548,21 @@ html.pf-modal-open {
   inset: -1px;
   border-radius: 40px;
   padding: 1px;
-  background: linear-gradient(
+  /* background: linear-gradient(
     90deg,
     #bed600 0%,
     #bed600 28%,
     rgb(190 214 0 / 48%) 50%,
     rgb(190 214 0 / 10%) 68%,
     transparent 84%
+  ); */
+  background: linear-gradient(
+    90deg,
+    #bed600 0%,
+    #bed600 28%,
+    rgb(190 214 0 / 48%) 70%,
+    rgb(190 214 0 / 10%) 88%,
+    transparent 94%
   );
   content: "";
   pointer-events: none;
@@ -4714,8 +4759,10 @@ html.pf-modal-open {
   width: 16px;
   height: 16px;
   background: #8a9998;
-  -webkit-mask: url("/assets/trialli-home/request-modal-arrow.svg") center / 10.667px 6px no-repeat;
-  mask: url("/assets/trialli-home/request-modal-arrow.svg") center / 10.667px 6px no-repeat;
+  -webkit-mask: url("/assets/trialli-home/request-modal-arrow.svg") center /
+    10.667px 6px no-repeat;
+  mask: url("/assets/trialli-home/request-modal-arrow.svg") center / 10.667px
+    6px no-repeat;
 }
 
 .pf-modal .pf-field[aria-disabled="true"] .pf-arrow {
@@ -4784,8 +4831,10 @@ html.pf-modal-open {
   width: 16px;
   height: 16px;
   background: currentColor;
-  -webkit-mask: url("/assets/trialli-home/request-modal-car.svg") center / 14px 13.334px no-repeat;
-  mask: url("/assets/trialli-home/request-modal-car.svg") center / 14px 13.334px no-repeat;
+  -webkit-mask: url("/assets/trialli-home/request-modal-car.svg") center / 14px
+    13.334px no-repeat;
+  mask: url("/assets/trialli-home/request-modal-car.svg") center / 14px 13.334px
+    no-repeat;
 }
 
 .pf-modal-history__badge {
@@ -4965,8 +5014,10 @@ html.pf-modal-open {
   height: 16px;
   flex: 0 0 16px;
   background: currentColor;
-  -webkit-mask: url("/assets/trialli-home/request-modal-sent.svg") center / 12.647px 12.648px no-repeat;
-  mask: url("/assets/trialli-home/request-modal-sent.svg") center / 12.647px 12.648px no-repeat;
+  -webkit-mask: url("/assets/trialli-home/request-modal-sent.svg") center /
+    12.647px 12.648px no-repeat;
+  mask: url("/assets/trialli-home/request-modal-sent.svg") center / 12.647px
+    12.648px no-repeat;
 }
 
 .pf-modal__close {
@@ -4998,8 +5049,10 @@ html.pf-modal-open {
   display: block;
   flex: 0 0 auto;
   background: currentColor;
-  -webkit-mask: url("/assets/trialli-home/request-modal-close.svg") center / contain no-repeat;
-  mask: url("/assets/trialli-home/request-modal-close.svg") center / contain no-repeat;
+  -webkit-mask: url("/assets/trialli-home/request-modal-close.svg") center /
+    contain no-repeat;
+  mask: url("/assets/trialli-home/request-modal-close.svg") center / contain
+    no-repeat;
 }
 
 .pf-modal__close .pf-cross-icon {

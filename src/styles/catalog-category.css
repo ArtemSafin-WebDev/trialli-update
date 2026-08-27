@@ -120,7 +120,6 @@
   display: block;
   height: 56px;
   padding: 0;
-  background: var(--results-surface);
   color: var(--results-muted-dark);
 }
 

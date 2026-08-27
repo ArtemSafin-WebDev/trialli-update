@@ -238,7 +238,7 @@
 }
 
 .tri-home .tri-catalog-menu__group-label {
-  margin: 8px 0;
+  margin: 16px 0 8px;
   color: rgb(255 255 255 / 70%);
   font-size: 12px;
   font-weight: 500;

@@ -76,6 +76,7 @@ if (root) {
       const options = getOptions(id, selected);
       field.disabled = !enabled;
       field.classList.toggle("tri-category-vehicle-filter--disabled", !enabled);
+      field.classList.toggle("tri-results-panel--surface", !enabled);
       if (!enabled) field.classList.remove("is-expanded", "is-search-empty");
       renderOptions(field, id, options, selectedValue);
       const more = field.querySelector("[data-filter-more]");

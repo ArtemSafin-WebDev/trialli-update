@@ -83,7 +83,7 @@
                     <span>Сбросить</span>
                   </button>
                 </header>
-                <p class="tri-results-filters__summary">Всего товаров: <span data-total>106</span></p>
+                <p class="tri-results-filters__summary tri-results-panel tri-results-panel--surface-light">Всего товаров: <span data-total>106</span></p>
 
                 <section class="tri-category-tree" aria-labelledby="category-tree-title">
                   <h2 class="tri-category-tree__title" id="category-tree-title">Категории</h2>
@@ -100,7 +100,7 @@
                   </nav>
                 </section>
 
-                <fieldset class="tri-results-filter tri-category-vehicle-filter" data-filter="brand" data-filter-next="model">
+                <fieldset class="tri-results-filter tri-category-vehicle-filter tri-results-panel" data-filter="brand" data-filter-next="model">
                   <legend>Марка</legend>
                   <div class="tri-results-filter__search">
                     <label class="tri-home-visually-hidden" for="filter-search-brand">Поиск по марке</label>
@@ -129,7 +129,7 @@
                   <button class="tri-results-filter__more" type="button" aria-expanded="false" data-filter-more><span>Еще 134</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.805 5.806 8.472 11.139h-.944L2.195 5.806l.943-.943L8 9.725l4.862-4.862.943.943Z" /></svg></button>
                 </fieldset>
 
-                <fieldset class="tri-results-filter tri-category-vehicle-filter tri-category-vehicle-filter--disabled" data-filter="model" data-filter-next="year" data-filter-action-label="модель" disabled>
+                <fieldset class="tri-results-filter tri-category-vehicle-filter tri-category-vehicle-filter--disabled tri-results-panel tri-results-panel--surface" data-filter="model" data-filter-next="year" data-filter-action-label="модель" disabled>
                   <legend>Модель</legend>
                   <div class="tri-results-filter__search">
                     <label class="tri-home-visually-hidden" for="filter-search-model">Поиск по модели</label>
@@ -143,7 +143,7 @@
                   <p class="tri-results-filter__empty" data-filter-empty>Ничего не найдено</p>
                   <button class="tri-results-filter__more" type="button" aria-expanded="false" data-filter-more hidden><span>Еще 0</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.805 5.806 8.472 11.139h-.944L2.195 5.806l.943-.943L8 9.725l4.862-4.862.943.943Z" /></svg></button>
                 </fieldset>
-                <fieldset class="tri-results-filter tri-category-vehicle-filter tri-category-vehicle-filter--disabled" data-filter="year" data-filter-next="modification" data-filter-action-label="год" disabled>
+                <fieldset class="tri-results-filter tri-category-vehicle-filter tri-category-vehicle-filter--disabled tri-results-panel tri-results-panel--surface" data-filter="year" data-filter-next="modification" data-filter-action-label="год" disabled>
                   <legend>Год</legend>
                   <div class="tri-results-filter__search">
                     <label class="tri-home-visually-hidden" for="filter-search-year">Поиск по году</label>
@@ -157,7 +157,7 @@
                   <p class="tri-results-filter__empty" data-filter-empty>Ничего не найдено</p>
                   <button class="tri-results-filter__more" type="button" aria-expanded="false" data-filter-more hidden><span>Еще 0</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.805 5.806 8.472 11.139h-.944L2.195 5.806l.943-.943L8 9.725l4.862-4.862.943.943Z" /></svg></button>
                 </fieldset>
-                <fieldset class="tri-results-filter tri-category-vehicle-filter tri-category-vehicle-filter--disabled" data-filter="modification" data-filter-next="" data-filter-action-label="модификацию" disabled>
+                <fieldset class="tri-results-filter tri-category-vehicle-filter tri-category-vehicle-filter--disabled tri-results-panel tri-results-panel--surface" data-filter="modification" data-filter-next="" data-filter-action-label="модификацию" disabled>
                   <legend>Модификация</legend>
                   <div class="tri-results-filter__search">
                     <label class="tri-home-visually-hidden" for="filter-search-modification">Поиск по модификации</label>
@@ -171,13 +171,13 @@
                   <p class="tri-results-filter__empty" data-filter-empty>Ничего не найдено</p>
                   <button class="tri-results-filter__more" type="button" aria-expanded="false" data-filter-more hidden><span>Еще 0</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.805 5.806 8.472 11.139h-.944L2.195 5.806l.943-.943L8 9.725l4.862-4.862.943.943Z" /></svg></button>
                 </fieldset>
-                <label class="tri-results-sale"><span>Товары со скидкой</span><input type="checkbox" data-sale /><i></i></label>
-                <fieldset class="tri-results-filter tri-results-price" data-price>
+                <label class="tri-results-sale tri-results-panel"><span>Товары со скидкой</span><input type="checkbox" data-sale /><i></i></label>
+                <fieldset class="tri-results-filter tri-results-price tri-results-panel" data-price>
                   <legend>Цена, ₽</legend>
                   <div class="tri-results-price__content">
                     <div class="tri-results-price__inputs">
-                      <input class="tri-results-price__input" type="text" inputmode="numeric" value="459" aria-label="Цена от" data-price-input="min" />
-                      <input class="tri-results-price__input" type="text" inputmode="numeric" value="9 999 999" aria-label="Цена до" data-price-input="max" />
+                      <input class="tri-results-price__input" type="text" inputmode="numeric" pattern="[0-9 ]*" placeholder="459" aria-label="Цена от" data-price-input="min" />
+                      <input class="tri-results-price__input" type="text" inputmode="numeric" pattern="[0-9 ]*" placeholder="9 999 999" aria-label="Цена до" data-price-input="max" />
                     </div>
                     <div class="tri-results-price__slider">
                       <span class="tri-results-price__track" aria-hidden="true"></span>
@@ -188,7 +188,7 @@
                     </div>
                   </div>
                 </fieldset>
-                <div class="tri-results-reset-wrap"><button class="tri-results-reset" type="button" data-reset-filters disabled><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.3 1.6A6.7 6.7 0 0 1 12.7 3V1.7H14V5l-.7.7H10V4.3h1.9A5.3 5.3 0 1 0 12.6 10.7l1.2.6A6.7 6.7 0 1 1 6.3 1.6Z" /></svg>Сбросить фильтры</button></div>
+                <div class="tri-results-reset-wrap tri-results-panel"><button class="tri-results-reset" type="button" data-reset-filters disabled><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.3 1.6A6.7 6.7 0 0 1 12.7 3V1.7H14V5l-.7.7H10V4.3h1.9A5.3 5.3 0 1 0 12.6 10.7l1.2.6A6.7 6.7 0 1 1 6.3 1.6Z" /></svg>Сбросить фильтры</button></div>
                 <div class="tri-results-filters__mobile-actions"><button type="button" data-filter-apply><span>Показать <span data-mobile-total>2 657</span> товаров</span></button></div>
                 <section class="tri-results-filter-detail" data-filter-detail hidden aria-label="Расширенный фильтр">
                   <header class="tri-results-filter-detail__head">
@@ -197,7 +197,7 @@
                     </button>
                     <h2 data-filter-detail-title>Фильтр</h2>
                   </header>
-                  <div class="tri-results-filter-detail__card">
+                  <div class="tri-results-filter-detail__card tri-results-panel">
                     <div class="tri-results-filter-detail__search">
                       <label class="tri-home-visually-hidden" for="category-filter-detail-search">Поиск по фильтру</label>
                       <input id="category-filter-detail-search" type="search" placeholder="Начните ввод..." autocomplete="off" data-filter-detail-search />
@@ -223,7 +223,7 @@
 
               <div class="tri-results-filter-preview" role="status" aria-live="polite" aria-hidden="true" data-filter-preview hidden><span data-filter-preview-text></span><a href="#catalog-products" data-filter-preview-link>Показать</a></div>
               <div class="tri-results-main">
-                <div class="tri-results-active" data-active-filters><span>Фильтры:</span><div data-active-tags></div></div>
+                <div class="tri-results-active tri-results-panel" data-active-filters><span>Фильтры:</span><div data-active-tags></div></div>
                 <div class="tri-results-products" id="catalog-products" data-products></div>
                 <!-- @include /src/partials/products-more-button.html -->
                 <!-- @include /src/partials/request-banner.html -->

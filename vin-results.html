@@ -15,7 +15,7 @@
       <!-- @include /src/partials/site-header.html -->
 
       <div class="tri-results-scroll-header" aria-hidden="true" data-results-scroll-header inert>
-        <div class="tri-results-scroll-header__panel">
+        <div class="tri-results-scroll-header__panel tri-results-panel">
           <button
             class="tri-results-scroll-header__back"
             type="button"
@@ -154,9 +154,9 @@
                     <span>Сбросить</span>
                   </button>
                 </header>
-                <p class="tri-results-filters__summary">Всего товаров: <span data-total>106</span></p>
+                <p class="tri-results-filters__summary tri-results-panel tri-results-panel--surface-light">Всего товаров: <span data-total>106</span></p>
 
-                <fieldset class="tri-results-filter" data-filter="groups">
+                <fieldset class="tri-results-filter tri-results-panel" data-filter="groups">
                   <legend>Категория</legend>
                   <div class="tri-results-filter__search">
                     <label class="tri-home-visually-hidden" for="filter-search-groups">Поиск по фильтру Доступные группы товаров</label>
@@ -195,7 +195,7 @@
                   </button>
                 </fieldset>
 
-                <fieldset class="tri-results-filter" data-filter="teeth">
+                <fieldset class="tri-results-filter tri-results-panel" data-filter="teeth">
                   <legend>Кол-во зубьев</legend>
                   <div class="tri-results-filter__chips">
                     <label><input type="radio" name="teeth" value="01" /><span>Вариант 1</span></label>
@@ -207,7 +207,7 @@
                   </div>
                 </fieldset>
 
-                <fieldset class="tri-results-filter" data-filter="power">
+                <fieldset class="tri-results-filter tri-results-panel tri-results-panel--surface" data-filter="power">
                   <legend>Напряжение</legend>
                   <div class="tri-results-filter__search">
                     <label class="tri-home-visually-hidden" for="filter-search-power">Поиск по фильтру Мощность, кВт</label>
@@ -250,14 +250,14 @@
                   </button>
                 </fieldset>
 
-                <label class="tri-results-sale"><span>Товары со скидкой</span><input type="checkbox" data-sale /><i></i></label>
+                <label class="tri-results-sale tri-results-panel"><span>Товары со скидкой</span><input type="checkbox" data-sale /><i></i></label>
 
-                <fieldset class="tri-results-filter tri-results-price" data-price>
+                <fieldset class="tri-results-filter tri-results-price tri-results-panel" data-price>
                   <legend>Цена, ₽</legend>
                   <div class="tri-results-price__content">
                     <div class="tri-results-price__inputs">
-                      <input class="tri-results-price__input" type="text" inputmode="numeric" pattern="[0-9 ]*" value="459" aria-label="Цена от" data-price-input="min" />
-                      <input class="tri-results-price__input" type="text" inputmode="numeric" pattern="[0-9 ]*" value="9 999 999" aria-label="Цена до" data-price-input="max" />
+                      <input class="tri-results-price__input" type="text" inputmode="numeric" pattern="[0-9 ]*" placeholder="459" aria-label="Цена от" data-price-input="min" />
+                      <input class="tri-results-price__input" type="text" inputmode="numeric" pattern="[0-9 ]*" placeholder="9 999 999" aria-label="Цена до" data-price-input="max" />
                     </div>
                     <div class="tri-results-price__slider">
                       <span class="tri-results-price__track" aria-hidden="true"></span>
@@ -269,7 +269,7 @@
                   </div>
                 </fieldset>
 
-                <div class="tri-results-reset-wrap">
+                <div class="tri-results-reset-wrap tri-results-panel">
                   <button class="tri-results-reset" type="button" data-reset-filters disabled>
                     <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.3 1.6A6.7 6.7 0 0 1 12.7 3V1.7H14V5l-.7.7H10V4.3h1.9A5.3 5.3 0 1 0 12.6 10.7l1.2.6A6.7 6.7 0 1 1 6.3 1.6Z"/></svg>
                     Сбросить фильтры
@@ -289,7 +289,7 @@
                     </button>
                     <h2 data-filter-detail-title>Категория</h2>
                   </header>
-                  <div class="tri-results-filter-detail__card">
+                  <div class="tri-results-filter-detail__card tri-results-panel">
                     <div class="tri-results-filter-detail__search">
                       <label class="tri-home-visually-hidden" for="filter-detail-search">Поиск по фильтру</label>
                       <input id="filter-detail-search" type="search" placeholder="Начните ввод..." autocomplete="off" data-filter-detail-search />
@@ -326,7 +326,7 @@
               </div>
 
               <div class="tri-results-main">
-                <div class="tri-results-active" data-active-filters>
+                <div class="tri-results-active tri-results-panel" data-active-filters>
                   <span>Фильтры:</span>
                   <div data-active-tags></div>
                 </div>
