@@ -4169,7 +4169,7 @@ button.pf-vin-request__car-icon.is-open {
     position: fixed;
     z-index: 4;
     right: 0;
-    bottom: 0;
+    bottom: var(--pf-mobile-keyboard-inset, 0px);
     left: 0;
     display: grid;
     gap: 8px;

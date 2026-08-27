@@ -304,6 +304,22 @@ import {
         if (!this.openControl && !this.historyOpen) return;
         this.closeFloatingLayers();
       });
+
+      const updateMobileKeyboardInset = () =>
+        this.updateMobileKeyboardInset();
+      window.visualViewport?.addEventListener(
+        "resize",
+        updateMobileKeyboardInset,
+      );
+      window.visualViewport?.addEventListener(
+        "scroll",
+        updateMobileKeyboardInset,
+      );
+      window.addEventListener("resize", updateMobileKeyboardInset);
+      this.root.addEventListener("focusin", updateMobileKeyboardInset);
+      this.root.addEventListener("focusout", () => {
+        requestAnimationFrame(updateMobileKeyboardInset);
+      });
     }
 
     async refresh(renderOptions = {}) {
@@ -413,7 +429,35 @@ import {
         this.restoreMobileScreenScrollTop(options.mobileScrollTop);
       }
       document.body.classList.toggle("pf-mobile-lock", this.mobileFinderOpen);
+      this.updateMobileKeyboardInset();
       this.positionVinRequestHistory();
+    }
+
+    updateMobileKeyboardInset() {
+      const screen = this.root.querySelector(".pf-mobile-screen");
+      if (!screen) return;
+      const activeElement = document.activeElement;
+      const hasFocusedField = Boolean(
+        activeElement &&
+          screen.contains(activeElement) &&
+          activeElement.matches(
+            'input, textarea, [contenteditable="true"]',
+          ),
+      );
+      const viewport = window.visualViewport;
+      const keyboardInset =
+        hasFocusedField && viewport
+          ? Math.max(
+              0,
+              Math.round(
+                window.innerHeight - viewport.height - viewport.offsetTop,
+              ),
+            )
+          : 0;
+      screen.style.setProperty(
+        "--pf-mobile-keyboard-inset",
+        `${keyboardInset}px`,
+      );
     }
 
     replaceNode(selector, html) {
