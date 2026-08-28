@@ -34,6 +34,10 @@
   --results-panel-background: var(--results-surface);
 }
 
+.tri-results-panel--bg-selected {
+  --results-panel-background: var(--results-surface);
+}
+
 .tri-results-panel--surface-light {
   --results-panel-background: var(--results-surface-light);
 }
