@@ -157,7 +157,7 @@
   }
 
   .tri-category > .tri-home-header__slot {
-    display: block;
+    display: contents !important;
   }
 
   .tri-category .tri-home-header__logo {
