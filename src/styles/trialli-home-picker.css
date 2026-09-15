@@ -2886,7 +2886,7 @@ button.pf-vin-request__car-icon.is-open {
     max-height: 360px;
     padding: 16px 0;
     border: 0 !important;
-    border-right: 8px solid #203840 !important;
+    border-right: 0px solid #203840 !important;
     border-radius: 20px;
     background: #203840;
     box-shadow: 0 8px 20px rgb(22 45 53 / 25%);
