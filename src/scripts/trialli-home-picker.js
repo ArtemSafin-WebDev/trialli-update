@@ -1058,6 +1058,7 @@ import {
               ${iconCtaSearch()}
               <span>${escapeHtml(this.response.submit?.mobileLabel || "Подобрать товары")}</span>
             </button>
+            <button class="pf-mobile-submit pf-mobile-submit--secondary" type="button" data-action="save-mobile-options">Сохранить</button>
           </div>
         `;
       }
