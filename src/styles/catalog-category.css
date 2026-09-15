@@ -28,7 +28,7 @@
 }
 
 .tri-category-head {
-  grid-template-columns: minmax(0, 1fr) 210px;
+  grid-template-columns: minmax(0, 1fr) 210px !important;
   min-height: 112px;
   padding: 32px 0 24px;
 }
