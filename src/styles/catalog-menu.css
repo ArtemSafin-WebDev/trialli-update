@@ -17,6 +17,12 @@
   font-family: "TTHover", "TT Hoves", Arial, sans-serif;
 }
 
+@media (min-width: 1600px) {
+  .tri-catalog-menu {
+    --tri-catalog-panel-height: min(740px, var(--tri-catalog-available-height, 740px));
+  }
+}
+
 .tri-catalog-menu[hidden] {
   display: none !important;
 }
