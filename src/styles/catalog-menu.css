@@ -847,6 +847,17 @@
     flex: 1 1 auto;
   }
 
+  .tri-catalog-mobile__accordion-toggle {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    appearance: none;
+    background: transparent;
+    font: inherit;
+    cursor: pointer;
+    -webkit-appearance: none;
+  }
+
   .tri-catalog-mobile__accordion-panel {
     display: grid;
     grid-template-rows: 0fr;
