@@ -709,6 +709,7 @@
   .tri-catalog-mobile__collections {
     display: flex;
     flex-direction: column;
+    gap: 24px;
     padding: 16px;
     border-left: 1px solid #bed600 !important;
     border-radius: 20px;
@@ -716,8 +717,9 @@
   }
 
   .tri-catalog-mobile__collection {
+    position: relative;
     display: grid;
-    min-height: 56px;
+    min-height: 40px;
     grid-template-columns: 40px minmax(0, 1fr) 20px;
     align-items: center;
     gap: 12px;
@@ -729,7 +731,17 @@
   }
 
   .tri-catalog-mobile__collection + .tri-catalog-mobile__collection {
-    border-top: 1px solid rgb(255 255 255 / 7%) !important;
+    border-top: 0 !important;
+  }
+
+  .tri-catalog-mobile__collection + .tri-catalog-mobile__collection::before {
+    position: absolute;
+    top: -12px;
+    right: 0;
+    left: 0;
+    height: 1px;
+    background: rgb(255 255 255 / 7%);
+    content: "";
   }
 
   .tri-catalog-mobile__collection-icon {
