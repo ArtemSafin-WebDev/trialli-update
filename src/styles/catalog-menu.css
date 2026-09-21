@@ -417,11 +417,6 @@
   background:
     radial-gradient(circle at 100% 52%, rgb(99 136 34 / 90%) 0, rgb(52 78 31 / 58%) 28%, rgb(13 32 38 / 0%) 70%),
     linear-gradient(90deg, #0d2026, #10282b 58%, #254526);
-  opacity: 0;
-  transition: opacity 240ms ease;
-}
-
-.tri-catalog-menu__preview.has-model .tri-catalog-menu__glow {
   opacity: 1;
 }
 
