@@ -284,6 +284,10 @@ function arrowMarkup() {
   return '<span class="tri-catalog-menu__arrow" aria-hidden="true"></span>';
 }
 
+function diagonalArrowMarkup() {
+  return '<span class="tri-catalog-menu__arrow tri-catalog-menu__arrow--diagonal" aria-hidden="true"></span>';
+}
+
 function mobileRightArrowMarkup() {
   return `<svg class="tri-catalog-mobile__arrow" viewBox="0 0 16 16" aria-hidden="true">
     <path d="M6.1952 3.52818C6.45551 3.26793 6.87724 3.26797 7.13758 3.52818L11.1376 7.52818C11.3979 7.78851 11.3979 8.21021 11.1376 8.47057L7.13758 12.4706C6.87723 12.7309 6.45555 12.7309 6.1952 12.4706C5.93497 12.2102 5.93489 11.7885 6.1952 11.5282L9.72352 7.99986L6.1952 4.47057C5.93497 4.21021 5.93489 3.78849 6.1952 3.52818Z" />
@@ -316,7 +320,7 @@ function categoryMarkup(item, index) {
           : `<span class="tri-catalog-menu__category-badge" aria-hidden="true">${item.badge}</span>`
       }
       <span>${item.title}</span>
-      ${item.children?.length ? arrowMarkup() : ""}
+      ${item.children?.length ? arrowMarkup() : diagonalArrowMarkup()}
     </a>
   `;
 }
@@ -720,14 +724,14 @@ catalogRoots.forEach((root, rootIndex) => {
           .map(
             (item, index) => `
               <a
-                class="tri-catalog-menu__item"
+                class="tri-catalog-menu__item${item.children?.length ? " has-children" : ""}"
                 href="${item.href}"
                 data-catalog-depth="${depth}"
                 data-catalog-item="${index}"
                 aria-current="false"
               >
                 <span>${item.title}</span>
-                ${item.children?.length ? arrowMarkup() : ""}
+                ${item.children?.length ? arrowMarkup() : diagonalArrowMarkup()}
               </a>
             `,
           )
@@ -897,14 +901,14 @@ catalogRoots.forEach((root, rootIndex) => {
     }
 
     const categoryLink = event.target.closest("[data-catalog-category]");
-    if (categoryLink?.querySelector(".tri-catalog-menu__arrow")) {
+    if (categoryLink?.classList.contains("has-children")) {
       event.preventDefault();
       setActiveCategory(Number(categoryLink.dataset.catalogCategory));
       return;
     }
 
     const itemLink = event.target.closest("[data-catalog-item]");
-    if (itemLink?.querySelector(".tri-catalog-menu__arrow")) {
+    if (itemLink?.classList.contains("has-children")) {
       event.preventDefault();
       const depth = Number(itemLink.dataset.catalogDepth);
       const state = columnState[depth - 2];
