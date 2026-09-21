@@ -293,8 +293,8 @@
   z-index: calc(7 + var(--tri-column-index));
   top: 20px;
   bottom: 20px;
-  left: calc(304px + var(--tri-column-index) * 304px);
-  width: 288px;
+  left: var(--tri-column-left, 304px);
+  width: var(--tri-column-width, 288px);
   overflow: hidden;
   border-left: 1px solid var(--tri-catalog-accent) !important;
   border-radius: 16px;
@@ -307,11 +307,23 @@
   position: absolute;
   z-index: calc(7 + var(--tri-column-index));
   top: var(--tri-connector-top);
-  left: calc(304px + var(--tri-column-index) * 304px - 16px);
+  left: calc(var(--tri-column-left, 304px) - 16px);
   width: 16px;
   height: 1px;
   background: var(--tri-catalog-accent);
   pointer-events: none;
+}
+
+.tri-catalog-menu__column[data-catalog-column="3"],
+.tri-catalog-menu__connector[data-catalog-connector="3"] {
+  --tri-column-left: 608px;
+  --tri-column-width: 278px;
+}
+
+.tri-catalog-menu__column[data-catalog-column="4"],
+.tri-catalog-menu__connector[data-catalog-connector="4"] {
+  --tri-column-left: 902px;
+  --tri-column-width: 278px;
 }
 
 .tri-catalog-menu__all {
@@ -477,7 +489,7 @@
   display: none;
 }
 
-@media (max-width: 1220px) and (min-width: 768px) {
+@media (max-width: 1247px) and (min-width: 768px) {
   .tri-catalog-menu__panel {
     overflow-x: auto;
   }
