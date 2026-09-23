@@ -10,12 +10,12 @@
 }
 
 .tri-no-products-heading {
-  min-height: 130px;
+  min-height: 132px;
   padding: 48px 0 32px;
 }
 
 .tri-no-products-heading p {
-  margin: 0 0 6px;
+  margin: 0 0 8px;
   color: var(--results-muted);
   font-size: 14px;
   line-height: 16px;
@@ -426,7 +426,7 @@
   fill: currentColor;
 }
 
-.tri-no-products-form__submit:disabled {
+.tri-home .tri-no-products-form__submit:disabled {
   background: rgb(32 56 64 / 50%);
   color: #4c5759;
 }
@@ -482,7 +482,7 @@
 @media (max-width: 767px) {
   .tri-no-products-heading {
     min-height: auto;
-    padding: 24px 0;
+    padding: 32px 0 24px;
   }
 
   .tri-no-products-heading p {

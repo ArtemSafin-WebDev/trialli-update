@@ -106,7 +106,7 @@ if (root) {
   let pageScrollLocked = false;
 
   const icons = {
-    close: '<img class="tri-results-filter-close-icon" src="/assets/vin-results/filter-tag-close.svg" alt="" aria-hidden="true" />',
+    close: '<img class="tri-results-filter-close-icon" src="/assets/vin-results/filter-tag-close.svg" alt="" aria-hidden="true" /><img class="tri-results-filter-close-icon tri-results-filter-close-icon--mobile" src="/assets/vin-results/filter-tag-close-mobile.svg" alt="" aria-hidden="true" />',
     reset: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.27441 1.56147C7.6919 1.1817 9.19598 1.27919 10.5518 1.84076C11.3452 2.16945 12.0617 2.64755 12.667 3.24115V1.66693H14L13.999 5.00092L13.333 5.66693H10V4.33393H11.8711C11.3592 3.79349 10.7373 3.36162 10.041 3.07318C8.95656 2.62403 7.75394 2.54491 6.62012 2.84857C5.48612 3.15243 4.48326 3.82247 3.76855 4.75385C3.05393 5.68523 2.66701 6.82696 2.66699 8.00092C2.66706 9.17468 3.05411 10.3157 3.76855 11.247C4.48326 12.1784 5.4861 12.8484 6.62012 13.1523C7.75402 13.456 8.95649 13.3769 10.041 12.9277C11.1256 12.4784 12.0312 11.6836 12.6182 10.6669L13.7734 11.3339C13.0397 12.6047 11.9074 13.5985 10.5518 14.1601C9.19596 14.7217 7.69192 14.8202 6.27441 14.4404C4.85708 14.0605 3.60427 13.2236 2.71094 12.0595C1.81763 10.8953 1.33308 9.46835 1.33301 8.00092C1.33303 6.53347 1.81766 5.10656 2.71094 3.94232C3.60424 2.77821 4.85708 1.94133 6.27441 1.56147Z"/></svg>',
   };
 
@@ -227,6 +227,15 @@ if (root) {
   function getFilterValueInputs(filter) {
     return Array.from(filter?.querySelectorAll(".tri-results-filter__options input, .tri-results-filter__chips input") || [])
       .filter((input) => !input.matches("[data-filter-select-all]"));
+  }
+
+  function isToggleableRadio(input) {
+    return input?.type === "radio" && ["teeth", "power"].includes(input.closest("[data-filter]")?.dataset.filter);
+  }
+
+  function clearSelectedRadio(input) {
+    input.checked = false;
+    input.dispatchEvent(new Event("change", { bubbles: true }));
   }
 
   function serializeFilters() {
@@ -519,7 +528,7 @@ if (root) {
       .map(([key, label]) => `<button type="button" data-clear-filter="${key}"><span>${label}</span>${icons.close}</button>`)
       .join("");
     const resetButton = values.length >= 2
-      ? `<button class="tri-results-active__reset" type="button" data-reset-filters>${icons.reset}<span>Сбросить фильтры</span></button>`
+      ? `<button class="tri-results-active__reset" type="button" data-reset-filters>${icons.reset}<img src="/assets/vin-results/filter-reset-mobile.svg" alt="" aria-hidden="true" /><span>Сбросить фильтры</span><span>Сбросить</span></button>`
       : "";
     tags.innerHTML = filterTags + resetButton;
     const count = root.querySelector("[data-filter-count]");
@@ -735,7 +744,7 @@ if (root) {
       primaryAction.dataset.filterDetailAction = canOpenNext ? "next" : "save";
       primaryAction.dataset.filterDetailNext = canOpenNext ? nextFilter.dataset.filter : "";
       secondaryAction.hidden = false;
-      secondaryAction.textContent = isSequentialFilter ? "Сохранить" : "Уточнить параметры";
+      secondaryAction.textContent = isSequentialFilter ? "Сохранить" : "Все фильтры";
       secondaryAction.dataset.filterDetailAction = isSequentialFilter ? "save" : "close";
     }
   }
@@ -762,7 +771,7 @@ if (root) {
     if (!input) return;
 
     if (input.type === "radio") {
-      input.checked = true;
+      input.checked = isToggleableRadio(input) ? checked ?? !input.checked : true;
     } else {
       input.checked = checked ?? !input.checked;
     }
@@ -944,13 +953,6 @@ if (root) {
       if (!mobileMedia.matches) applySort();
     }
     if (button.matches("[data-sort-apply]")) applySort();
-    if (button.matches("[data-filter-chip]") && !event.target.closest("[data-filter-chip-clear]")) {
-      const filter = filters.querySelector(`[data-filter="${button.dataset.filterChip}"]`);
-      if (filter && !filter.disabled) {
-        setFilterOpen(true);
-        openMobileFilterDetail(filter);
-      }
-    }
     if (button.matches("[data-filter-open]")) setFilterOpen(true);
     if (button.matches("[data-filter-close], [data-filter-apply]")) setFilterOpen(false);
     if (button.matches("[data-filter-detail-close]")) closeMobileFilterDetail();
@@ -1047,6 +1049,16 @@ if (root) {
     queueFilterPreview(event.target);
   });
 
+  filters.addEventListener("click", (event) => {
+    // A label click normally cannot clear an already selected radio option.
+    // Leave new selections to the browser so the existing change handler runs once.
+    if (event.target.matches("input")) return;
+    const input = event.target.closest("label")?.querySelector("input");
+    if (!isToggleableRadio(input) || !input.checked) return;
+    event.preventDefault();
+    clearSelectedRadio(input);
+  });
+
   filters.addEventListener("input", (event) => {
     const priceInput = event.target.closest("[data-price-input]");
     if (priceInput) {
@@ -1104,6 +1116,11 @@ if (root) {
   });
 
   filters.addEventListener("keydown", (event) => {
+    if (event.key === " " && isToggleableRadio(event.target) && event.target.checked) {
+      event.preventDefault();
+      clearSelectedRadio(event.target);
+      return;
+    }
     const handle = event.target.closest("[data-price-handle]");
     if (!handle) return;
 

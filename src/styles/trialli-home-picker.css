@@ -4940,9 +4940,9 @@ html.pf-modal-open {
   }
 }
 
-.pf-modal__submit:disabled {
-  background: rgb(255 255 255 / 10%);
-  color: rgb(255 255 255 / 30%);
+.pf-modal .pf-modal__submit:disabled {
+  background: rgb(32 56 64 / 50%);
+  color: #4c5759;
 }
 
 .pf-modal .pf-sent-icon {

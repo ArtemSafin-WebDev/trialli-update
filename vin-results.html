@@ -2,7 +2,7 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <meta name="format-detection" content="telephone=no" />
     <title>Результаты подбора по VIN — TRIALLI</title>
     <!-- @include /src/partials/site-head.html -->
@@ -127,10 +127,6 @@
                 <span data-filter-count hidden>0</span>
               </button>
               <div data-mobile-sort-host><!-- @include /src/partials/catalog-sort.html --></div>
-              <button class="tri-results-filter-chip" type="button" aria-controls="catalog-filters" data-filter-chip="groups">
-                <span class="tri-results-filter-chip__label">Категория</span>
-                <svg class="tri-results-filter-chip__icon" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.2 4.2 6 8l3.8-3.8.8.8L6 9.6 1.4 5l.8-.8Z" /></svg>
-              </button>
               <div class="tri-results-view" aria-label="Вид товаров">
                 <button class="is-active" type="button" aria-label="Плитка" data-view="grid">▦</button>
                 <button type="button" aria-label="Список" data-view="list">☷</button>
@@ -210,7 +206,7 @@
                   </div>
                 </fieldset>
 
-                <fieldset class="tri-results-filter tri-results-panel tri-results-panel--surface" data-filter="power">
+                <fieldset class="tri-results-filter tri-results-panel" data-filter="power">
                   <legend>Напряжение</legend>
                   <div class="tri-results-filter__search">
                     <label class="tri-home-visually-hidden" for="filter-search-power">Поиск по фильтру Мощность, кВт</label>
@@ -280,7 +276,7 @@
                 </div>
                 <div class="tri-results-filters__mobile-actions">
                   <button type="button" data-filter-apply>
-                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.274 1.561A6.67 6.67 0 0 1 12.667 3.24V1.667H14L13.999 5l-.666.667H10V4.334h1.871A5.333 5.333 0 1 0 12.618 10.667l1.155.667A6.667 6.667 0 1 1 6.274 1.561Z" /></svg>
+                    <img src="/assets/trialli-home/filter-apply-search.svg" alt="" aria-hidden="true" />
                     <span>Показать <span data-mobile-total>2 657</span> товаров</span>
                   </button>
                 </div>
@@ -311,7 +307,7 @@
                   </div>
                   <div class="tri-results-filter-detail__actions">
                     <button type="button" data-filter-detail-save>Сохранить</button>
-                    <button type="button" data-filter-detail-close>Уточнить параметры</button>
+                    <button type="button" data-filter-detail-close>Все фильтры</button>
                   </div>
                 </section>
               </aside>
