@@ -1635,7 +1635,7 @@ import {
           <div class="${className}">
             <div class="pf-history-empty" role="status">
               <div class="pf-history-empty__icon" aria-hidden="true">
-                ${iconSleep()}
+                <img src="/assets/trialli-home/picker-empty-sleep.svg" alt="" width="60" height="60">
               </div>
               <div class="pf-history-empty__content">
                 <h2 class="pf-history-empty__title">Здесь пусто</h2>
@@ -2822,7 +2822,7 @@ import {
   }
 
   function iconTrash() {
-    return `<img src="/assets/trialli-home/picker-delete.svg" alt="" aria-hidden="true">`;
+    return `<span class="pf-trash-icon" aria-hidden="true"></span>`;
   }
 
   function iconReset() {

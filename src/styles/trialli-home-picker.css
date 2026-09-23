@@ -198,6 +198,15 @@
   fill: currentColor;
 }
 
+.pf-trash-icon {
+  display: block;
+  width: 1.6rem;
+  height: 1.6rem;
+  background: currentColor;
+  -webkit-mask: url("/assets/trialli-home/picker-delete.svg") center / contain no-repeat;
+  mask: url("/assets/trialli-home/picker-delete.svg") center / contain no-repeat;
+}
+
 .pf-reset-tags svg {
   width: 1.6rem;
   height: 1.6rem;
@@ -780,11 +789,14 @@ body.pf-mobile-lock {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 6.4rem;
-  height: 6.4rem;
-  border-radius: 0.8rem;
-  background: #f7f7f8;
-  color: #afb2b7;
+  width: 6rem;
+  height: 6rem;
+}
+
+.pf-history-empty__icon img {
+  display: block;
+  width: 6rem;
+  height: 6rem;
 }
 
 .pf-sleep-icon {
@@ -3044,7 +3056,9 @@ button.pf-vin-request__car-icon.is-open {
   }
 
   .pf-history__scroller {
-    overflow: hidden;
+    max-height: calc(28px + 5 * 48px);
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   .pf-history__table {
@@ -3424,7 +3438,6 @@ button.pf-vin-request__car-icon.is-open {
     top: 62px;
     left: 16px;
     width: calc(100% - 32px);
-    min-height: 206px;
   }
 }
 
