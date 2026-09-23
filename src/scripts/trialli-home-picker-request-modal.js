@@ -1,4 +1,5 @@
 import "./phone-mask.js";
+import { historyCardTemplate, historyTableTemplate, isHistoryItemSelectable } from "./parts-finder-history.js";
 import {
   formStatusModal,
   setFormPending,
@@ -39,6 +40,7 @@ import {
       this.handleInput = this.handleInput.bind(this);
       this.handleFocusOut = this.handleFocusOut.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.handleResize = this.handleResize.bind(this);
       this.closeTimer = null;
       this.optionsRequestId = 0;
     }
@@ -63,6 +65,7 @@ import {
         vehicle: options.vehicle || {},
         controls: options.controls || [],
         history: options.history || null,
+        deleteHistory: options.deleteHistory || null,
         historyOpen: false,
         openControl: null,
         mobileControl: null,
@@ -79,6 +82,7 @@ import {
     close(options = {}) {
       const host = document.querySelector(".pf-modal");
       window.clearTimeout(this.closeTimer);
+      window.removeEventListener("resize", this.handleResize);
 
       if (!host) {
         this.state = null;
@@ -125,7 +129,7 @@ import {
     }
 
     vehicleRowTemplate() {
-      const hasHistory = this.hasHistoryItems();
+      const hasHistory = this.hasHistoryFeature();
 
       return `
         <div class="pf-modal__vehicle-row ${hasHistory ? "has-history" : ""}">
@@ -215,12 +219,27 @@ import {
       const history = document.querySelector(".pf-modal-history");
       if (!history) return;
       const toggle = history.querySelector(".pf-modal-history__toggle");
-      history.querySelector(".pf-modal-history__list")?.remove();
+      history.querySelector(".pf-history")?.remove();
       toggle?.classList.toggle("is-open", this.state.historyOpen);
       toggle?.setAttribute("aria-expanded", String(this.state.historyOpen));
       if (this.state.historyOpen) {
         history.insertAdjacentHTML("beforeend", this.historyListTemplate());
+        this.positionHistoryPopover();
       }
+    }
+
+    positionHistoryPopover() {
+      const toggle = document.querySelector(".pf-modal-history__toggle");
+      const history = toggle?.closest(".pf-modal-history");
+      if (!history || !this.state?.historyOpen) return;
+      const dialog = history.closest(".pf-modal__dialog");
+      const dialogTop = dialog?.getBoundingClientRect().top || 0;
+      const dialogBorder = dialog ? parseFloat(getComputedStyle(dialog).borderTopWidth) || 0 : 0;
+      history.style.setProperty("--pf-modal-history-top", `${toggle.getBoundingClientRect().bottom + 8 - dialogTop - dialogBorder}px`);
+    }
+
+    handleResize() {
+      this.positionHistoryPopover();
     }
 
     updateVehicleFields() {
@@ -319,6 +338,10 @@ import {
       return Boolean(this.state.history?.enabled && this.state.history.items?.length);
     }
 
+    hasHistoryFeature() {
+      return Boolean(this.state.history?.enabled);
+    }
+
     render() {
       const host = document.createElement("dialog");
       host.className = "pf-modal";
@@ -331,6 +354,7 @@ import {
       host.addEventListener("change", this.handleInput);
       host.addEventListener("focusout", this.handleFocusOut);
       host.addEventListener("submit", this.handleSubmit);
+      window.addEventListener("resize", this.handleResize);
       document.body.append(host);
       window.LuzarPhoneMask?.init(host);
       host.showModal();
@@ -423,7 +447,7 @@ import {
     }
 
     historyToggleTemplate() {
-      if (!this.hasHistoryItems()) return "";
+      if (!this.hasHistoryFeature()) return "";
       const isOpen = this.state.historyOpen;
 
       return `
@@ -432,12 +456,12 @@ import {
             class="pf-modal-history__toggle ${isOpen ? "is-open" : ""}"
             type="button"
             aria-label="${escapeAttr(this.state.history.label || "Мои авто")}"
-            aria-haspopup="listbox"
+            aria-haspopup="dialog"
             aria-expanded="${isOpen}"
             data-modal-history-toggle
           >
             ${iconCar()}
-            <span class="pf-modal-history__badge">${this.state.history.items.length}</span>
+            ${this.hasHistoryItems() ? `<span class="pf-modal-history__badge">${this.state.history.items.length}</span>` : ""}
           </button>
           ${isOpen ? this.historyListTemplate() : ""}
         </div>
@@ -445,18 +469,25 @@ import {
     }
 
     historyListTemplate() {
-      const rows = this.state.history.items
-        .map(
-          (item) => `
-            <button class="pf-modal-history__item" type="button" role="option" data-modal-history="${escapeAttr(item.id)}">
-              <span>${escapeHtml(item.brand?.label || "")} ${escapeHtml(item.model?.label || "")}</span>
-              <small>${escapeHtml(item.vin || item.plate || "")}</small>
-            </button>
-          `,
-        )
-        .join("");
-
-      return `<div class="pf-modal-history__list" role="listbox">${rows}</div>`;
+      const items = this.state.history?.items || [];
+      const content = items.length
+        ? historyTableTemplate(items)
+        : `<div class="pf-history-empty" role="status">
+            <div class="pf-history-empty__icon" aria-hidden="true"><img src="/assets/trialli-home/picker-empty-sleep.svg" alt="" width="60" height="60"></div>
+            <div class="pf-history-empty__content">
+              <h2 class="pf-history-empty__title">Здесь пусто</h2>
+              <p class="pf-history-empty__text">Данные о ваших авто сохранятся автоматически,<br>после подбора запчастей</p>
+            </div>
+          </div>`;
+      return `
+        <div class="pf-history pf-history--modal ${items.length ? "" : "pf-history--empty"}" role="dialog" aria-label="Мои авто">
+          <div class="pf-modal-history__desktop">${content}</div>
+          <div class="pf-modal-history__mobile">
+            <button class="pf-modal-history__back" type="button" data-modal-history-close aria-label="Закрыть Мои авто">${iconBack()}<span>${escapeHtml(this.state.history?.label || "Мои авто")}</span></button>
+            ${items.length ? `<div class="pf-mobile-history-cards">${items.map(historyCardTemplate).join("")}</div>` : content}
+          </div>
+        </div>
+      `;
     }
 
     getControl(id) {
@@ -628,7 +659,7 @@ import {
 
     async selectHistory(id) {
       const item = this.state.history?.items?.find((entry) => entry.id === id);
-      if (!item) return;
+      if (!isHistoryItemSelectable(item)) return;
       this.state.values = {
         ...this.state.values,
         brand: item.brand || null,
@@ -641,6 +672,19 @@ import {
       this.updateVehicleControls();
       this.updateVehicleFields();
       await this.loadVehicleControls();
+    }
+
+    async deleteHistory(id) {
+      if (!this.state.deleteHistory || !this.state.history?.items?.some((item) => item.id === id)) return;
+      try {
+        const history = await this.state.deleteHistory(id);
+        if (!this.state) return;
+        this.state.history = history;
+        this.updateVehicleRow();
+        this.updateHistoryPopover();
+      } catch (error) {
+        console.error("Failed to delete vehicle history", error);
+      }
     }
 
     inputTemplate(id, placeholder, value, type = "text", required = false, className = "") {
@@ -703,11 +747,24 @@ import {
         return;
       }
 
-      const historyItem = event.target.closest("[data-modal-history]");
-      if (historyItem) {
+      if (event.target.closest("[data-modal-history-close]")) {
         event.preventDefault();
-        this.selectHistory(historyItem.dataset.modalHistory);
+        this.state.historyOpen = false;
+        this.updateHistoryPopover();
         return;
+      }
+
+      const historyAction = event.target.closest(".pf-history--modal [data-action]");
+      if (historyAction) {
+        event.preventDefault();
+        if (historyAction.dataset.action === "select-history") this.selectHistory(historyAction.dataset.value);
+        if (historyAction.dataset.action === "delete-history") this.deleteHistory(historyAction.dataset.value);
+        return;
+      }
+
+      if (this.state.historyOpen && !event.target.closest(".pf-modal-history")) {
+        this.state.historyOpen = false;
+        this.updateHistoryPopover();
       }
 
       const controlAction = event.target.closest("[data-modal-action]");
