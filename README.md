@@ -67,6 +67,39 @@ npm run sync:trialli
 Контракт предпросмотра количества товаров для плашки у изменённого фильтра
 описан в [`docs/catalog-filter-preview-api.md`](docs/catalog-filter-preview-api.md).
 
+## AJAX-подгрузка карточек товаров
+
+Разметка карточки должна соответствовать `productCardTemplate()` из
+`src/scripts/components/product-card.js`. Для копирования артикула особенно важны
+`data-copy-code` со значением артикула и элемент иконки
+`.tri-product-card__copy` внутри кнопки `.tri-product-card__code`: над центром
+этой иконки показывается сообщение «Артикул скопирован».
+
+Обработчик клика устанавливается **один раз** через
+`bindProductCardInteractions(root)` на стабильный родительский контейнер. На
+главной и в каталоге это корень страницы; в блоке рекомендаций — контейнер
+карточек. Обработчик использует делегирование событий, поэтому новые карточки,
+добавленные внутрь этого контейнера через AJAX, сразу поддерживают копирование.
+Поповер создаётся при первом успешном копировании и не требует отдельной
+инициализации для каждой карточки.
+
+После вставки HTML нужно инициализировать галереи новых карточек:
+
+```js
+// Код выполняется в страничном JS-модуле; обработчик на pageRoot уже установлен.
+const pageRoot = document.querySelector("[data-catalog-results]");
+const productsHost = pageRoot.querySelector("[data-products]");
+productsHost.insertAdjacentHTML("beforeend", htmlFromAjax);
+initProductCardGalleries(productsHost);
+```
+
+`initProductCardGalleries()` можно вызывать после каждой подгрузки: уже
+инициализированные карточки пропускаются. Для галерей к этому моменту должен
+быть загружен Swiper. Если AJAX заменяет не содержимое, а **сам контейнер** с
+обработчиком, вызовите `bindProductCardInteractions(newRoot)` для нового
+элемента и затем `initProductCardGalleries(newRoot)`. Оба метода экспортируются
+из `src/scripts/components/product-card.js`.
+
 ## Общие компоненты
 
 Vite раскрывает директивы `@include` на этапе dev-сервера и production-сборки.

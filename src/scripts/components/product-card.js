@@ -1,6 +1,95 @@
 import { showToast } from "../site.js";
 
 const productCardRoots = new WeakSet();
+const copyPopoverSupportsAnchor =
+  typeof CSS !== "undefined" &&
+  CSS.supports("anchor-name: --tri-product-copy") &&
+  CSS.supports("top: anchor(top)");
+let copyPopover;
+let activeCopyAnchor;
+let activeCopyAnchorName;
+let copyPopoverTimer;
+
+function positionCopyPopover() {
+  if (!copyPopover || !activeCopyAnchor) return;
+  if (!activeCopyAnchor.isConnected) {
+    hideCopyPopover();
+    return;
+  }
+
+  if (copyPopoverSupportsAnchor) {
+    copyPopover.style.translate = "";
+    const popover = copyPopover.getBoundingClientRect();
+    const inset = 8;
+    const offset =
+      popover.left < inset
+        ? inset - popover.left
+        : popover.right > window.innerWidth - inset
+          ? window.innerWidth - inset - popover.right
+          : 0;
+    const verticalOffset =
+      popover.top < inset
+        ? activeCopyAnchor.getBoundingClientRect().bottom + 12 - popover.top
+        : 0;
+    copyPopover.style.translate = `${offset}px ${verticalOffset}px`;
+    return;
+  }
+
+  const anchor = activeCopyAnchor.getBoundingClientRect();
+  const popover = copyPopover.getBoundingClientRect();
+  const gap = 12;
+  const inset = 8;
+  const top = anchor.top - popover.height - gap;
+
+  copyPopover.style.top = `${top >= inset ? top : anchor.bottom + gap}px`;
+  copyPopover.style.left = `${Math.max(inset, Math.min(anchor.left + anchor.width / 2 - popover.width / 2, window.innerWidth - popover.width - inset))}px`;
+}
+
+function hideCopyPopover() {
+  window.clearTimeout(copyPopoverTimer);
+  if (!copyPopover) return;
+
+  if (typeof copyPopover.hidePopover === "function" && copyPopover.matches(":popover-open")) {
+    copyPopover.hidePopover();
+  } else {
+    copyPopover.hidden = true;
+  }
+
+  if (activeCopyAnchor) {
+    if (activeCopyAnchorName) {
+      activeCopyAnchor.style.setProperty("anchor-name", activeCopyAnchorName);
+    } else {
+      activeCopyAnchor.style.removeProperty("anchor-name");
+    }
+  }
+  activeCopyAnchor = null;
+}
+
+function showCopyPopover(button) {
+  if (!copyPopover) {
+    copyPopover = document.createElement("div");
+    copyPopover.className = "tri-product-card__copy-popover";
+    copyPopover.setAttribute("popover", "manual");
+    copyPopover.setAttribute("role", "status");
+    copyPopover.textContent = "Артикул скопирован";
+    document.body.append(copyPopover);
+    window.addEventListener("scroll", positionCopyPopover, { capture: true, passive: true });
+    window.addEventListener("resize", positionCopyPopover);
+  }
+
+  hideCopyPopover();
+  activeCopyAnchor = button.querySelector(".tri-product-card__copy") || button;
+  if (copyPopoverSupportsAnchor) {
+    activeCopyAnchorName = activeCopyAnchor.style.getPropertyValue("anchor-name");
+    activeCopyAnchor.style.setProperty("anchor-name", "--tri-product-copy");
+    copyPopover.classList.add("is-anchor-positioned");
+  }
+
+  copyPopover.hidden = false;
+  if (typeof copyPopover.showPopover === "function") copyPopover.showPopover();
+  positionCopyPopover();
+  copyPopoverTimer = window.setTimeout(hideCopyPopover, 2200);
+}
 
 const productCardInteractiveSelector = [
   "a",
@@ -209,9 +298,9 @@ export function bindProductCardInteractions(root) {
     if (copyButton) {
       try {
         await navigator.clipboard.writeText(copyButton.dataset.copyCode);
-        showToast("Артикул скопирован");
+        showCopyPopover(copyButton);
       } catch {
-        showToast(copyButton.dataset.copyCode);
+        showToast("Не удалось скопировать артикул");
       }
       return;
     }

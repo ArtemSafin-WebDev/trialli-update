@@ -2100,6 +2100,35 @@
   color: var(--tri-accent);
 }
 
+.tri-product-card__copy-popover {
+  position: fixed;
+  inset: auto;
+  z-index: 400;
+  width: max-content;
+  max-width: calc(100vw - 16px);
+  margin: 0;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 999px;
+  background: #bed600;
+  color: #0d2026;
+  font-family: "TTHover", "TT Hoves", "Roboto", "Segoe UI", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: center;
+  white-space: nowrap;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 20%);
+  pointer-events: none;
+}
+
+.tri-product-card__copy-popover.is-anchor-positioned {
+  position-anchor: --tri-product-copy;
+  top: anchor(top);
+  left: anchor(center);
+  transform: translate(-50%, calc(-100% - 12px));
+}
+
 .tri-product-card__copy svg,
 .tri-product-card__add svg,
 .tri-product-card__counter svg {
